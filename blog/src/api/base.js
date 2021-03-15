@@ -24,7 +24,7 @@ export function getTags(success) {
  */
 export function getCategory(success) {
     axios({
-        url: '/blog/category',
+        url: '/blog/base/category',
         method: 'GET'
     }).then(res => {
         success(res.data)

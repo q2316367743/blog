@@ -100,14 +100,14 @@
 						</span>
 					</div>
 					<div class="tools-right">
-						<span title="点击登录" class="tool-fox" @click="openLogin()" v-if="user == null">
+						<span title="点击登录" class="tool-fox" @click="openLogin()" v-if="!isLogin">
 							<span style="font-size: 0.8em; font-weight: bold; position: relative; top: -2px;">未登录</span>
 						</span>
-						<span title="我的信息" class="tool-fox user-info" style="padding: 0;" v-if="user != null">
+						<span title="我的信息" class="tool-fox user-info" style="padding: 0;" v-else>
 							<el-dropdown @command="handleCommand" trigger="click" size="medium">
 								<span class="el-dropdown-link user-name" style="height: 100%; padding: 0 1em; display: inline-block;">
-									<img :src="user.avatar" class="user-avatar">
-									{{user.username}}
+									<img src="./admin-logo.png" class="user-avatar">
+									{{nickname}}
 									<i class="el-icon-arrow-down el-icon--right"></i>
 								</span>
 								<el-dropdown-menu slot="dropdown">

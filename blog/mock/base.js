@@ -28,7 +28,7 @@ module.exports = function(app) {
         });
     });
 
-    app.all('/api/blog/category', function(req, res) {
+    app.all('/api/blog/base/category', function(req, res) {
         /**
          * mockjs中属性名‘|’符号后面的属性为随机属性，数组对象后面的随机属性为随机数组数量，正则表达式表示随机规则，+1代表自增
          */
