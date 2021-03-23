@@ -1,134 +1,186 @@
-<style scoped>
-</style>
-
 <template>
-	<div class="vue-box">
-		<div class="c-panel">
-			<!-- 参数栏 -->
-			<div class="c-title">检索参数</div>
-			<el-form :inline="true" size="mini">
-				<el-form-item label="文章编号：">
-					<el-input v-model="p.id" type="number"></el-input>
-				</el-form-item>
-				<el-form-item label="标题：">
-					<el-input v-model="p.title" placeholder="模糊查询"></el-input>
-				</el-form-item>
-				<el-form-item style="min-width: 10px;">
-					<el-button type="primary" icon="el-icon-search" @click="f5">查询</el-button>
-					<el-button type="primary" icon="el-icon-plus" @click="add">增加</el-button>
-				</el-form-item>
-				<br>
-				<el-form-item label="综合排序：">
-					<el-radio-group v-model="p.sort_type">
-						<el-radio :label="0">发表时间</el-radio>
-						<el-radio :label="1">喜欢数</el-radio>
-						<el-radio :label="2">点击数</el-radio>
-						<el-radio :label="3">分享数</el-radio>
-					</el-radio-group>
-				</el-form-item>
-			</el-form>
-			<!-- 数据列表 -->
-			<!-- <h4 class="c-title">列表</h4> -->
-			<el-table class="data-table" :data="dataList" size="mini">
-				<el-table-column label="编号" prop="id" width="70px"> </el-table-column>
-				<el-table-column label="文章标题" prop="title"></el-table-column>
-				<el-table-column label="文章内容" prop="content" width="400px"></el-table-column>
-				<el-table-column label="发表人" prop="create_username"></el-table-column>
-				<el-table-column label="发表于" prop="create_time"></el-table-column>
-				<el-table-column label="点击量" prop="see_count"></el-table-column>
-				<el-table-column label="喜欢" prop="like_count"></el-table-column>
-				<el-table-column label="分享" prop="share_count"></el-table-column>
-				<el-table-column prop="address" label="操作" width="150px">
-					<template slot-scope="s">
-						<el-button class="c-btn" type="primary" icon="el-icon-edit" @click="update(s.row)">修改</el-button>
-						<el-button class="c-btn" type="danger" icon="el-icon-delete" @click="del(s.row)">删除</el-button>
-					</template>
-				</el-table-column>
-			</el-table>
-			<!-- 分页 -->
-			<div class="page-box">
-				<el-pagination background
-					layout="total, prev, pager, next, sizes, jumper" 
-					:current-page.sync="p.pageNo" 
-					:page-size.sync="p.pageSize" 
-					:total="dataCount" 
-					:page-sizes="[1, 10, 20, 30, 40, 50, 100]" 
-					@current-change="f5(true)" 
-					@size-change="f5(true)">
-				</el-pagination>
-			</div>
+	<div class="box">
+		<!-- 欢迎 -->
+		<div class="content">
+			<el-card shadow="nover" style="margin-top: 1em">
+				<div
+					style="
+						font-size: 14px;
+						font-weight: bold;
+						line-height: 2em;
+						margin-bottom: 3px;
+					"
+				>
+					检索参数
+				</div>
+				<!-- 检索参数 -->
+				<div style="margin-left: 20px; margin-top: 10px">
+					<div style="display: flex">
+						<div>
+							<span>文章编号：</span>
+							<el-input
+								size="mini"
+								v-model="search.id"
+								style="width: 200px; margin-left: 20px"
+							></el-input>
+						</div>
+						<div style="margin-left: 40px">
+							<span>文章标题：</span>
+							<el-input
+								size="mini"
+								v-model="search.title"
+								style="width: 200px; margin-left: 20px"
+							></el-input>
+						</div>
+						<div style="margin-left: 40px">
+							<el-button
+								size="mini"
+								type="primary"
+								@click="executeSearch"
+								>搜索</el-button
+							>
+							<el-button size="mini" @click="clearSearch"
+								>清空</el-button
+							>
+						</div>
+					</div>
+					<div style="margin-top: 20px">
+						<span>综合排序：</span>
+
+						<el-radio-group
+							v-model="search.sort"
+							@change="executeSearch"
+							style="margin-left: 20px"
+						>
+							<el-radio label="0">发表时间</el-radio>
+							<el-radio label="1">喜欢数</el-radio>
+							<el-radio label="2">点击数</el-radio>
+							<el-radio label="3">分享数</el-radio>
+						</el-radio-group>
+					</div>
+					<el-table
+						:data="articles"
+						style="width: 100%; margin-top: 20px"
+					>
+						<el-table-column prop="id" label="编号" width="100">
+						</el-table-column>
+						<el-table-column prop="title" label="标题" width="180">
+						</el-table-column>
+						<el-table-column prop="createTime" label="创建日期">
+						</el-table-column>
+						<el-table-column label="状态"> 草稿 </el-table-column>
+						<el-table-column label="操作">
+							<template slot-scope="item">
+								<el-button
+									type="primary"
+									size="mini"
+									@click="update(item.row)"
+									>修改</el-button
+								>
+								<el-button
+									type="danger"
+									size="mini"
+									@click="delect(item.row)"
+									>删除</el-button
+								>
+							</template>
+						</el-table-column>
+					</el-table>
+					<el-pagination
+						@current-change="executeSearch"
+						:current-page.sync="page"
+						:page-size="10"
+						layout="total, prev, pager, next"
+						:total="3"
+						style="margin-top: 20px;"
+					>
+					</el-pagination>
+				</div>
+			</el-card>
 		</div>
-		
-		<!-- 给wangEditor打一波广告 -->
-		<div class="c-panel" style="background-color: rgba(0,0,0,0);">
-			<li>
-				wangEditor：
-				<el-link type="primary" href="http://www.wangeditor.com/" target="_blank">
-					基于javascript和css开发的 Web富文本编辑器， 轻量、简洁、易用、开源免费
-				</el-link>
-			</li>
-			<li>
-				在vue中集成示例：
-				<el-link type="primary" href="https://www.kancloud.cn/wangfupeng/wangeditor3/335789" target="_blank">
-					https://www.kancloud.cn/wangfupeng/wangeditor3/335789
-				</el-link>
-			</li>
-		</div>
-					
-		<!-- 增改组件 -->
-		<add-or-update ref="add-or-update"></add-or-update>
-		
+		<el-dialog :visible.sync="addShow" width="70%" top="0vh" :modal-append-to-body='false' fullscreen v-if="addShow">
+			<add :id="id"></add>
+		</el-dialog>
 	</div>
 </template>
 
 <script>
-	import mockData from '@/sa-view/article/data-list.js';
-	import addOrUpdate from '@/sa-view/article/art-add.vue';
-	export default {
-		components: {
-			addOrUpdate
+import ajax from '@/api/article'
+import add from './add'
+
+export default {
+	components:{
+		add
+	},
+	data() {
+		return {
+			search: {
+				id: "",
+				title: "",
+				sort: "0",
+			},
+			page: 1,
+			total:3,
+			articles: [
+			],
+			id: '',
+			addShow: false
+		};
+	},
+	created(){
+		this.executeSearch();
+	},
+	methods: {
+		// 更新文章
+		update(article) {
+			this.id = article.id;
+			this.addShow = true;
 		},
-		data() {
-			return {
-				p: { // 查询参数
-					id: '',
-					title: '',
-					sort_type: 0,
-					pageNo: 1,
-					pageSize: 10,
-				},
-				dataCount: 0,	// 数据总数 
-				dataList: [] // 数据集合
+		// 更新文章删除文章
+		delect(article) {
+			this.$confirm("此操作将删除文章, 是否继续?", "提示", {
+				confirmButtonText: "确定",
+				cancelButtonText: "取消",
+				type: "warning",
+			}).then(() => {
+				this.layer.alert("删除" + JSON.stringify(article), (index) => {
+					this.$message({
+						type: "success",
+						message: "删除成功!",
+					});
+					this.layer.close(index);
+				});
+			});
+		},
+		/**
+		 * 进行搜索
+		 *
+		 */
+		executeSearch() {
+			
+			ajax.list({
+				id: this.search.id,
+				title: this.search.title,
+				sort: this.search.sort,
+				page: this.page,
+				limit: 10
+
+			}, res=>{
+			if(res.success){
+				this.articles = res.data.items;
 			}
+		})
 		},
-		methods: {
-			// 数据刷新
-			f5: function() {
-				this.sa.ajax2('/VocArticle/getList', this.p, function(res){
-					this.dataList = res.data;	// 数据
-					this.dataCount = res.dataCount;		// 分页 
-				}.bind(this), {res: mockData});
-			},
-			// 增加
-			add: function() {
-				this.$refs['add-or-update'].open(0);
-			},
-			// 修改
-			update: function(data) {
-				this.$refs['add-or-update'].open(data.id);
-			},
-			// 删除
-			del: function(data) {
-				this.sa.confirm('是否删除，此操作不可撤销', function() {
-					this.sa.ajax2('/acticle/delete?id=' + data.id, function() {
-						this.sa.arrayDelete(this.dataList, data);
-						this.sa.ok('删除成功');
-					}.bind(this))
-				}.bind(this));
-			}
+		clearSearch() {
+			this.search = {
+				id: "",
+				title: "",
+				sort: "0",
+			};
 		},
-		created: function() {
-			this.f5();
-		}
-	}
+	},
+};
 </script>
+
+<style>
+</style>

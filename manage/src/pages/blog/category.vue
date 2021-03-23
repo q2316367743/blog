@@ -3,7 +3,7 @@
 		<!-- 欢迎 -->
 		<div class="content">
             <el-card shadow="nover" style="margin-top: 1em;">
-                仪表盘
+                分类管理
             </el-card>
         </div>
 	</div>

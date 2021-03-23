@@ -3,7 +3,7 @@ import { Message } from 'element-ui'
 import Vue from 'vue';
 
 const instance = axios.create({
-    baseURL: 'http://localhost/api/manage',
+    baseURL: 'http://localhost:9000/api/manage',
     timeout: 3000
 })
 

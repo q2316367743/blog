@@ -8,6 +8,15 @@
 module.exports = function(baseUrl, app) {
 
     app.get(baseUrl + '/user/login', function(req, res) {
+        if (!req.query) {
+            res.json({
+                success: false,
+                code: 400,
+                message: '用户名或密码错误',
+                data: {}
+            });
+            return;
+        }
         if (req.query.username == 'esion' && req.query.password == '123456') {
             res.json({
                 success: true,

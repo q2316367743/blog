@@ -43,6 +43,18 @@ export default [{
                 name: '文章列表',
                 view: () =>
                     import ('@/pages/blog/all')
+            },
+            {
+                id: '2-4',
+                name: '分类管理',
+                view: () =>
+                    import ('@/pages/blog/category')
+            },
+            {
+                id: '2-5',
+                name: '标签管理',
+                view: () =>
+                    import ('@/pages/blog/tag')
             }
         ]
     },

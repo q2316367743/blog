@@ -8,7 +8,7 @@
 					:xs="24"
 					:sm="12"
 					:lg="6"
-					style="margin-top: 2em"
+					style="margin-top: 1em"
 				>
 					<el-card shadow="hover">
 						<div slot="header" class="card-head">
@@ -32,7 +32,7 @@
 					:xs="24"
 					:sm="12"
 					:lg="6"
-					style="margin-top: 2em"
+					style="margin-top: 1em"
 				>
 					<el-card shadow="hover">
 						<div slot="header" class="card-head">
@@ -56,7 +56,7 @@
 					:xs="24"
 					:sm="12"
 					:lg="6"
-					style="margin-top: 2em"
+					style="margin-top: 1em"
 				>
 					<el-card shadow="hover">
 						<div slot="header" class="card-head">
@@ -80,7 +80,7 @@
 					:xs="24"
 					:sm="12"
 					:lg="6"
-					style="margin-top: 2em"
+					style="margin-top: 1em"
 				>
 					<el-card shadow="hover">
 						<div slot="header" class="card-head">

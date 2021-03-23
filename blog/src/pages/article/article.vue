@@ -66,6 +66,7 @@
 					<div
 						style="margin-top: 20px"
 						v-html="article.content"
+						class="typo"
 					></div>
 					<div class="export-info">
 						<div>
@@ -409,7 +410,11 @@ import $ from "jquery";
 import { getArticle } from "@/api/article";
 import { getComment, addComment, addReply } from "@/api/comment";
 import hljs from "highlight.js";
+import './typo.css'
 import "highlight.js/styles/dracula.css";
+import showdown from "showdown";
+let converter = new showdown.Converter();
+converter.setOption("tables", true); // 将表格显示出来
 
 let isAdd = true;
 
@@ -489,6 +494,7 @@ export default {
 		getArticle(this.$route.params.id, (res) => {
 			if (res.success) {
 				this.article = res.data.article;
+				this.article.content = converter.makeHtml(this.article.content)
 				this.catalog = res.data.catalog;
 				this.createCatalog();
 				this.step++;

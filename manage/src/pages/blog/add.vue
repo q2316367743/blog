@@ -2,7 +2,7 @@
 	<div class="box" id="article-main">
 		<!-- 欢迎 -->
 		<div class="content">
-			<el-card shadow="nover" style="margin-top: 2em">
+			<el-card shadow="nover" style="margin-top: 1em">
 				<el-form ref="form">
 					<el-row>
 						<el-col :span="17"
@@ -70,7 +70,7 @@
 						>
 						<el-input
 							type="textarea"
-							:rows="27"
+							:rows="28"
 							placeholder="请输入Markdown内容"
 							v-model="contentText"
 							v-if="inputVisible"
@@ -80,7 +80,7 @@
 							v-else
 							v-html="contentHtml"
 							v-highlight
-							style="height: 573px; overflow-y: auto"
+							style="height: 594px; overflow-y: auto"
 							class="el-textarea__inner typo"
 						></div>
 					</div>
@@ -123,6 +123,14 @@ Vue.directive("highlight", function (el) {
 import ajax from "@/api/article";
 
 export default {
+	name: "add",
+	props: {
+		id: {
+			type: String,
+			require: false,
+			default: "",
+		},
+	},
 	data() {
 		return {
 			title: "",
@@ -151,6 +159,19 @@ export default {
 				this.category = res.data.items;
 			}
 		});
+
+		//如果作为组件
+		if(this.id && this.id != ''){
+			ajax.info(this.id, res=>{
+				if(res.success){
+					this.title = res.data.item.title;
+					this.description = res.data.item.description;
+					this.contentText = res.data.item.content;
+					this.tags = res.data.item.tags;
+					this.categoryId = res.data.item.categoryId;
+				}
+			})
+		}
 	},
 	methods: {
 		handleClose(tag) {
@@ -189,23 +210,31 @@ export default {
 				categoryId: this.categoryId,
 				description: this.description,
 				tags: tags,
-				content: this.contentHtml,
+				content: this.contentText,
 			};
-            ajax.article(article, res=>{
-                if(res.success){
-                    this.layer.msg('发布成功');
-                    // 重置
-                    this.title = '';
-                    this.categoryId = '',
-                    this.description = '',
-                    this.tags = [],
-                    this.contentText = '',
-                    this.contentHtml = ''
-                }
-            })
+			ajax.article(article, (res) => {
+				if (res.success) {
+					this.layer.msg("发布成功");
+					//如果是组件，则退出
+					if(this.id && this.id != ''){
+						this.$parent.$parent.addShow = false
+					}
+					// 重置
+					this.title = "";
+					(this.categoryId = ""),
+						(this.description = ""),
+						(this.tags = []),
+						(this.contentText = ""),
+						(this.contentHtml = "");
+				}
+			});
 		},
 		beginEditor() {
-			$("#article-main")[0].scrollTop = 280;
+			if(this.id && this.id != ''){
+				$(".el-dialog")[0].scrollTop = 330;
+			}else{
+				$("#article-main")[0].scrollTop = 280;
+			}
 		},
 	},
 };
