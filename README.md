@@ -1,4 +1,4 @@
-# 个人网站
+# 个人博客
 
 前端采用**Vue+Element-UI**，后台采用**SpringCloud**
 
