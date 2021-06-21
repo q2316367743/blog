@@ -40,4 +40,4 @@ app.use(function(req, res, next) {
 /**
  * 监听8090端口
  */
-app.listen('8000');
+app.listen('8990');
