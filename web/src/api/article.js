@@ -12,7 +12,7 @@ export function getList(data, success) {
         method: 'GET',
         data: data
     }).then(res => {
-        success(res.data)
+        success(res)
     })
 }
 
@@ -28,7 +28,7 @@ export function getSjz(data, success) {
         method: 'GET',
         data: data
     }).then(res => {
-        success(res.data)
+        success(res)
     })
 }
 
@@ -45,7 +45,7 @@ export function getByTag(id, data, success) {
         method: 'GET',
         data: data
     }).then(res => {
-        success(res.data)
+        success(res)
     })
 }
 
@@ -62,7 +62,7 @@ export function getByCategory(id, data, success) {
         method: 'GET',
         data: data
     }).then(res => {
-        success(res.data)
+        success(res)
     })
 }
 
@@ -77,6 +77,6 @@ export function getArticle(id, success) {
         url: `/blog/article/info/${id}`,
         method: 'GET'
     }).then(res => {
-        success(res.data)
+        success(res)
     })
 }

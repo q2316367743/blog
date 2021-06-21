@@ -12,7 +12,7 @@ const instance = axios.create({
 // http response 拦截器
 instance.interceptors.response.use(
     response => {
-        if (response.data.code == 500) {
+        if (response.data.code === 500) {
             Message({
                 message: '服务器错误，' + response.data.message,
                 type: 'error',
@@ -22,12 +22,15 @@ instance.interceptors.response.use(
                 success: false,
             };
         } else {
-            return response;
+            return response.data;
         }
     },
     error => {
+        if (error) console.log(error)
         window.layer.msg('加载失败，网络错误')
-        return Promise.reject(error.response) // 返回接口返回的错误信息
+        return {
+            success: false,
+        }
     });
 
 export default instance;

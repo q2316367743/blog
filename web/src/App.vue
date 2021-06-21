@@ -63,7 +63,7 @@
 		<router-view></router-view>
 
 		<!-- 底部 -->
-		<div id="fixbar"></div>
+		<div id="fix-bar"></div>
 		<el-col :span="24" class="footer">
 			<div>©2020 - 2021 By Esion</div>
 		</el-col>
@@ -86,11 +86,11 @@
 			</div>
 		</el-backtop>
 		<!-- 设置音乐显示 -->
-		<fixbar target="#app" :bottom="70" :right="8" @click="isShowMusic()">
+		<fix-bar target="#app" :bottom="70" :right="8" @click="isShowMusic()">
 			<div class="back_top">
 				<span class="iconfont icon-yinle"></span>
 			</div>
-		</fixbar>
+		</fix-bar>
 
 		<!-- 侧边菜单 -->
 		<el-drawer
@@ -151,8 +151,8 @@
 
 <script>
 import $ from "jquery";
-import { getBaseInfo } from "@/api/admin";
-import fixbar from "@/components/fixbar";
+import { getConfig } from "@/api/global";
+import fix_bar from "@/components/fixbar";
 
 import "aplayer/dist/APlayer.min.css";
 import APlayer from "aplayer";
@@ -160,7 +160,7 @@ import APlayer from "aplayer";
 export default {
 	name: "App",
 	components: {
-		fixbar,
+		"fix-bar": fix_bar,
 	},
 	data() {
 		return {
@@ -182,11 +182,12 @@ export default {
 	},
 	mounted() {
 		//获取基本信息
-		getBaseInfo((res) => {
+		getConfig((res) => {
 			if (res.success) {
 				let baseInfo = res.data.item;
+				console.log(res)
 				new APlayer({
-					container: document.getElementById("fixbar"),
+					container: document.getElementById("fix-bar"),
 					fixed: true,
 					loop: "all",
 					audio: baseInfo.music,
@@ -241,7 +242,7 @@ export default {
 			}, 100);
 		},
 		isShowMusic() {
-            let fix_bar = $("#fixbar");
+            let fix_bar = $("#fix-bar");
 			this.showMusic = !this.showMusic;
 			this.showMusic ? fix_bar.show() : fix_bar.hide();
 		},

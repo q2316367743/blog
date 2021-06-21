@@ -6,12 +6,12 @@ import axios from '@/utils/axios'
  * 获取作者信息
  * 
  */
-export function getAdmin(success) {
+export function getAuthor(success) {
     axios({
-        url: '/base/admin',
+        url: '/global/author',
         method: 'GET'
     }).then(res => {
-        success(res.data)
+        success(res)
     }).catch(function() {
         success({
             success: true,
@@ -20,7 +20,7 @@ export function getAdmin(success) {
             data: {
                 item: {
                     other: "[{\"name\": \"CSDN\",\"icon\": \"https://g.csdnimg.cn/static/logo/favicon32.ico\",\"href\": \"https://blog.csdn.net/q2316367743\"}]",
-                    name: "落雨不悔",
+                    name: "云落天都",
                     description: "主要是Java技术栈，略带部分源码，随笔",
                     avatar: "https://portrait.gitee.com/uploads/avatars/user/1786/5358547_qiaoshengda_1578985319.png!avatar200",
                     gitee: "https://gitee.com/qiaoshengda"
@@ -35,21 +35,36 @@ export function getAdmin(success) {
  * 
  */
 export function getWebInfo(success) {
-    axios({
-        url: '/base/blog/info',
-        method: 'GET'
-    }).then(res => {
-        success(res.data)
+    success({
+        success: true,
+        code: 200,
+        message: 'success',
+        data: {
+            item: {
+                articleCount: 11,
+                tagCount: 22,
+                classifyCount: 3,
+                notices: [
+                    '<a target="_blank" href="https://www.baidu.com">百度</a>',
+                    '网站测试通知，预祝网站成功完成',
+                ],
+                runTime: '1',
+                personCount: 2,
+                AllCount: 15,
+                accessCount: 1,
+                lastUpdate: '2021-02-22'
+            }
+        }
     })
 }
 
 
-export function getBaseInfo(success) {
+export function getConfig(success) {
     axios({
-        url: '/base/config',
+        url: '/global/config',
         method: 'GET'
     }).then(res => {
-        success(res.data)
+        success(res)
     }).catch(function() {
         success({
             success: true,
@@ -110,4 +125,18 @@ export function getBaseInfo(success) {
             }
         })
     });
+}
+
+/**
+ * 获取全部分类
+ *
+ * @param {Function} success 成功回调
+ */
+export function getCategory(success) {
+    axios({
+        url: '/global/category',
+        method: 'GET'
+    }).then(res => {
+        success(res)
+    })
 }

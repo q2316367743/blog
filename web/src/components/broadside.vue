@@ -76,9 +76,9 @@
 				<span>分类</span>
 			</div>
             <div class="card-content">
-				<div v-for="(item, index) in categorys" :key="index" class="category" @click="toA('/category/' + item.id)">
+				<div v-for="(item, index) in category" :key="index" class="category" @click="toA('/category/' + item.id)">
 					<div v-text="item.name"></div>
-					<div v-text="item.count"></div>
+					<div v-text="item.article_count"></div>
 				</div>
 			</div>
 		</el-card>
@@ -118,8 +118,7 @@
 </template>
 
 <script>
-import { getTags, getCategory } from "@/api/base"
-import { getAdmin, getWebInfo } from "@/api/admin";
+import { getAuthor, getWebInfo, getCategory } from "@/api/global";
 
 export default {
 	data() {
@@ -143,11 +142,11 @@ export default {
 				lastUpdate: "",
 			},
 			tags: [],
-			categorys: []
+			category: []
 		};
 	},
 	created() {
-		getAdmin((res) => {
+        getAuthor((res) => {
 			if (res.success) {
 				this.admin = res.data.item;
 				try{
@@ -162,14 +161,10 @@ export default {
 				this.webInfo = res.data.item;
 			}
 		});
-		getTags(res=>{
-			if (res.success) {
-				this.tags = res.data.items;
-			}
-		})
 		getCategory(res=>{
 			if (res.success) {
-				this.categorys = res.data.items;
+                console.log(res)
+				this.category = res.data.items;
 			}
 		})
 	},

@@ -91,4 +91,19 @@ public class Config implements Serializable {
         }
     }
 
+    public String getBackground() {
+        return background;
+    }
+
+    public void setBackground(String background) {
+        this.background = background;
+    }
+
+    public List<Music> getMusic() {
+        return music;
+    }
+
+    public void setMusic(List<Music> music) {
+        this.music = music;
+    }
 }

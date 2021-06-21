@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import xyz.esion.blog.global.Author;
 import xyz.esion.blog.global.Config;
 import xyz.esion.blog.global.Result;
+import xyz.esion.blog.service.GlobalService;
 
 /**
  * 全局数据控制器
@@ -20,16 +21,28 @@ public class GlobalController {
 
     private Author author;
     private Config config;
+    private GlobalService globalService;
 
-    @GetMapping("static")
+    @GetMapping("author")
     public Result author(){
-        return Result.success().data("author", author).data("config", config);
+        return Result.success().data("item", author);
     }
 
+    @GetMapping("config")
+    public Result config(){
+        return Result.success().data("item", config);
+    }
+
+    @GetMapping("category")
+    public Result category(){
+        return Result.success().data("items", globalService.getCategory());
+    }
 
     @Autowired
-    public GlobalController(Author author, Config config) {
+    public GlobalController(Author author, Config config, GlobalService globalService) {
         this.author = author;
         this.config = config;
+        this.globalService = globalService;
     }
+
 }

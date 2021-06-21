@@ -62,7 +62,7 @@
 import { findDimensions } from "@/utils/window";
 import $ from "jquery";
 import broadside from "@/components/broadside";
-import { getCategory } from "@/api/base";
+import { getCategory } from "@/api/global";
 
 export default {
 	components: {

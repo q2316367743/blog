@@ -6,14 +6,17 @@
 create table t_category
 (
     id int unsigned primary key auto_increment comment '分类ID',
-    name varchar(32) default '' not null comment '分类标题'
+    name varchar(32) default '' not null comment '分类标题',
+    create_time datetime default '1998-08-06 00:00:00' not null comment '创建时间',
+    update_time datetime default '1998-08-06 00:00:00' not null comment '更新时间',
+    is_delete tinyint(1) unsigned default 0 not null comment '逻辑删除'
 ) comment '文章分类表';
 
 create table t_article
 (
     id int unsigned primary key auto_increment comment '文章ID',
     title varchar(32) default '' not null comment '文章标题',
-    image varchar(64) default '' not null comment '文章展示图片',
+    image varchar(255) default '' not null comment '文章展示图片',
     category_id int unsigned default 0 not null comment '分类ID',
     tags varchar(64) default '' not null comment '标签，使用英文逗号隔开',
     sequence bigint unsigned default 0 not null comment '排序，默认更新时间截',
@@ -37,6 +40,16 @@ create view v_article_list as
     on a.category_id = c.id
     where is_delete = 0
     order by sequence desc;
+
+create view v_category_list as
+    select c.id, c.name, ifnull(a.article_count, 0) article_count
+    from t_category c
+             left join (
+        select category_id id, count(1) article_count
+        from t_article
+        group by category_id
+    ) a
+    on a.id = c.id;
 
 # 测试数据
 
