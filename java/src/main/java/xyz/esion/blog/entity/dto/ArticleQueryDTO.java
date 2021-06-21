@@ -11,7 +11,11 @@ public class ArticleQueryDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String name;
+    private Integer page;
+
+    private Integer size;
+
+    private String title;
 
     private Integer categoryId;
 
@@ -19,12 +23,17 @@ public class ArticleQueryDTO implements Serializable {
 
     private List<String> orderByDesc;
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public ArticleQueryDTO() {
+        this.page = 1;
+        this.size = 10;
     }
 
     public Integer getCategoryId() {
@@ -51,10 +60,28 @@ public class ArticleQueryDTO implements Serializable {
         this.orderByDesc = orderByDesc;
     }
 
+    public Integer getPage() {
+        return page;
+    }
+
+    public void setPage(Integer page) {
+        this.page = page;
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
+    }
+
     @Override
     public String toString() {
         return "ArticleQueryDTO{" +
-                "name='" + name + '\'' +
+                "page=" + page +
+                ", size=" + size +
+                ", title='" + title + '\'' +
                 ", categoryId=" + categoryId +
                 ", orderByAsc=" + orderByAsc +
                 ", orderByDesc=" + orderByDesc +

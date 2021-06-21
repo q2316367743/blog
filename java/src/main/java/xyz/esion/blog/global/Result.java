@@ -1,5 +1,7 @@
 package xyz.esion.blog.global;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -73,6 +75,14 @@ public class Result implements Serializable {
 
     public Result data(String key, Object value){
         this.data.put(key, value);
+        return this;
+    }
+
+    public Result page(Page<?> page){
+        Map<String, Object> data = new HashMap<>(2);
+        data.put("total", page.getTotal());
+        data.put("items", page.getRecords());
+        this.setData(data);
         return this;
     }
 

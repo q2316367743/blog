@@ -5,8 +5,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import xyz.esion.blog.entity.ArticleInfo;
 import xyz.esion.blog.entity.ArticleList;
 import xyz.esion.blog.entity.dto.ArticleQueryDTO;
+import xyz.esion.blog.mapper.ArticleInfoMapper;
 import xyz.esion.blog.mapper.ArticleListMapper;
 import xyz.esion.blog.mapper.ArticleMapper;
 import xyz.esion.blog.service.ArticleService;
@@ -20,11 +22,12 @@ public class ArticleServiceImpl implements ArticleService {
 
     private ArticleMapper articleMapper;
     private ArticleListMapper articleListMapper;
+    private ArticleInfoMapper articleInfoMapper;
 
     @Override
-    public Page<ArticleList> pageByCondition(Integer page, Integer size, ArticleQueryDTO condition) {
+    public Page<ArticleList> pageByCondition(ArticleQueryDTO condition) {
         QueryWrapper<ArticleList> wrapper = new QueryWrapper<>();
-        wrapper.like(ObjectUtil.isNotEmpty(condition.getName()), "name", condition.getName());
+        wrapper.like(ObjectUtil.isNotEmpty(condition.getTitle()), "title", condition.getTitle());
         wrapper.eq(ObjectUtil.isNotEmpty(condition.getCategoryId()), "category_id", condition.getCategoryId());
         if (ObjectUtil.isNotNull(condition.getOrderByAsc()) && !condition.getOrderByAsc().isEmpty()){
             for (String field : condition.getOrderByAsc()){
@@ -36,12 +39,18 @@ public class ArticleServiceImpl implements ArticleService {
                 wrapper.orderByDesc(ObjectUtil.isNotEmpty(field), field);
             }
         }
-        return articleListMapper.selectPage(new Page<>(page, size), wrapper);
+        return articleListMapper.selectPage(new Page<>(condition.getPage(), condition.getSize()), wrapper);
+    }
+
+    @Override
+    public ArticleInfo infoById(Integer id) {
+        return articleInfoMapper.selectById(id);
     }
 
     @Autowired
-    public ArticleServiceImpl(ArticleMapper articleMapper, ArticleListMapper articleListMapper) {
+    public ArticleServiceImpl(ArticleMapper articleMapper, ArticleListMapper articleListMapper, ArticleInfoMapper articleInfoMapper) {
         this.articleMapper = articleMapper;
         this.articleListMapper = articleListMapper;
+        this.articleInfoMapper = articleInfoMapper;
     }
 }

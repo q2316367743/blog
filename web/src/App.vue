@@ -185,7 +185,6 @@ export default {
 		getConfig((res) => {
 			if (res.success) {
 				let baseInfo = res.data.item;
-				console.log(res)
 				new APlayer({
 					container: document.getElementById("fix-bar"),
 					fixed: true,

@@ -25,7 +25,7 @@ create table t_article
     update_time datetime default '1998-08-06 00:00:00' not null comment '更新时间',
     is_delete tinyint(1) unsigned default 0 not null comment '逻辑删除',
     word_count int unsigned default 0 not null comment '字数统计',
-    read_time int unsigned default 0 not null comment '阅读时间，根据字数',
+    read_time int unsigned default 0 not null comment '阅读时间，根据字数，单位分钟',
     view_count int unsigned default 0 not null comment '阅读人数',
     comment_count int unsigned default 0 not null comment '评论数量',
     content text comment '文章内容，内容为Markdown文档',
@@ -34,12 +34,21 @@ create table t_article
 
 create view v_article_list as
     select a.id, a.title, a.image, a.category_id, c.name category_name,
-           a.tags, a.description, a.create_time, a.update_time
+           a.tags, a.description, a.create_time, a.update_time, a.sequence
     from t_article a
     left join t_category c
     on a.category_id = c.id
-    where is_delete = 0
+    where a.is_delete = 0
     order by sequence desc;
+
+create view v_article_info as
+    select a.id, a.title, a.category_id, c.name category_name,
+           a.tags, a.create_time, a.update_time, a.word_count, a.read_time, a.view_count,
+           a.comment_count, a.content
+    from t_article a
+    left join t_category c
+    on a.category_id = c.id
+    where a.is_delete = 0;
 
 create view v_category_list as
     select c.id, c.name, ifnull(a.article_count, 0) article_count

@@ -12,37 +12,37 @@
 						<div style="font-size: 14px">
 							<div style="margin-top: 10px">
 								<span><i class="el-icon-date"></i> 发表于</span>
-								<span v-text="article.createTime"></span>
+								<span v-text="article.create_time"></span>
 								<span> | </span>
 								<span
 									><i class="el-icon-refresh"></i>
 									更新于</span
 								>
-								<span v-text="article.updateTime"></span>
+								<span v-text="article.update_time"></span>
 							</div>
 							<div>
 								<span
 									><i class="el-icon-document"></i>
 									字数总计:</span
 								>
-								<span v-text="article.count"></span>
+								<span v-text="article.word_count"></span>
 								<span> | </span>
 								<span
 									><i class="el-icon-time"></i>
 									阅读时长:</span
 								>
-								<span>{{ article.readTime }}分钟</span>
+								<span>{{ article.read_time }}分钟</span>
 								<span> | </span>
 								<span
 									><i class="el-icon-view"></i> 阅读量:</span
 								>
-								<span v-text="article.viewCount"></span>
+								<span v-text="article.view_count"></span>
 								<span> | </span>
 								<span
 									><i class="el-icon-chat-line-square"></i>
 									评论数:</span
 								>
-								<span v-text="article.commentCount"></span>
+								<span v-text="article.comment_count"></span>
 							</div>
 						</div>
 					</el-col>
@@ -73,7 +73,7 @@
 							<span class="export-title">文章作者：</span>
 							<span
 								><a href="mailto:m17762618644@163.com"
-									>落雨不悔</a
+									>云落天都</a
 								></span
 							>
 						</div>
@@ -493,9 +493,8 @@ export default {
 		// 获取文章信息
 		getArticle(this.$route.params.id, (res) => {
 			if (res.success) {
-				this.article = res.data.article;
+				this.article = res.data.item;
 				this.article.content = converter.makeHtml(this.article.content)
-				this.catalog = res.data.catalog;
 				this.createCatalog();
 				this.step++;
 			} else {

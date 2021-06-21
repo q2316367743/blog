@@ -4,20 +4,17 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 
- * @TableName v_article_list
+ * @TableName v_article_info
  * @author Esion
- * @since 2021/6/21
+ * @since  2021/6/21
  */
-@TableName(value ="v_article_list")
-public class ArticleList implements Serializable {
-
+@TableName(value ="v_article_info")
+public class ArticleInfo implements Serializable {
     /**
      * 文章ID
      */
@@ -27,11 +24,6 @@ public class ArticleList implements Serializable {
      * 文章标题
      */
     private String title;
-
-    /**
-     * 文章展示图片
-     */
-    private String image;
 
     /**
      * 分类ID
@@ -44,14 +36,9 @@ public class ArticleList implements Serializable {
     private String categoryName;
 
     /**
-     * 标签
+     * 标签，使用英文逗号隔开
      */
     private String tags;
-
-    /**
-     * 描述
-     */
-    private String description;
 
     /**
      * 创建时间
@@ -63,14 +50,33 @@ public class ArticleList implements Serializable {
      */
     private Date updateTime;
 
+    /**
+     * 字数统计
+     */
+    private Integer wordCount;
+
+    /**
+     * 阅读时间，根据字数
+     */
+    private Integer readTime;
+
+    /**
+     * 阅读人数
+     */
+    private Integer viewCount;
+
+    /**
+     * 评论数量
+     */
+    private Integer commentCount;
+
+    /**
+     * 文章内容，内容为Markdown文档
+     */
+    private String content;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
-
-    @TableField(exist = false)
-    private Boolean stick;
-
-    @JsonIgnore
-    private Long sequence;
 
     /**
      * 文章ID
@@ -98,20 +104,6 @@ public class ArticleList implements Serializable {
      */
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    /**
-     * 文章展示图片
-     */
-    public String getImage() {
-        return image;
-    }
-
-    /**
-     * 文章展示图片
-     */
-    public void setImage(String image) {
-        this.image = image;
     }
 
     /**
@@ -143,31 +135,17 @@ public class ArticleList implements Serializable {
     }
 
     /**
-     * 标签
+     * 标签，使用英文逗号隔开
      */
     public String getTags() {
         return tags;
     }
 
     /**
-     * 标签
+     * 标签，使用英文逗号隔开
      */
     public void setTags(String tags) {
         this.tags = tags;
-    }
-
-    /**
-     * 描述
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * 描述
-     */
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     /**
@@ -198,41 +176,73 @@ public class ArticleList implements Serializable {
         this.updateTime = updateTime;
     }
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
+    /**
+     * 字数统计
+     */
+    public Integer getWordCount() {
+        return wordCount;
     }
 
-    public Boolean getStick() {
-        return this.sequence == Long.MAX_VALUE;
+    /**
+     * 字数统计
+     */
+    public void setWordCount(Integer wordCount) {
+        this.wordCount = wordCount;
     }
 
-    public void setStick(Boolean stick) {
-        this.stick = stick;
+    /**
+     * 阅读时间，根据字数
+     */
+    public Integer getReadTime() {
+        return readTime;
     }
 
-    public Long getSequence() {
-        return sequence;
+    /**
+     * 阅读时间，根据字数
+     */
+    public void setReadTime(Integer readTime) {
+        this.readTime = readTime;
     }
 
-    public void setSequence(Long sequence) {
-        this.sequence = sequence;
+    /**
+     * 阅读人数
+     */
+    public Integer getViewCount() {
+        return viewCount;
     }
 
-    @Override
-    public String toString() {
-        return "ArticleList{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", image='" + image + '\'' +
-                ", categoryId=" + categoryId +
-                ", categoryName='" + categoryName + '\'' +
-                ", tags='" + tags + '\'' +
-                ", description='" + description + '\'' +
-                ", createTime=" + createTime +
-                ", updateTime=" + updateTime +
-                ", stick=" + stick +
-                ", sequence=" + sequence +
-                '}';
+    /**
+     * 阅读人数
+     */
+    public void setViewCount(Integer viewCount) {
+        this.viewCount = viewCount;
     }
 
+    /**
+     * 评论数量
+     */
+    public Integer getCommentCount() {
+        return commentCount;
+    }
+
+    /**
+     * 评论数量
+     */
+    public void setCommentCount(Integer commentCount) {
+        this.commentCount = commentCount;
+    }
+
+    /**
+     * 文章内容，内容为Markdown文档
+     */
+    public String getContent() {
+        return content;
+    }
+
+    /**
+     * 文章内容，内容为Markdown文档
+     */
+    public void setContent(String content) {
+        this.content = content;
+    }
 }

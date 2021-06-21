@@ -8,7 +8,7 @@ import axios from '@/utils/axios'
  */
 export function getList(data, success) {
     axios({
-        url: '/blog/article',
+        url: '/article',
         method: 'GET',
         data: data
     }).then(res => {
@@ -74,7 +74,7 @@ export function getByCategory(id, data, success) {
  */
 export function getArticle(id, success) {
     axios({
-        url: `/blog/article/info/${id}`,
+        url: `/article/${id}`,
         method: 'GET'
     }).then(res => {
         success(res)

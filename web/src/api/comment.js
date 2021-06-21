@@ -7,11 +7,50 @@ import axios from '@/utils/axios'
  * @param {Function} success 成功回调
  */
 export function getComment(id, success) {
-    axios({
-        url: `/blog/comment/${id}`,
-        method: 'GET'
-    }).then(res => {
-        success(res.data)
+    success({
+        success: true,
+        code: 200,
+        message: 'success',
+        data: {
+            items: [{
+                id: '1',
+                email: '1583720084@qq.com',
+                nickname: '浅梦凉城',
+                website: 'javascript:;',
+                type: '1',
+                brower: 'Edge 86.0.622.51',
+                system: 'Windows 10.0',
+                createTime: '2021-02-03',
+                content: '真强',
+                reply: {
+                    id: '3',
+                    email: '2316367743@qq.com',
+                    nickname: '落雨不悔',
+                    website: 'javascript:;',
+                    type: '3',
+                    target: {
+                        nickname: '落雨不悔',
+                        website: 'javascript:;',
+                    },
+                    brower: 'Edge 86.0.622.51',
+                    system: 'Windows 10.0',
+                    createTime: '2021-02-03',
+                    content: '真强',
+                }
+            }, {
+                id: '1',
+                email: '1583720084@qq.com',
+                nickname: '剑锋寒',
+                website: 'javascript:;',
+                type: '2',
+                brower: 'Edge 86.0.622.51',
+                system: 'Windows 10.0',
+                createTime: '2021-02-03',
+                content: '真强'
+    
+            }],
+            total: 2,
+        }
     })
 }
 

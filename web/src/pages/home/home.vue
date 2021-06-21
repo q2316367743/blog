@@ -80,7 +80,7 @@
 											><i class="el-icon-date"></i>发表于
 										</span>
 										<span
-											v-text="article.createTime"
+											v-text="article.create_time"
 										></span>
 										<span> | </span>
 										<span
@@ -88,7 +88,7 @@
 											>更新于
 										</span>
 										<span
-											v-text="article.updateTime"
+											v-text="article.update_time"
 										></span>
 										<span v-if="article.categoryId !== ''">
 											<span> | </span>
@@ -100,11 +100,11 @@
 												@click="
 													toA(
 														'/category/' +
-															article.categoryId
+															article.category_id
 													)
 												"
 											>
-												{{ article.categoryName }}</span
+												{{ article.category_name }}</span
 											>
 										</span>
 										<span v-if="article.tags.length > 0">
@@ -115,7 +115,7 @@
 											<span
 												v-for="(
 													tag, index
-												) in article.tags"
+												) in article.tags.split(',')"
 												:key="index"
 											>
 												<span v-if="index !== 0">
@@ -123,11 +123,8 @@
 												>
 												<span
 													class="item-link"
-													@click="
-														toA('/tag/' + tag.id)
-													"
 												>
-													{{ tag.name }}</span
+													{{ tag }}</span
 												>
 											</span>
 										</span>

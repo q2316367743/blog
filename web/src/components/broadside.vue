@@ -149,11 +149,6 @@ export default {
         getAuthor((res) => {
 			if (res.success) {
 				this.admin = res.data.item;
-				try{
-					this.admin.other = JSON.parse(this.admin.other);
-				}catch{
-					console.log('额外连接解析错误')
-				}
 			}
 		});
 		getWebInfo((res) => {
@@ -163,7 +158,6 @@ export default {
 		});
 		getCategory(res=>{
 			if (res.success) {
-                console.log(res)
 				this.category = res.data.items;
 			}
 		})
