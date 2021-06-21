@@ -1,4 +1,4 @@
-package xyz.esion.blog.controller;
+package xyz.esion.blog.controller.portal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,15 +21,11 @@ public class GlobalController {
     private Author author;
     private Config config;
 
-    @GetMapping("author")
+    @GetMapping("static")
     public Result author(){
-        return Result.success().data("item", author);
+        return Result.success().data("author", author).data("config", config);
     }
 
-    @GetMapping("config")
-    public Result config(){
-        return Result.success().data("item", config);
-    }
 
     @Autowired
     public GlobalController(Author author, Config config) {

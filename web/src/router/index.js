@@ -5,8 +5,6 @@ import home from '@/pages/home/home'
 import about from '@/pages/about/about'
 import article from '@/pages/article/article'
 import sjz from '@/pages/shijianzhou/shijianzhou'
-import tag from '@/pages/tag/index'
-import tagInfo from '@/pages/tag/info'
 import category from '@/pages/category/index'
 import categoryInfo from '@/pages/category/info'
 
@@ -29,14 +27,6 @@ export default new Router({
         path: '/shijianzhou',
         name: 'sjz',
         component: sjz
-    }, {
-        path: '/tag',
-        name: 'tag',
-        component: tag
-    }, {
-        path: '/tag/:id',
-        name: 'tagInfo',
-        component: tagInfo
     }, {
         path: '/category',
         name: 'category',

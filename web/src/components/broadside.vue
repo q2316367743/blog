@@ -84,15 +84,6 @@
 		</el-card>
 		<el-card shadow="hover" class="card">
 			<div class="card-title">
-				<i class="iconfont icon-biaoqian my-icon"></i>
-				<span>标签</span>
-			</div>
-            <div class="card-content">
-			<wordCloud :datas="tags"></wordCloud>
-			</div>
-		</el-card>
-		<el-card shadow="hover" class="card">
-			<div class="card-title">
 				<i class="my-icon el-icon-info"></i>
 				<span>网站资讯</span>
 			</div>
@@ -127,14 +118,10 @@
 </template>
 
 <script>
-import wordCloud from "@/components/wordCloud"
 import { getTags, getCategory } from "@/api/base"
 import { getAdmin, getWebInfo } from "@/api/admin";
 
 export default {
-	components: {
-		wordCloud
-	},
 	data() {
 		return {
 			admin: {

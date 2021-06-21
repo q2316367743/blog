@@ -27,16 +27,6 @@
 							</svg>
 							<a href="javascript:void(0);"> 时间轴</a>
 						</li>
-						<li class="nav-item" to="/tag">
-							<svg
-								class="icon"
-								aria-hidden="true"
-								style="font-size: 16px;"
-							>
-								<use xlink:href="#icon-biaoqian"></use>
-							</svg>
-							<a href="javascript:void(0);"> 标签</a>
-						</li>
 						<li class="nav-item" to="/category">
 							<svg class="icon" aria-hidden="true">
 								<use
