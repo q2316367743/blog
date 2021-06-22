@@ -25,4 +25,8 @@
         update_time,word_count,read_time,
         view_count,comment_count,content
     </sql>
+    <select id="selectSumWithWordCount" resultType="java.lang.Long">
+        select sum(word_count)
+        from v_article_info
+    </select>
 </mapper>

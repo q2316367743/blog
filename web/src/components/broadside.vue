@@ -8,30 +8,20 @@
 			<div class="admin-describe" v-text="admin.description"></div>
 			<div class="admin-web">
 				<el-row type="flex" justify="space-between">
-					<el-col :span="8">
-						<router-link tag="a" to="article">
+					<el-col :span="12">
+						<router-link tag="a" to="shijianzhou">
 							<div>文章</div>
 							<div
-								v-text="webInfo.articleCount"
+								v-text="webInfo.article_count"
 								style="margin-top: 5px"
 							></div>
 						</router-link>
 					</el-col>
-					<el-col :span="8">
-						<router-link tag="a" to="tag">
-							<div>标签</div>
-							<div
-								v-text="webInfo.tagCount"
-								style="margin-top: 5px"
-							>
-							</div>
-						</router-link>
-					</el-col>
-					<el-col :span="8">
-						<router-link tag="a" to="classify">
+					<el-col :span="12">
+						<router-link tag="a" to="category">
 							<div>分类</div>
 							<div
-								v-text="webInfo.classifyCount"
+								v-text="webInfo.category_count"
 								style="margin-top: 5px"
 							></div>
 						</router-link>
@@ -64,9 +54,9 @@
 			</div>
 			<div class="card-content">
 				<div
-					v-for="(notice, index) in webInfo.notices"
+					v-for="(notice, index) in notices"
 					:key="index"
-					v-html="notice"
+					v-html="notice.title"
 				></div>
 			</div>
 		</el-card>
@@ -90,27 +80,23 @@
             <div class="card-content">
                 <div class="info-item">
                     <div>文章数目：</div>
-                    <div v-text="webInfo.articleCount"></div>
+                    <div v-text="webInfo.article_count"></div>
                 </div>
                 <div class="info-item">
                     <div>以运行时间：</div>
-                    <div>{{webInfo.runTime}}&emsp;天</div>
+                    <div>{{webInfo.run_time}}&emsp;天</div>
                 </div>
                 <div class="info-item">
                     <div>文章总字数：</div>
-                    <div>{{webInfo.AllCount}}&emsp;K</div>
-                </div>
-                <div class="info-item">
-                    <div>本站访客数：</div>
-                    <div v-text="webInfo.articleCount"></div>
+                    <div>{{webInfo.word_count}}&emsp;K</div>
                 </div>
                 <div class="info-item">
                     <div>本站总访问量：</div>
-                    <div v-text="webInfo.accessCount"></div>
+                    <div v-text="webInfo.access_count"></div>
                 </div>
                 <div class="info-item">
                     <div>最后更新时间：</div>
-                    <div v-text="webInfo.lastUpdate"></div>
+                    <div v-text="webInfo.last_update"></div>
                 </div>
             </div>
 		</el-card>
@@ -134,7 +120,6 @@ export default {
 				articleCount: 0,
 				tagCount: 0,
 				classifyCount: 0,
-				notices: [],
 				runTime: "1",
                 AllCount: 0,
                 personCount: 0,
@@ -142,7 +127,8 @@ export default {
 				lastUpdate: "",
 			},
 			tags: [],
-			category: []
+			category: [],
+			notices: [],
 		};
 	},
 	created() {
@@ -154,6 +140,7 @@ export default {
 		getWebInfo((res) => {
 			if (res.success) {
 				this.webInfo = res.data.item;
+				this.notices = res.data.items;
 			}
 		});
 		getCategory(res=>{

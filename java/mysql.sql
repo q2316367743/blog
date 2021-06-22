@@ -34,7 +34,11 @@ create table t_article
 create table t_notice
 (
     id int unsigned primary key auto_increment comment '文章ID',
-    name varchar(255) default '' not null comment '通知内容'
+    title varchar(64) default '' not null comment '通知标题',
+    content varchar(255) default '' not null comment '通知内容，html字符串',
+    create_time datetime default '1998-08-06 00:00:00' not null comment '创建时间',
+    update_time datetime default '1998-08-06 00:00:00' not null comment '更新时间',
+    is_delete tinyint(1) unsigned default 0 not null comment '逻辑删除'
 ) comment '通知';
 
 create view v_article_list as
@@ -64,6 +68,13 @@ create view v_category_list as
         group by category_id
     ) a
     on a.id = c.id;
+
+create view v_notice_list as
+    select id, title, content
+    from t_notice
+    where is_delete = 0
+    order by update_time desc
+    limit 4;
 
 # 测试数据
 

@@ -41,7 +41,7 @@
 								<el-timeline-item
 									v-for="(article, index) in articles"
 									:key="index"
-									:timestamp="article.createTime"
+									:timestamp="article.create_time"
 									placement="top"
 								>
 									<el-card>
