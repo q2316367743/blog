@@ -2,7 +2,6 @@
 
 # CREATE DATABASE `blog` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-
 create table t_category
 (
     id int unsigned primary key auto_increment comment '分类ID',
@@ -31,6 +30,12 @@ create table t_article
     content text comment '文章内容，内容为Markdown文档',
     constraint fk_article_category foreign key(category_id) references t_category(id)
 ) comment '文章';
+
+create table t_notice
+(
+    id int unsigned primary key auto_increment comment '文章ID',
+    name varchar(255) default '' not null comment '通知内容'
+) comment '通知';
 
 create view v_article_list as
     select a.id, a.title, a.image, a.category_id, c.name category_name,

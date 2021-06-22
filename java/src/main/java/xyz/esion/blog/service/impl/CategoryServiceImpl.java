@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.esion.blog.entity.CategoryList;
 import xyz.esion.blog.mapper.CategoryListMapper;
-import xyz.esion.blog.service.GlobalService;
+import xyz.esion.blog.service.CategoryService;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
  * @since 2021/6/21
  */
 @Service
-public class GlobalServiceImpl implements GlobalService {
+public class CategoryServiceImpl implements CategoryService {
 
     private CategoryListMapper categoryMapper;
 
@@ -23,8 +23,13 @@ public class GlobalServiceImpl implements GlobalService {
         return categoryMapper.selectList(new QueryWrapper<>());
     }
 
+    @Override
+    public CategoryList infoById(Integer id) {
+        return categoryMapper.selectById(id);
+    }
+
     @Autowired
-    public GlobalServiceImpl(CategoryListMapper categoryMapper) {
+    public CategoryServiceImpl(CategoryListMapper categoryMapper) {
         this.categoryMapper = categoryMapper;
     }
 }

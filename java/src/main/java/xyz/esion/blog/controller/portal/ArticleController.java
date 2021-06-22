@@ -1,13 +1,12 @@
 package xyz.esion.blog.controller.portal;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import xyz.esion.blog.entity.CategoryList;
 import xyz.esion.blog.entity.dto.ArticleQueryDTO;
 import xyz.esion.blog.global.Result;
 import xyz.esion.blog.service.ArticleService;
+import xyz.esion.blog.service.CategoryService;
 
 /**
  * 文章控制器
@@ -20,19 +19,33 @@ import xyz.esion.blog.service.ArticleService;
 public class ArticleController {
 
     private ArticleService articleService;
+    private CategoryService categoryService;
 
-    @GetMapping
+    @GetMapping("all")
     public Result page(ArticleQueryDTO articleQueryDTO){
         return Result.success().page(articleService.pageByCondition(articleQueryDTO));
     }
 
-    @GetMapping("{id}")
+    @GetMapping("info/{id}")
     public Result info(@PathVariable("id") Integer id){
         return Result.success().data("item", articleService.infoById(id));
     }
 
+    @GetMapping("category/{categoryId}")
+    public Result category(
+            @PathVariable("categoryId") Integer categoryId,
+            @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+            @RequestParam(value = "size", required = false, defaultValue = "10") Integer size){
+        CategoryList categoryList = categoryService.infoById(categoryId);
+        if (categoryList == null){
+            return Result.fail().message("分类ID错误");
+        }
+        return Result.success().page(articleService.pageByCategory(page, size, categoryId)).data("item", categoryList);
+    }
+
     @Autowired
-    public ArticleController(ArticleService articleService) {
+    public ArticleController(ArticleService articleService, CategoryService categoryService) {
         this.articleService = articleService;
+        this.categoryService = categoryService;
     }
 }

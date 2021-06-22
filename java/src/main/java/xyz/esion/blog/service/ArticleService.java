@@ -29,4 +29,14 @@ public interface ArticleService {
      * */
     ArticleInfo infoById(Integer id);
 
+    /**
+     * 根据分类分页查询文章列表
+     *
+     * @param page 页码
+     * @param size 每页数目
+     * @param categoryId 分类ID
+     * @return 文章列表
+     * */
+    Page<ArticleList> pageByCategory(Integer page, Integer size, Integer categoryId);
+
 }

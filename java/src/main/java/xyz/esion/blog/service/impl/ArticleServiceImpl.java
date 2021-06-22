@@ -47,6 +47,11 @@ public class ArticleServiceImpl implements ArticleService {
         return articleInfoMapper.selectById(id);
     }
 
+    @Override
+    public Page<ArticleList> pageByCategory(Integer page, Integer size, Integer categoryId) {
+        return articleListMapper.selectPage(new Page<>(page, size), new QueryWrapper<ArticleList>().eq("category_id", categoryId));
+    }
+
     @Autowired
     public ArticleServiceImpl(ArticleMapper articleMapper, ArticleListMapper articleListMapper, ArticleInfoMapper articleInfoMapper) {
         this.articleMapper = articleMapper;

@@ -8,7 +8,7 @@ import axios from '@/utils/axios'
  */
 export function getList(data, success) {
     axios({
-        url: '/article',
+        url: '/article/all',
         method: 'GET',
         data: data
     }).then(res => {
@@ -33,23 +33,6 @@ export function getSjz(data, success) {
 }
 
 /**
- * 根据标签ID获取标签下文章列表
- * 
- * @param {String} id 标签ID
- * @param {Object} data page 页码，limit 每页数目
- * @param {Function} success 成功回调
- */
-export function getByTag(id, data, success) {
-    axios({
-        url: `/blog/article/tag/${id}`,
-        method: 'GET',
-        data: data
-    }).then(res => {
-        success(res)
-    })
-}
-
-/**
  * 根据分类ID获取标签下文章列表
  * 
  * @param {String} id 分类ID
@@ -58,7 +41,7 @@ export function getByTag(id, data, success) {
  */
 export function getByCategory(id, data, success) {
     axios({
-        url: `/blog/article/category/${id}`,
+        url: `/article/category/${id}`,
         method: 'GET',
         data: data
     }).then(res => {
@@ -74,7 +57,7 @@ export function getByCategory(id, data, success) {
  */
 export function getArticle(id, success) {
     axios({
-        url: `/article/${id}`,
+        url: `/article/info/${id}`,
         method: 'GET'
     }).then(res => {
         success(res)

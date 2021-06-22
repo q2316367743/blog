@@ -47,7 +47,7 @@
 									class="category-tree"
                                     @click="toA('/category/' + item.id)"
 								>
-									{{ item.name }}（{{ item.count }}）
+									{{ item.name }}（{{ item.article_count }}）
 								</li>
 							</ul>
 						</el-card>
