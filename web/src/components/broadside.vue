@@ -9,7 +9,7 @@
 			<div class="admin-web">
 				<el-row type="flex" justify="space-between">
 					<el-col :span="12">
-						<router-link tag="a" to="shijianzhou">
+						<router-link tag="a" to="../shijianzhou">
 							<div>文章</div>
 							<div
 								v-text="webInfo.article_count"
@@ -18,7 +18,7 @@
 						</router-link>
 					</el-col>
 					<el-col :span="12">
-						<router-link tag="a" to="category">
+						<router-link tag="a" to="../category">
 							<div>分类</div>
 							<div
 								v-text="webInfo.category_count"
