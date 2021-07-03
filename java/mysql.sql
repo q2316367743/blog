@@ -58,15 +58,16 @@ create view v_article_info as
     left join t_category c
     on a.category_id = c.id
     where a.is_delete = 0;
+    
+create view v_article_count as 
+	select category_id id, count(1) article_count
+        from t_article
+        group by category_id;
 
 create view v_category_list as
     select c.id, c.name, ifnull(a.article_count, 0) article_count
     from t_category c
-             left join (
-        select category_id id, count(1) article_count
-        from t_article
-        group by category_id
-    ) a
+    left join v_article_count a
     on a.id = c.id;
 
 create view v_notice_list as
