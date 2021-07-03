@@ -92,9 +92,9 @@ export default {
 </script>
 <style scoped>
 .my-backtop {
-	border-radius: 0%;
+	border-radius: 0;
 	background-color: transparent;
-	box-shadow: 0px 0px 0px;
+	box-shadow: 0 0 0;
 	width: 30px;
 	height: 30px;
 	position: fixed;
