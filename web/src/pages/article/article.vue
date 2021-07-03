@@ -97,19 +97,19 @@
 						</div>
 					</div>
 					<div class="share">
-						<a href="javascript:;"
+						<a href="javascript:void(0);"
 							><i
 								class="layui-icon layui-icon-login-wechat"
 								style="color: #83d942"
 							></i>
 						</a>
-						<a href="javascript:;"
+						<a href="javascript:void(0);"
 							><i
 								class="layui-icon layui-icon-login-qq"
 								style="color: #26cbfe"
 							></i>
 						</a>
-						<a href="javascript:;"
+						<a href="javascript:void(0);"
 							><i
 								class="layui-icon layui-icon-login-weibo"
 								style="color: #ed221b"
@@ -146,7 +146,7 @@
 								id="comment"
 								placeholder="1、昵称可自定义，大于3个字符即可。2、邮箱建议填写qq邮箱，可以收到评论回复，且评论区头像就可以采用QQ头像。"
 							></textarea>
-							<div align="right" style="margin-top: 10px">
+							<div style="margin-top: 10px;text-align: right">
 								<el-button type="primary" @click="submitComment"
 									>提交</el-button
 								>
@@ -187,14 +187,14 @@
 								<el-col :span="22" style="padding-left: 5px">
 									<div>
 										<a
-											href="javascript:;"
+											href="javascript:void(0);"
 											v-text="comment.nickname"
 										></a>
 										<el-tag
 											type="info"
 											size="mini"
 											style="margin-left: 5px"
-											v-if="comment.type == 1"
+											v-if="comment.type === 1"
 										>
 											<i
 												class="layui-icon layui-icon-username"
@@ -205,7 +205,7 @@
 											type="success"
 											size="mini"
 											style="margin-left: 5px"
-											v-else-if="comment.type == 2"
+											v-else-if="comment.type === 2"
 										>
 											<i
 												class="layui-icon layui-icon-username"
@@ -216,7 +216,7 @@
 											type="warning"
 											size="mini"
 											style="margin-left: 5px"
-											v-else-if="comment.type == 3"
+											v-else-if="comment.type === 3"
 										>
 											<i
 												class="layui-icon layui-icon-username"
@@ -231,7 +231,7 @@
 												class="layui-icon layui-icon-website"
 											></i>
 											<span
-												v-text="comment.brower"
+												v-text="comment.browser"
 											></span>
 										</el-tag>
 										<el-tag
@@ -298,14 +298,14 @@
 								<el-col :span="21" style="padding-left: 5px">
 									<div>
 										<a
-											href="javascript:;"
+											href="javascript:void(0);"
 											v-text="comment.reply.nickname"
 										></a>
 										<el-tag
 											type="info"
 											size="mini"
 											style="margin-left: 5px"
-											v-if="comment.reply.type == 1"
+											v-if="comment.reply.type === 1"
 										>
 											<i
 												class="layui-icon layui-icon-username"
@@ -316,7 +316,7 @@
 											type="success"
 											size="mini"
 											style="margin-left: 5px"
-											v-else-if="comment.reply.type == 2"
+											v-else-if="comment.reply.type === 2"
 										>
 											<i
 												class="layui-icon layui-icon-username"
@@ -327,7 +327,7 @@
 											type="warning"
 											size="mini"
 											style="margin-left: 5px"
-											v-else-if="comment.reply.type == 3"
+											v-else-if="comment.reply.type === 3"
 										>
 											<i
 												class="layui-icon layui-icon-username"
@@ -342,7 +342,7 @@
 												class="layui-icon layui-icon-website"
 											></i>
 											<span
-												v-text="comment.reply.brower"
+												v-text="comment.reply.browser"
 											></span>
 										</el-tag>
 										<el-tag
@@ -462,16 +462,16 @@ export default {
 			href: "",
 			article: {
 				title: "",
-				createTime: "",
-				updateTime: "",
+				create_time: "",
+				update_time: "",
 				count: 0,
-				readTime: 0,
-				viewCount: 0,
-				commentCount: 0,
+				read_time: 0,
+				view_count: 0,
+				comment_count: 0,
+                word_count: 0,
 				content: "",
 			},
 			catalog: [],
-			catelogId: -1,
 			comment: {
 				nickname: "",
 				email: "",
@@ -548,7 +548,7 @@ export default {
 		// 应该加入定时函数，查找class => layui-layedit
 		let that = this;
 		let interval = setInterval(() => {
-			if (window.layedit && $(".layui-layedit").length == 0) {
+			if (window.layedit && $(".layui-layedit").length === 0) {
 				that.editIndex = window.layedit.build("comment", {
 					height: 180, //设置编辑器高度
 					hideTool: ["image"],
@@ -560,21 +560,21 @@ export default {
 		// 确定当前步骤
 		let count = 0;
 		let inter = setInterval(()=>{
-			if(that.step == 3){
+			if(that.step === 3){
 				that.loading.close();
 				clearInterval(inter);
 			}
-			if(count == 4){
-				if(that.step == 0){
+			if(count === 4){
+				if(that.step === 0){
 					window.layer.msg('文章加载失败');
 					that.$router.go(-1);
 				}
-				if(that.step == 1){
+				if(that.step === 1){
 					window.layer.alert('评论加载失败', function(){
 						that.$router.go(-1);
 					})
 				}
-				if(that.step == 2){
+				if(that.step === 2){
 					window.layer.msg('文章加载失败');
 					that.$router.go(-1);
 				}
@@ -587,7 +587,7 @@ export default {
 	updated() {
 		highlightCode();
 		let that = this;
-		if (window.layedit && that.editIndex == -1) {
+		if (window.layedit && that.editIndex === -1) {
 			that.editIndex = window.layedit.build("comment", {
 				height: 180, //设置编辑器高度
 				hideTool: ["image"],
@@ -604,7 +604,7 @@ export default {
 					skin: "layui-layer-nobg", //没有背景色
 					shadeClose: true,
 					content:
-						'<img src="' + $(e.currentTarget).attr("src") + '" />',
+						'<img alt="" src="' + $(e.currentTarget).attr("src") + '" />',
 				});
 			});
 		}
@@ -619,12 +619,14 @@ export default {
 				this.winWidth = winWidth;
 				this.winHeight = winHeight;
 			});
-			$("#article-title").css("width", this.winWidth);
-			$("#article-main").css("width", this.winWidth);
+            let article_title = $("#article-title");
+            let article_main = $("#article-main");
+            article_title.css("width", this.winWidth);
+            article_main.css("width", this.winWidth);
 			let h = this.winHeight / 3;
 			if (h > 152) {
-				$("#article-title").css("padding-top", h - 23);
-				$("#article-main").css("height", h * 2 - 92);
+                article_title.css("padding-top", h - 23);
+                article_main.css("height", h * 2 - 92);
 			}
 
 			this.$parent.isSm = this.winWidth < 768;
@@ -638,16 +640,16 @@ export default {
 		 */
 		submitComment() {
 			//判断是否填写信息
-			if (this.comment.nickname.length == 0) {
+			if (this.comment.nickname.length === 0) {
 				window.layer.msg("未填写昵称");
 				return;
 			}
-			if (this.comment.email.length == 0) {
+			if (this.comment.email.length === 0) {
 				window.layer.msg("未填写邮箱");
 				return;
 			}
 			this.comment.content = window.layedit.getContent(this.editIndex);
-			if (this.comment.content.length == 0) {
+			if (this.comment.content.length === 0) {
 				window.layer.msg("未填写内容");
 				return;
 			}
@@ -658,7 +660,7 @@ export default {
 				appVersion[3].substring(0, appVersion[3].length - 1);
 			let browerVersion = appVersion[appVersion.length - 1];
 			this.comment.system = osVersion;
-			this.comment.brower = browerVersion;
+			this.comment.browser = browerVersion;
 			addComment(this.comment, (res) => {
 				if (res.success) {
 					window.layer.msg("评论成功，审核中");
@@ -678,7 +680,7 @@ export default {
 		},
 		reply(comment) {
 			// 打开对话框
-			if (this.replyDialogIndex != -1) {
+			if (this.replyDialogIndex !== -1) {
 				window.layer.close(this.replyDialogIndex);
 				this.replyDialogIndex = -1;
 			}
@@ -686,6 +688,7 @@ export default {
 				type: 1,
 				title: "回复 " + comment.nickname,
 				content:
+                    '<div style="padding: 10px 20px;">' +
 					'<div class="layui-row">' +
 					'<div class="layui-col-md4">' +
 					'<input type="text" id="nickname" class="layui-input" placeholder="昵称（必填）">' +
@@ -698,8 +701,9 @@ export default {
 					"</div>" +
 					"</div>" +
 					'<textarea id="reply"></textarea>' +
-					'<div align="right" style="margin-top: 10px;"><button id="addReply" class="layui-btn" style="background-color: #409EFF;">提交</button></div>',
-				area: ["500px", "360px"],
+					'<div style="margin-top: 10px;text-align: right;"><button id="addReply" class="layui-btn" style="background-color: #409EFF;">提交</button></div>' +
+                    '</div>',
+				area: ["520px", "380px"],
 			});
 			//建立编辑器
 			let that = this;
@@ -714,15 +718,15 @@ export default {
 				let email = $("#email").val();
 				let website = $("#website").val();
 				let content = window.layedit.getContent(that.replyIndex);
-				if (length == 0) {
+				if (length === 0) {
 					window.layer.msg("未填写昵称");
 					return;
 				}
-				if (email.length == 0) {
+				if (email.length === 0) {
 					window.layer.msg("未填写邮箱");
 					return;
 				}
-				if (content.length == 0) {
+				if (content.length === 0) {
 					window.layer.msg("未填写内容");
 					return;
 				}
@@ -740,7 +744,7 @@ export default {
 						website: website,
 						content: content,
 						system: osVersion,
-						brower: browerVersion,
+						browser: browerVersion,
 						commentId: comment.id,
 					},
 					(res) => {
@@ -784,9 +788,6 @@ export default {
 	font-size: 26px;
 	padding-left: 5px;
 }
-.share i:hover {
-	cursor: url(http://esion.xyz/assets/pointer/link.png), pointer;
-}
 
 .comment {
 	margin-top: 40px;
@@ -818,20 +819,10 @@ export default {
 	border-color: #ffffff;
 }
 
-.hljs {
-	border: 0;
-	font-size: 13px;
-	display: block;
-	padding: 1px;
-	margin: 0;
-	width: 100%;
-	white-space: pre-wrap;
-	position: relative;
-}
 .hljs ol {
 	list-style: decimal;
-	margin: 0px 0px 0 40px !important;
-	padding: 0px;
+	margin: 0 0 0 40px !important;
+	padding: 0;
 }
 .hljs ol li {
 	list-style: decimal-leading-zero;
@@ -839,6 +830,6 @@ export default {
 	padding: 5px !important;
 	margin: 0 !important;
 	white-space: pre;
-	font-family: JetBrainsMono;
+	font-family: JetBrainsMono,Consolas,serif;
 }
 </style>

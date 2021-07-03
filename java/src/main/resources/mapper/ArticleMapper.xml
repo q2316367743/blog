@@ -29,4 +29,9 @@
         is_delete,word_count,read_time,
         view_count,comment_count,content
     </sql>
+    <update id="updateViewCountById">
+        update t_article
+        set view_count = #{viewCount}
+        where id = #{id}
+    </update>
 </mapper>

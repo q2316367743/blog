@@ -3,7 +3,7 @@ import { Message } from 'element-ui'
 
 
 const instance = axios.create({
-    baseURL: 'http://localhost:8990',
+    baseURL: 'http://localhost:8990/api',
     timeout: 3000
 })
 

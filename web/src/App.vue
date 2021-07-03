@@ -50,11 +50,7 @@
 				<div v-show="isSm" style="padding: 0 20px">
 					<i
 						class="el-icon-menu"
-						style="
-							font-size: 20px;
-							cursor: url(https://esion.xyz/assets/pointer/link.png),
-								pointer;
-						"
+						style="font-size: 20px;"
 						@click="openMenu"
 					></i>
 				</div>
@@ -285,29 +281,6 @@ a {
 *::-webkit-scrollbar-track {
 	background-color: transparent;
 }
-* {
-	cursor: url(https://esion.xyz/assets/pointer/base.png), default;
-}
-a {
-	cursor: url(https://esion.xyz/assets/pointer/link.png), pointer;
-}
-
-input {
-	cursor: url(https://esion.xyz/assets/pointer/text.png), text;
-}
-
-img {
-	cursor: url(https://esion.xyz/assets/pointer/link.png), pointer;
-	max-width: 100%;
-}
-
-button {
-	cursor: url(https://esion.xyz/assets/pointer/link.png), pointer !important;
-}
-
-button span {
-	cursor: url(https://esion.xyz/assets/pointer/link.png), pointer;
-}
 
 #app {
 	width: 100%;
@@ -383,7 +356,6 @@ button span {
 	line-height: 60px;
 	list-style: none;
 	padding: 0 20px;
-	cursor: url(https://esion.xyz/assets/pointer/link.png), pointer;
 }
 .nav a {
 	text-decoration: none;
@@ -402,6 +374,7 @@ button span {
 	border-bottom: 5px solid #49b1f5;
 	transition: 0.2s all linear; /*动画效果*/
 	right: 100%; /*下划线从右侧开始显示*/
+    cursor: pointer;
 }
 .nav-item:hover:before {
 	right: 0; /*鼠标滑过时，下划线从右向左移动*/

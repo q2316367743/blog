@@ -86,7 +86,7 @@ public class Website implements Serializable {
         this.articleCount = articleListMapper.selectCount(new QueryWrapper<>());
         this.categoryCount = categoryListMapper.selectCount(new QueryWrapper<>());
         this.runTime = Math.toIntExact(DateUtil.betweenDay(now, new Date(), false));
-        this.wordCount = articleInfoMapper.selectSumWithWordCount();
+        this.wordCount = articleInfoMapper.selectSumWithWordCount() / 1000;
         ArticleList articleList = articleListMapper.selectOne(new QueryWrapper<ArticleList>().last("limit 1"));
         this.lastUpdate = articleList.getUpdateTime();
     }

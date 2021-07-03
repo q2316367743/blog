@@ -62,7 +62,7 @@
 import { findDimensions } from "@/utils/window";
 import $ from "jquery";
 import broadside from "@/components/broadside";
-import { getCategory } from "@/api/global";
+import { get_category_list } from "@/api/global";
 
 export default {
 	components: {
@@ -76,7 +76,7 @@ export default {
 		};
 	},
 	created() {
-		getCategory((res) => {
+        get_category_list((res) => {
 			if (res.success) {
 				this.categorys = res.data.items;
 			}
@@ -92,12 +92,14 @@ export default {
 				this.winWidth = winWidth;
 				this.winHeight = winHeight;
 			});
-			$("#sjz-title").css("width", this.winWidth);
-			$("#sjz-main").css("width", this.winWidth);
+            let sjz_title = $("#sjz-title");
+            let sjz_main = $("#sjz-main");
+            sjz_title.css("width", this.winWidth);
+            sjz_main.css("width", this.winWidth);
 			let h = this.winHeight / 3;
 			if (h > 152) {
-				$("#sjz-title").css("padding-top", h);
-				$("#sjz-main").css("height", h * 2 - 92);
+                sjz_title.css("padding-top", h);
+                sjz_main.css("height", h * 2 - 92);
 			}
 
 			this.$parent.isSm = this.winWidth < 768;
@@ -116,24 +118,23 @@ export default {
 	color: #ffffff;
 	font-weight: bold;
 }
-.sjz-title {
+#sjz-title {
 	margin-left: 20px;
 	line-height: 60px;
 	font-size: 20px;
 }
-.sjz-title > span {
-	cursor: url(http://esion.xyz/assets/pointer/link.png), pointer;
+#sjz-title > span {
 }
-.sjz-title > span:hover {
+#sjz-title > span:hover {
 	color: #49b1f5;
 }
 .category-tree {
-	padding: 10px 0px;
+	padding: 10px 0;
     list-style: inside;
+    cursor: pointer;
 }
 
 .category-tree:hover {
     background-color: rgba(0, 0, 0, 0.1);
-	cursor: url(http://esion.xyz/assets/pointer/link.png), pointer;
 }
 </style>

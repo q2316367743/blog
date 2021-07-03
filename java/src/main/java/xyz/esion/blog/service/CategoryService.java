@@ -11,6 +11,13 @@ import java.util.List;
 public interface CategoryService {
 
     /**
+     * 获取前五分类
+     *
+     * @return 全部分类
+     * */
+    List<CategoryList> getCategoryTop();
+
+    /**
      * 获取全部分类
      *
      * @return 全部分类

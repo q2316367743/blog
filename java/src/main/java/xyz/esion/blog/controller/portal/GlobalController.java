@@ -11,6 +11,9 @@ import xyz.esion.blog.global.Website;
 import xyz.esion.blog.service.CategoryService;
 import xyz.esion.blog.service.NoticeService;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 全局数据控制器
  *
@@ -18,7 +21,7 @@ import xyz.esion.blog.service.NoticeService;
  * @since 2021/6/20
  */
 @RestController
-@RequestMapping("global")
+@RequestMapping("api/global")
 public class GlobalController {
 
     private Author author;
@@ -29,7 +32,21 @@ public class GlobalController {
 
     @GetMapping("author")
     public Result author(){
-        return Result.success().data("item", author);
+        Map<String, Object> item = new HashMap<>(5);
+        item.put("name", author.getName());
+        item.put("description", author.getDescription());
+        item.put("avatar", author.getAvatar());
+        item.put("gitee", author.getGitee());
+        item.put("other", author.getOther());
+        return Result.success().data("item", item);
+    }
+
+    @GetMapping("about")
+    public Result about(){
+        Map<String, Object> item = new HashMap<>(5);
+        item.put("name", author.getName());
+        item.put("base_info", author.getBaseInfo());
+        return Result.success().data("item", item);
     }
 
     @GetMapping("config")
@@ -37,8 +54,13 @@ public class GlobalController {
         return Result.success().data("item", config);
     }
 
-    @GetMapping("category")
-    public Result category(){
+    @GetMapping("category/top")
+    public Result categoryTop(){
+        return Result.success().data("items", categoryService.getCategory());
+    }
+
+    @GetMapping("category/list")
+    public Result categoryList(){
         return Result.success().data("items", categoryService.getCategory());
     }
 

@@ -33,7 +33,7 @@ create table t_article
 
 create table t_notice
 (
-    id int unsigned primary key auto_increment comment '文章ID',
+    id int unsigned primary key auto_increment comment 'ID',
     title varchar(64) default '' not null comment '通知标题',
     content varchar(255) default '' not null comment '通知内容，html字符串',
     create_time datetime default '1998-08-06 00:00:00' not null comment '创建时间',

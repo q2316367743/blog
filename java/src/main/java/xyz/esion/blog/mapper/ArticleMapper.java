@@ -1,6 +1,7 @@
 package xyz.esion.blog.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import xyz.esion.blog.entity.Article;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
@@ -11,6 +12,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 @Mapper
 public interface ArticleMapper extends BaseMapper<Article> {
+
+    void updateViewCountById(@Param("id") Integer id, @Param("viewCount") Integer viewCount);
 
 }
 

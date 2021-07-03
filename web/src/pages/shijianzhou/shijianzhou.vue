@@ -174,9 +174,6 @@ export default {
 	line-height: 60px;
 	font-size: 20px;
 }
-.sjz-title > span {
-	cursor: url(http://esion.xyz/assets/pointer/link.png), pointer;
-}
 .sjz-title > span:hover {
 	color: #49b1f5;
 }

@@ -43,6 +43,14 @@ export function getWebInfo(success) {
     })
 }
 
+export function getAbout(success) {
+    axios({
+        url: '/global/about',
+        method: 'GET'
+    }).then(res => {
+        success(res)
+    })
+}
 
 export function getConfig(success) {
     axios({
@@ -113,13 +121,27 @@ export function getConfig(success) {
 }
 
 /**
+ * 获取前5分类
+ *
+ * @param {Function} success 成功回调
+ */
+export function get_category_top(success) {
+    axios({
+        url: '/global/category/top',
+        method: 'GET'
+    }).then(res => {
+        success(res)
+    })
+}
+
+/**
  * 获取全部分类
  *
  * @param {Function} success 成功回调
  */
-export function getCategory(success) {
+export function get_category_list(success) {
     axios({
-        url: '/global/category',
+        url: '/global/category/list',
         method: 'GET'
     }).then(res => {
         success(res)

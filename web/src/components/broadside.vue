@@ -9,7 +9,7 @@
 			<div class="admin-web">
 				<el-row type="flex" justify="space-between">
 					<el-col :span="12">
-						<router-link tag="a" to="../shijianzhou">
+						<router-link tag="a" to="/shijianzhou">
 							<div>文章</div>
 							<div
 								v-text="webInfo.article_count"
@@ -18,7 +18,7 @@
 						</router-link>
 					</el-col>
 					<el-col :span="12">
-						<router-link tag="a" to="../category">
+						<router-link tag="a" to="/category">
 							<div>分类</div>
 							<div
 								v-text="webInfo.category_count"
@@ -56,8 +56,18 @@
 				<div
 					v-for="(notice, index) in notices"
 					:key="index"
-					v-html="notice.title"
-				></div>
+                    v-text="notice.title"
+                    @click="open_notice(notice.content)"
+                    style="cursor: pointer"
+				>
+                    <el-popover
+                        placement="top-start"
+                        :title="notice.title"
+                        width="200"
+                        trigger="hover"
+                        :content="notice.content">
+                    </el-popover>
+                </div>
 			</div>
 		</el-card>
 		<el-card shadow="hover" class="card">
@@ -104,7 +114,7 @@
 </template>
 
 <script>
-import { getAuthor, getWebInfo, getCategory } from "@/api/global";
+import { getAuthor, getWebInfo, get_category_top } from "@/api/global";
 
 export default {
 	data() {
@@ -117,14 +127,13 @@ export default {
 				other: [],
 			},
 			webInfo: {
-				articleCount: 0,
-				tagCount: 0,
-				classifyCount: 0,
-				runTime: "1",
-                AllCount: 0,
-                personCount: 0,
-				accessCount: 0,
-				lastUpdate: "",
+				article_count: 0,
+				tag_count: 0,
+				category_count: 0,
+				run_time: "1",
+                person_count: 0,
+				access_count: 0,
+				last_update: "",
 			},
 			tags: [],
 			category: [],
@@ -143,7 +152,7 @@ export default {
 				this.notices = res.data.items;
 			}
 		});
-		getCategory(res=>{
+        get_category_top(res=>{
 			if (res.success) {
 				this.category = res.data.items;
 			}
@@ -155,7 +164,12 @@ export default {
 		},
 		toA(href){
 			this.$router.push(href)
-		}
+		},
+        open_notice(content){
+            this.$alert(content, '通知内容', {
+                dangerouslyUseHTMLString: true
+            });
+        }
 	},
 };
 </script>
@@ -242,7 +256,7 @@ a {
 	margin-top: 20px;
 }
 .card-content div {
-	padding: 5px 0px;
+	padding: 5px 0;
 }
 
 .my-icon {
@@ -258,12 +272,12 @@ a {
 .category{
 	display: flex;
 	justify-content: space-between;
+    cursor: pointer;
 }
 .category>div{
 	padding: 5px 5px;
 }
 .category:hover{
 	background-color: rgba(0, 0, 0, 0.1);
-	cursor: url(http://esion.xyz/assets/pointer/link.png), pointer;
 }
 </style>

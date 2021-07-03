@@ -2,21 +2,46 @@
 
 前端采用**Vue+Element-UI**，后台采用**Spring Boot**
 
-## 技术栈
+## 目录设计
 
-- Spring Cloud
-- Spring Cloud Alibaba
-- Spring Boot
-- Mybatis Plus
-- Druid
-- MySQL
-- hutool
-- sa-token
-- Vue
-- Element-UI
-- axios
+`/`：前台前端地址
 
+`/api/*`：前台后端地址
 
-## 进度
+`/manage`：后台前端地址
 
-2021/6/20 完成前台前端
+`/manage/api/*`：后台后端地址
+
+## 图片存储
+
+采用springboot进行上传到nginx映射目录下，再采用nginx进行访问
+
+## 版本
+
+### 1.0（开发中）
+
+#### 前台功能
+
+- 网站基本信息/配置信息
+- 作者信息
+- 文章列表
+- 文章分类
+- 文章搜索
+
+#### 后台功能
+
+- 网站基本信息可视化展示
+- 修改网站配置信息
+- 修改作者信息
+- 分页多条件查询文章列表
+- 新建/修改文章信息
+
+### 2.0
+
+- 增加访客（地点，IP，时间）统计
+- 增加文章操作日志
+- 增加标签定时任务，获取最多的标签数量，标签列表
+
+## 开源框架
+
+- [vditor](https://github.com/Vanessa219/vditor)：一款浏览器端的 Markdown 编辑器，支持所见即所得（富文本）、即时渲染（类似 Typora）和分屏预览模式。

@@ -24,6 +24,12 @@ public class Author implements Serializable {
     private String gitee;
     private List<Other> other;
 
+    /**
+     * 基本信息
+     *
+     * */
+    private String baseInfo;
+
     public Author() {
         this.name = "云落天都";
         this.description = "主要是Java技术栈，略带部分源码，随笔";
@@ -32,6 +38,20 @@ public class Author implements Serializable {
         List<Other> other = new LinkedList<>();
         other.add(new Other("CSDN", "https://g.csdnimg.cn/static/logo/favicon32.ico", "https://blog.csdn.net/q2316367743"));
         this.other = other;
+        this.baseInfo = "<h1>基本信息</h1>\n" +
+                "\t\t\t\t\t<p>\uD83D\uDC68基本情况：大四在读，计算机科学与技术专业。</p>\n" +
+                "\t\t\t\t\t<p>\n" +
+                "\t\t\t\t\t\t\uD83C\uDFAB昵称：云落天都。云落天都，月出九皋。\n" +
+                "\t\t\t\t\t</p>\n" +
+                "\t\t\t\t\t<p>\uD83C\uDF0D地址：目前在湖北孝感。</p>\n" +
+                "\t\t\t\t\t<p>\n" +
+                "\t\t\t\t\t\t\uD83D\uDCE7邮箱：<a href=\"mailto:m17762618644@163.com\"\n" +
+                "\t\t\t\t\t\t\t>m17762618644@163.com</a\n" +
+                "\t\t\t\t\t\t>\n" +
+                "\t\t\t\t\t</p>\n" +
+                "\t\t\t\t\t<p>\uD83D\uDD28技术方向：主Java，会考虑学一点前端和大数据。</p>\n" +
+                "\t\t\t\t\t<p>\uD83D\uDC93兴趣爱好：游戏，编程。</p>\n" +
+                "\t\t\t\t\t<p>\uD83D\uDCDD写作风格：一般以学习笔记为主，少量的心得感悟。</p>";
     }
 
     class Other implements Serializable {
@@ -115,5 +135,13 @@ public class Author implements Serializable {
 
     public void setOther(List<Other> other) {
         this.other = other;
+    }
+
+    public String getBaseInfo() {
+        return baseInfo;
+    }
+
+    public void setBaseInfo(String baseInfo) {
+        this.baseInfo = baseInfo;
     }
 }

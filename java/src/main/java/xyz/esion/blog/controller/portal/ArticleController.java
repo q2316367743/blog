@@ -15,7 +15,7 @@ import xyz.esion.blog.service.CategoryService;
  * @since 2021/6/20
  */
 @RestController
-@RequestMapping("article")
+@RequestMapping("api/article")
 public class ArticleController {
 
     private ArticleService articleService;

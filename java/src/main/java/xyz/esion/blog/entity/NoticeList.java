@@ -15,7 +15,7 @@ import java.io.Serializable;
 @TableName(value ="v_notice_list")
 public class NoticeList implements Serializable {
     /**
-     * 文章ID
+     * ID
      */
     private Integer id;
 
@@ -33,14 +33,14 @@ public class NoticeList implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 文章ID
+     * ID
      */
     public Integer getId() {
         return id;
     }
 
     /**
-     * 文章ID
+     * ID
      */
     public void setId(Integer id) {
         this.id = id;

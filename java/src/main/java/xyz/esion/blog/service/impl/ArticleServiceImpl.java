@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import xyz.esion.blog.entity.Article;
 import xyz.esion.blog.entity.ArticleInfo;
 import xyz.esion.blog.entity.ArticleList;
 import xyz.esion.blog.entity.dto.ArticleQueryDTO;
@@ -44,7 +45,12 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public ArticleInfo infoById(Integer id) {
-        return articleInfoMapper.selectById(id);
+        ArticleInfo articleInfo = articleInfoMapper.selectById(id);
+        // 查询时增加文章阅读量
+        if (articleInfo != null){
+            articleMapper.updateViewCountById(id, articleInfo.getViewCount() + 1);
+        }
+        return articleInfo;
     }
 
     @Override

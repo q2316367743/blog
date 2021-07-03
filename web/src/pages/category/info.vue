@@ -45,12 +45,13 @@
 									placement="top"
 								>
 									<el-card>
-										<div style="display: flex">
+										<div style="display: flex;">
 											<div>
 												<el-image
 													style="
 														width: 100px;
 														height: 100px;
+														cursor: pointer;
 													"
 													:src="article.image"
 													fit="fill"
@@ -65,6 +66,7 @@
 											<div class="sjz-title">
 												<span
 													v-text="article.title"
+                                                    style="cursor: pointer;"
 													@click="
 														toA(
 															'/article/' +
@@ -78,7 +80,6 @@
 								</el-timeline-item>
 							</el-timeline>
 							<el-pagination
-								align="center"
 								background
 								layout="prev, pager, next"
 								:total="total"
@@ -179,9 +180,6 @@ export default {
 	margin-left: 20px;
 	line-height: 60px;
 	font-size: 20px;
-}
-.sjz-title > span {
-	cursor: url(http://esion.xyz/assets/pointer/link.png), pointer;
 }
 .sjz-title > span:hover {
 	color: #49b1f5;

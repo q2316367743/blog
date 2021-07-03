@@ -19,6 +19,11 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryListMapper categoryMapper;
 
     @Override
+    public List<CategoryList> getCategoryTop() {
+        return categoryMapper.selectList(new QueryWrapper<CategoryList>().orderByDesc("article_count").last("limit 5"));
+    }
+
+    @Override
     public List<CategoryList> getCategory() {
         return categoryMapper.selectList(new QueryWrapper<>());
     }
