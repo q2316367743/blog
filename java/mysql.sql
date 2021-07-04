@@ -41,6 +41,23 @@ create table t_notice
     is_delete tinyint(1) unsigned default 0 not null comment '逻辑删除'
 ) comment '通知';
 
+create table t_comment
+(
+    id int unsigned primary key auto_increment comment 'ID',
+    email varchar(64) default '' not null comment '电子邮箱',
+    website varchar(64) default '' not null comment '个人网站',
+    nickname varchar(32) default '' not null comment '昵称',
+    create_time datetime default '1998-08-06 00:00:00' not null comment '创建时间',
+    is_show tinyint(1) unsigned default 0 not null comment '是否展示',
+    browser varchar(64) default '' not null comment '浏览器版本',
+    system_version varchar(32) default '' not null comment '系统',
+    type tinyint unsigned default 1 not null comment '评论类型；1：访客',
+    article_id int unsigned default 0 not null comment '文章ID',
+    p_id int unsigned default 0 not null comment '所在评论的ID',
+    target_nickname varchar(32) default '' not null comment '回复对象昵称，冗余',
+    target_website varchar(64) default '' not null comment '回复对象个人网站，冗余'
+) comment '评论表';
+
 create view v_article_list as
     select a.id, a.title, a.image, a.category_id, c.name category_name,
            a.tags, a.description, a.create_time, a.update_time, a.sequence

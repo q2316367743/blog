@@ -242,7 +242,7 @@
 												class="layui-icon layui-icon-windows"
 											></i>
 											<span
-												v-text="comment.system"
+												v-text="comment.system_version"
 											></span>
 										</el-tag>
 									</div>
@@ -258,7 +258,7 @@
 												color: #49b1f5;
 												font-size: 14px;
 											"
-											v-text="comment.createTime"
+											v-text="comment.create_time"
 										></div>
 										<div>
 											<el-button
@@ -274,127 +274,129 @@
 									></div>
 								</el-col>
 							</el-row>
-							<el-row
-								v-if="comment.reply && comment.reply.nickname"
-								style="margin-top: 40px"
-							>
-								<el-col
-									:span="2"
-									:offset="1"
-									style="
+							<el-row v-if="comment.reply && comment.reply.length > 0">
+								<el-row
+									v-for="(item, index) in comment.reply"
+									:key="index"
+									style="margin-top: 40px"
+								>
+									<el-col
+										:span="2"
+										:offset="1"
+										style="
 										text-align: right;
 										padding-right: 5px;
 									"
-								>
-									<el-image
-										class="comment-image-reply"
-										:src="
+									>
+										<el-image
+											class="comment-image-reply"
+											:src="
 											'https://q2.qlogo.cn/headimg_dl?dst_uin=' +
-											comment.reply.email +
+											item.email +
 											',1583720084,&spec=100'
 										"
-									></el-image>
-								</el-col>
-								<el-col :span="21" style="padding-left: 5px">
-									<div>
-										<a
-											href="javascript:void(0);"
-											v-text="comment.reply.nickname"
-										></a>
-										<el-tag
-											type="info"
-											size="mini"
-											style="margin-left: 5px"
-											v-if="comment.reply.type === 1"
-										>
-											<i
-												class="layui-icon layui-icon-username"
-											></i>
-											<span>访客</span>
-										</el-tag>
-										<el-tag
-											type="success"
-											size="mini"
-											style="margin-left: 5px"
-											v-else-if="comment.reply.type === 2"
-										>
-											<i
-												class="layui-icon layui-icon-username"
-											></i>
-											<span>小伙伴</span>
-										</el-tag>
-										<el-tag
-											type="warning"
-											size="mini"
-											style="margin-left: 5px"
-											v-else-if="comment.reply.type === 3"
-										>
-											<i
-												class="layui-icon layui-icon-username"
-											></i>
-											<span>博主</span>
-										</el-tag>
-										<el-tag
-											size="mini"
-											style="margin-left: 5px"
-										>
-											<i
-												class="layui-icon layui-icon-website"
-											></i>
-											<span
-												v-text="comment.reply.browser"
-											></span>
-										</el-tag>
-										<el-tag
-											size="mini"
-											style="margin-left: 5px"
-										>
-											<i
-												class="layui-icon layui-icon-windows"
-											></i>
-											<span
-												v-text="comment.reply.system"
-											></span>
-										</el-tag>
-									</div>
-									<div
-										style="
+										></el-image>
+									</el-col>
+									<el-col :span="21" style="padding-left: 5px">
+										<div>
+											<a
+												:href="item.website.length > 0 ? item.website.length : 'javascript:void(0);'"
+												v-text="item.nickname"
+											></a>
+											<el-tag
+												type="info"
+												size="mini"
+												style="margin-left: 5px"
+												v-if="item.type === 1"
+											>
+												<i
+													class="layui-icon layui-icon-username"
+												></i>
+												<span>访客</span>
+											</el-tag>
+											<el-tag
+												type="success"
+												size="mini"
+												style="margin-left: 5px"
+												v-else-if="item.type === 2"
+											>
+												<i
+													class="layui-icon layui-icon-username"
+												></i>
+												<span>小伙伴</span>
+											</el-tag>
+											<el-tag
+												type="warning"
+												size="mini"
+												style="margin-left: 5px"
+												v-else-if="item.type === 3"
+											>
+												<i
+													class="layui-icon layui-icon-username"
+												></i>
+												<span>博主</span>
+											</el-tag>
+											<el-tag
+												size="mini"
+												style="margin-left: 5px"
+											>
+												<i
+													class="layui-icon layui-icon-website"
+												></i>
+												<span
+													v-text="item.browser"
+												></span>
+											</el-tag>
+											<el-tag
+												size="mini"
+												style="margin-left: 5px"
+											>
+												<i
+													class="layui-icon layui-icon-windows"
+												></i>
+												<span
+													v-text="item.system_version"
+												></span>
+											</el-tag>
+										</div>
+										<div
+											style="
 											display: flex;
 											justify-content: space-between;
 											margin-top: 5px;
 										"
-									>
-										<div
-											style="
+										>
+											<div
+												style="
 												color: #49b1f5;
 												font-size: 14px;
 											"
-											v-text="comment.reply.createTime"
-										></div>
-										<div>
-											<el-button
-												size="mini"
-												@click="reply(comment.reply)"
+												v-text="item.create_time"
+											></div>
+											<div>
+												<el-button
+													size="mini"
+													@click="reply(item)"
 												>回复</el-button
-											>
+												>
+											</div>
 										</div>
-									</div>
-									<div style="margin-top: 10px">
-										<a :href="comment.reply.target.website">
-											<span>@</span>
-											<span
-												v-text="
-													comment.reply.target
-														.nickname
+										<div style="margin-top: 10px">
+											<a :href="item.target_website.length > 0 ? item.target_website : 'javascript:void(0);'">
+												<span>@</span>
+												<span
+													v-text="
+													item.target_nickname
 												"
+												></span>
+											</a>
+											<span>, </span>
+											<span
+												v-html="item.content"
 											></span>
-										</a>
-										<span>, </span>
-										<span
-											v-html="comment.reply.content"
-										></span>
-									</div>
-								</el-col>
+										</div>
+									</el-col>
+								</el-row>
 							</el-row>
 						</el-card>
 					</div>
@@ -648,9 +650,18 @@ export default {
 				window.layer.msg("未填写邮箱");
 				return;
 			}
+			let email_verify = /^([a-zA-Z0-9]+[_|_|.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|_|.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+			if(!email_verify.test(this.comment.email)){
+				window.layer.msg("请填写正确的邮箱");
+				return;
+			}
 			this.comment.content = window.layedit.getContent(this.editIndex);
 			if (this.comment.content.length === 0) {
 				window.layer.msg("未填写内容");
+				return;
+			}
+			if (this.comment.content.length > 255){
+				window.layer.msg("内容最多支持输入255字");
 				return;
 			}
 			let appVersion = window.navigator.appVersion.split(" ");
@@ -658,9 +669,9 @@ export default {
 				appVersion[1].substring(1, appVersion[1].length) +
 				" " +
 				appVersion[3].substring(0, appVersion[3].length - 1);
-			let browerVersion = appVersion[appVersion.length - 1];
+			let browser_version = appVersion[appVersion.length - 1];
 			this.comment.system = osVersion;
-			this.comment.browser = browerVersion;
+			this.comment.browser = browser_version;
 			addComment(this.comment, (res) => {
 				if (res.success) {
 					window.layer.msg("评论成功，审核中");
@@ -726,8 +737,17 @@ export default {
 					window.layer.msg("未填写邮箱");
 					return;
 				}
+				let email_verify = /^([a-zA-Z0-9]+[_|_|.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|_|.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+				if(!email_verify.test(email)){
+					window.layer.msg("请填写正确的邮箱");
+					return;
+				}
 				if (content.length === 0) {
 					window.layer.msg("未填写内容");
+					return;
+				}
+				if (content.length > 255) {
+					window.layer.msg("内容最多支持输入255字");
 					return;
 				}
 				let appVersion = window.navigator.appVersion.split(" ");
@@ -735,7 +755,7 @@ export default {
 					appVersion[1].substring(1, appVersion[1].length) +
 					" " +
 					appVersion[3].substring(0, appVersion[3].length - 1);
-				let browerVersion = appVersion[appVersion.length - 1];
+				let browser_version = appVersion[appVersion.length - 1];
 				// 增加回复
 				addReply(
 					{
@@ -744,8 +764,8 @@ export default {
 						website: website,
 						content: content,
 						system: osVersion,
-						browser: browerVersion,
-						commentId: comment.id,
+						browser: browser_version,
+						comment_id: comment.id,
 					},
 					(res) => {
 						if (res.success) {
@@ -753,7 +773,15 @@ export default {
 						}
 					}
 				);
-				console.log(nickname, email, website, content);
+				console.log({
+					nickname: nickname,
+					email: email,
+					website: website,
+					content: content,
+					system: osVersion,
+					browser: browser_version,
+					comment_id: comment.id,
+				});
 				window.layer.close(that.replyDialogIndex);
 				that.replyDialogIndex = -1;
 			});
