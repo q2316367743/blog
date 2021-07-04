@@ -11,17 +11,35 @@ public class ArticleQueryDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 分页页码
+     * */
     private Integer page;
 
+    /**
+     * 分页页数
+     * */
     private Integer size;
 
+    /**
+     * 文章标题
+     * */
     private String title;
 
+    /**
+     * 文章分类
+     * */
     private Integer categoryId;
 
-    private List<String> orderByAsc;
+    /**
+     * 从小到大排序字段
+     * */
+    private List<Integer> orderByAsc;
 
-    private List<String> orderByDesc;
+    /**
+     * 从大到小排序字段
+     * */
+    private List<Integer> orderByDesc;
 
     public String getTitle() {
         return title;
@@ -44,19 +62,19 @@ public class ArticleQueryDTO implements Serializable {
         this.categoryId = categoryId;
     }
 
-    public List<String> getOrderByAsc() {
+    public List<Integer> getOrderByAsc() {
         return orderByAsc;
     }
 
-    public void setOrderByAsc(List<String> orderByAsc) {
+    public void setOrderByAsc(List<Integer> orderByAsc) {
         this.orderByAsc = orderByAsc;
     }
 
-    public List<String> getOrderByDesc() {
+    public List<Integer> getOrderByDesc() {
         return orderByDesc;
     }
 
-    public void setOrderByDesc(List<String> orderByDesc) {
+    public void setOrderByDesc(List<Integer> orderByDesc) {
         this.orderByDesc = orderByDesc;
     }
 

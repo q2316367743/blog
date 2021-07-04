@@ -5,13 +5,13 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import xyz.esion.blog.entity.Article;
 import xyz.esion.blog.entity.ArticleInfo;
 import xyz.esion.blog.entity.ArticleList;
 import xyz.esion.blog.entity.dto.ArticleQueryDTO;
-import xyz.esion.blog.mapper.ArticleInfoMapper;
+import xyz.esion.blog.enumerate.ArticleOrderEnum;
 import xyz.esion.blog.mapper.ArticleListMapper;
 import xyz.esion.blog.mapper.ArticleMapper;
+import xyz.esion.blog.mapper.ArticleInfoMapper;
 import xyz.esion.blog.service.ArticleService;
 
 /**
@@ -31,12 +31,14 @@ public class ArticleServiceImpl implements ArticleService {
         wrapper.like(ObjectUtil.isNotEmpty(condition.getTitle()), "title", condition.getTitle());
         wrapper.eq(ObjectUtil.isNotEmpty(condition.getCategoryId()), "category_id", condition.getCategoryId());
         if (ObjectUtil.isNotNull(condition.getOrderByAsc()) && !condition.getOrderByAsc().isEmpty()){
-            for (String field : condition.getOrderByAsc()){
+            for (Integer id : condition.getOrderByAsc()){
+                String field = ArticleOrderEnum.getFieldById(id);
                 wrapper.orderByAsc(ObjectUtil.isNotEmpty(field), field);
             }
         }
         if (ObjectUtil.isNotNull(condition.getOrderByDesc()) && !condition.getOrderByDesc().isEmpty()){
-            for (String field : condition.getOrderByDesc()){
+            for (Integer id : condition.getOrderByDesc()){
+                String field = ArticleOrderEnum.getFieldById(id);
                 wrapper.orderByDesc(ObjectUtil.isNotEmpty(field), field);
             }
         }
