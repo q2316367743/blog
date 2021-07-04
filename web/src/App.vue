@@ -15,6 +15,10 @@
 				</div>
 				<div v-show="!isSm">
 					<ul class="nav" :class="{ 'nav-item-a': scrollOver }">
+						<li class="nav-item" @click="search_click">
+							<i class="el-icon-search" style="color: #1abc9c;font-weight: bold;font-size: 16px;"></i>
+							<span>搜索</span>
+						</li>
 						<li class="nav-item" to="/">
 							<svg class="icon" aria-hidden="true">
 								<use xlink:href="#icon-zhuye"></use>
@@ -47,7 +51,7 @@
 						</li>
 					</ul>
 				</div>
-				<div v-show="isSm" style="padding: 0 20px">
+				<div v-show="isSm" style="padding: 0 20px;cursor: pointer">
 					<i
 						class="el-icon-menu"
 						style="font-size: 20px;"
@@ -98,6 +102,11 @@
 			<div style="width: 205px; text-align: left">
 				<div style="margin-top: 10%; margin-bottom: 100px">
 					<ul class="nav" :class="{ 'nav-item-a': scrollOver }">
+						<li class="nav-item" @click="search_click">
+							<i class="el-icon-search" style="color: #1abc9c;font-weight: bold;font-size: 16px;"></i>
+							<span>搜索</span>
+						</li>
+						<br/>
 						<li class="nav-item" to="/">
 							<svg class="icon" aria-hidden="true">
 								<use xlink:href="#icon-zhuye"></use>
@@ -142,12 +151,18 @@
 				</div>
 			</div>
 		</el-drawer>
+		<div class="search-main" v-if="is_search">
+			<div class="search-background" @click="is_search = false"></div>
+			<div class="search-input">
+				<el-input ref="search" style="max-width: 500px" placeholder="请输入文章标题" @keyup.enter.native="search" v-model="title"></el-input>
+			</div>
+		</div>
 	</div>
 </template>
 
 <script>
 import $ from "jquery";
-import { getConfig } from "@/api/global";
+import {getConfig} from "@/api/global";
 import fix_bar from "@/components/fixbar";
 
 import "aplayer/dist/APlayer.min.css";
@@ -174,6 +189,9 @@ export default {
 				music: [],
 			},
 			showMusic: true,
+			// 是否搜索
+			is_search: false,
+			title: ''
 		};
 	},
 	mounted() {
@@ -197,13 +215,15 @@ export default {
 		let that = this;
 		// 增加事件
 		$(".nav-item").on("click", function (e) {
-			that.$router.push($(e.currentTarget).attr("to"));
+			if ($(e.currentTarget).attr("to")){
+				that.$router.push($(e.currentTarget).attr("to"));
+			}
 		});
 	},
 	watch: {
 		$route() {
 			// 返回顶部
-			$("#app").animate({ scrollTop: "0px" }, 800);
+			$("#app").animate({scrollTop: "0px"}, 800);
 		},
 	},
 	methods: {
@@ -232,15 +252,34 @@ export default {
 			setTimeout(() => {
 				$(".nav-item").on("click", function (e) {
 					that.menuShow = false;
-					that.$router.push($(e.currentTarget).attr("to"));
+					if ($(e.currentTarget).attr("to")){
+						that.$router.push($(e.currentTarget).attr("to"));
+					}
 				});
-			}, 100);
+			});
 		},
 		isShowMusic() {
-            let fix_bar = $("#fix-bar");
+			let fix_bar = $("#fix-bar");
 			this.showMusic = !this.showMusic;
 			this.showMusic ? fix_bar.show() : fix_bar.hide();
 		},
+		search_click(){
+			this.is_search = true
+			this.$nextTick(() => {
+				this.$refs.search.focus();
+			})
+		},
+		search() {
+			this.is_search = false;
+			let title = this.title;
+			this.title = '';
+			this.$router.push({
+				path: "/search",
+				query: {
+					title: title
+				}
+			})
+		}
 	},
 };
 </script>
@@ -252,19 +291,23 @@ export default {
 	background-color: #30c2b4;
 	text-shadow: none;
 }
+
 *::-moz-selection {
 	color: #ffffff;
 	background-color: #30c2b4;
 	text-shadow: none;
 }
+
 a {
 	color: #14d1b2;
 	text-decoration: none;
 }
+
 *::-webkit-scrollbar {
 	width: 8px;
 	height: 8px;
 }
+
 *::-webkit-scrollbar-thumb {
 	background-color: #49b1f5;
 	background-image: -webkit-linear-gradient(
@@ -278,6 +321,7 @@ a {
 		transparent
 	);
 }
+
 *::-webkit-scrollbar-track {
 	background-color: transparent;
 }
@@ -292,6 +336,7 @@ a {
 	overflow-y: auto;
 	overflow-x: hidden;
 }
+
 #app {
 	width: 100%;
 	height: 100%;
@@ -308,12 +353,15 @@ a {
 	background-color: transparent;
 	color: #ffffff;
 }
+
 .topT .nav .nav-item a {
 	color: #ffffff;
 }
+
 .topT .logo a {
 	color: #ffffff;
 }
+
 .topS {
 	position: fixed;
 	top: 0;
@@ -325,9 +373,11 @@ a {
 	background: rgba(255, 255, 255, 0.8);
 	color: #000000;
 }
+
 .topS .nav-item a {
 	color: #000000;
 }
+
 .topS .logo a {
 	color: #000000;
 }
@@ -337,6 +387,7 @@ a {
 	font-weight: bold;
 	padding-left: 20px;
 }
+
 .logo a {
 	text-decoration: none;
 }
@@ -348,6 +399,7 @@ a {
 	border-radius: 2px;
 	font-size: 0;
 }
+
 .nav-item {
 	position: relative;
 	display: inline-block;
@@ -357,9 +409,11 @@ a {
 	list-style: none;
 	padding: 0 20px;
 }
+
 .nav a {
 	text-decoration: none;
 }
+
 .nav-item-a a:hover {
 	color: #49b1f5;
 }
@@ -374,12 +428,14 @@ a {
 	border-bottom: 5px solid #49b1f5;
 	transition: 0.2s all linear; /*动画效果*/
 	right: 100%; /*下划线从右侧开始显示*/
-    cursor: pointer;
+	cursor: pointer;
 }
+
 .nav-item:hover:before {
 	right: 0; /*鼠标滑过时，下划线从右向左移动*/
 	width: 100%; /*同时，下划线宽度从0-100%*/
 }
+
 .nav-item:hover ~ .nav-item:before {
 	/*~ 选择器：查找指定元素后面的所有兄弟结点*/
 	left: 0; /*处于hover后面元素的下划线从左侧开始显示*/
@@ -388,8 +444,9 @@ a {
 .footer {
 	color: #ffffff;
 	padding: 30px;
-    text-align: center;
+	text-align: center;
 }
+
 .back_top {
 	height: 100%;
 	width: 100%;
@@ -397,6 +454,30 @@ a {
 	line-height: 30px;
 	color: #ffffff;
 	background-color: #1989fa;
+}
+
+/* 搜素 */
+.search-main{
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+.search-input{
+	margin-top: 10vh;
+	text-align: center;
+}
+
+.search-background{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #000000;
+	opacity: 0.6;
 }
 
 </style>

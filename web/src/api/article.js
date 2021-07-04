@@ -10,7 +10,7 @@ export function getList(data, success) {
     axios({
         url: '/article/all',
         method: 'GET',
-        data: data
+        params: data
     }).then(res => {
         success(res)
     })

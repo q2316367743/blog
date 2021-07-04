@@ -40,7 +40,11 @@ public class ArticleController {
         if (categoryList == null){
             return Result.fail().message("分类ID错误");
         }
-        return Result.success().page(articleService.pageByCategory(page, size, categoryId)).data("item", categoryList);
+        ArticleQueryDTO articleQueryDTO = new ArticleQueryDTO();
+        articleQueryDTO.setPage(page);
+        articleQueryDTO.setSize(size);
+        articleQueryDTO.setCategoryId(categoryId);
+        return Result.success().page(articleService.pageByCondition(articleQueryDTO)).data("item", categoryList);
     }
 
     @Autowired

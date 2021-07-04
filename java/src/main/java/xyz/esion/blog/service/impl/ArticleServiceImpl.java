@@ -42,6 +42,11 @@ public class ArticleServiceImpl implements ArticleService {
                 wrapper.orderByDesc(ObjectUtil.isNotEmpty(field), field);
             }
         }
+        if (ObjectUtil.isNull(condition.getOrderByAsc()) || condition.getOrderByAsc().isEmpty()){
+            if (ObjectUtil.isNull(condition.getOrderByDesc()) || condition.getOrderByDesc().isEmpty()){
+                wrapper.orderByDesc("sequence");
+            }
+        }
         return articleListMapper.selectPage(new Page<>(condition.getPage(), condition.getSize()), wrapper);
     }
 
@@ -53,11 +58,6 @@ public class ArticleServiceImpl implements ArticleService {
             articleMapper.updateViewCountById(id, articleInfo.getViewCount() + 1);
         }
         return articleInfo;
-    }
-
-    @Override
-    public Page<ArticleList> pageByCategory(Integer page, Integer size, Integer categoryId) {
-        return articleListMapper.selectPage(new Page<>(page, size), new QueryWrapper<ArticleList>().eq("category_id", categoryId));
     }
 
     @Autowired

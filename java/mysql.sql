@@ -47,8 +47,7 @@ create view v_article_list as
     from t_article a
     left join t_category c
     on a.category_id = c.id
-    where a.is_delete = 0
-    order by sequence desc;
+    where a.is_delete = 0;
 
 create view v_article_info as
     select a.id, a.title, a.category_id, c.name category_name,

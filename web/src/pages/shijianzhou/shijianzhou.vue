@@ -41,7 +41,7 @@
 								<el-timeline-item
 									v-for="(article, index) in articles"
 									:key="index"
-									:timestamp="article.createTime"
+									:timestamp="article.create_time"
 									placement="top"
 								>
 									<el-card>
@@ -98,7 +98,7 @@
 import { findDimensions } from "@/utils/window";
 import $ from "jquery";
 import broadside from "@/components/broadside";
-import { getSjz } from "@/api/article";
+import { getList } from "@/api/article";
 
 export default {
 	components: {
@@ -138,10 +138,11 @@ export default {
 			this.$parent.isSm = this.winWidth < 768;
 		},
 		getArticle() {
-			getSjz(
+			getList(
 				{
 					page: this.page,
 					limit: this.limit,
+					orderByDesc: 1
 				},
 				(res) => {
 					if (res.success) {
@@ -176,5 +177,6 @@ export default {
 }
 .sjz-title > span:hover {
 	color: #49b1f5;
+	cursor: pointer;
 }
 </style>

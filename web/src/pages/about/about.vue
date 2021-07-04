@@ -48,12 +48,14 @@ export default {
 				this.winWidth = winWidth;
 				this.winHeight = winHeight;
 			});
-			$("#about-title").css("width", this.winWidth);
-			$("#about-main").css("width", this.winWidth);
+			let about_title = $("#about-title");
+			let about_main = $("#about-main");
+			about_title.css("width", this.winWidth);
+			about_main.css("width", this.winWidth);
 			let h = this.winHeight / 3;
 			if (h > 152) {
-				$("#about-title").css("padding-top", h);
-				$("#about-main").css("height", h * 2 - 92);
+				about_title.css("padding-top", h);
+				about_main.css("height", h * 2 - 92);
 			}
 
 			this.$parent.isSm = this.winWidth < 768;

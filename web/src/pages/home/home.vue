@@ -44,97 +44,7 @@
 								没有文章
 							</div>
 						</el-card>
-						<el-card
-							shadow="hover"
-							class="item"
-							v-for="(article, index) in articles"
-							:key="index"
-						>
-							<el-row>
-								<el-col :span="10" class="item-img">
-									<el-image
-										style="width: 100%; height: 100%"
-										:src="article.image"
-										fit="fill"
-										@click="toA('/article/' + article.id)"
-									></el-image>
-								</el-col>
-								<el-col :span="14" class="item-content">
-									<div
-										class="item-title item-link"
-										v-text="article.title"
-										@click="toA('/article/' + article.id)"
-									></div>
-									<div class="item-extra">
-										<span v-if="article.stick">
-											<span style="color: #49b1f5">
-												<span
-													class="iconfont icon-zhiding"
-												></span>
-												<span>置顶</span>
-											</span>
-											<span> | </span></span
-										>
-										<span
-											><i class="el-icon-date"></i>发表于
-										</span>
-										<span
-											v-text="article.create_time"
-										></span>
-										<span> | </span>
-										<span
-											><i class="el-icon-refresh"></i
-											>更新于
-										</span>
-										<span
-											v-text="article.update_time"
-										></span>
-										<span v-if="article.categoryId !== ''">
-											<span> | </span>
-											<span
-												class="iconfont icon-leimupinleifenleileibie"
-											></span>
-											<span
-												class="item-link"
-												@click="
-													toA(
-														'/category/' +
-															article.category_id
-													)
-												"
-											>
-												{{ article.category_name }}</span
-											>
-										</span>
-										<span v-if="article.tags.length > 0">
-											<span> | </span>
-											<span
-												class="iconfont icon-biaoqian"
-											></span>
-											<span
-												v-for="(
-													tag, index
-												) in article.tags.split(',')"
-												:key="index"
-											>
-												<span v-if="index !== 0">
-													·</span
-												>
-												<span
-													class="item-link"
-												>
-													{{ tag }}</span
-												>
-											</span>
-										</span>
-									</div>
-									<div
-										class="item-describe"
-										v-text="article.describe"
-									></div>
-								</el-col>
-							</el-row>
-						</el-card>
+                        <my-article v-for="(article, index) in articles" :key="index" :data="article" @click="toA" style="margin-top: 20px;"></my-article>
 						<el-pagination
 							background
 							layout="prev, pager, next"
@@ -154,18 +64,20 @@
 import $ from "jquery";
 import TypeIt from "typeit";
 import broadside from "@/components/broadside";
+import article from "@/components/article";
 import { findDimensions } from "@/utils/window";
 import { getList } from "@/api/article";
 
 export default {
 	components: {
 		broadside,
+        "my-article": article
 	},
 	data() {
 		return {
 			winWidth: 0,
 			winHeight: 0,
-			index: 0,
+			page: 0,
 			limit: 5,
 			total: 0,
 			articles: [],
@@ -216,7 +128,7 @@ export default {
 		getArticle() {
 			getList(
 				{
-					page: this.index,
+					page: this.page,
 					limit: this.limit,
 				},
 				(res) => {
@@ -270,43 +182,7 @@ export default {
 
 .item {
 	margin-top: 20px;
-	height: 280px;
     cursor: pointer;
-}
-.item-img {
-	transition: all 0.6s;
-}
-.item:hover .item-img {
-	transform: scale(1.1);
-}
-.item-content {
-	text-align: left;
-	margin-top: 8%;
-	padding-left: 40px;
-	width: 50%;
-}
-.item-title {
-	font-size: 26px;
-}
-
-.item-link:hover,
-.item-link:focus,
-.item-link:active {
-	-webkit-transition: all 0.5s linear;
-	-moz-transition: all 0.5s linear;
-	-o-transition: all 0.5s linear;
-	transition: all 0.5s linear;
-	color: #49b1f5;
-}
-
-.item-extra {
-	font-size: 14px;
-	color: darkgray;
-	padding-top: 10px;
-}
-.item-describe {
-	font-size: 16px;
-	padding-top: 10px;
 }
 
 .pagination {
