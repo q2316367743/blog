@@ -162,7 +162,7 @@
 
 <script>
 import $ from "jquery";
-import {getConfig} from "@/api/global";
+import { get_config, get_author, get_web_info, get_category_top } from "@/api/global";
 import fix_bar from "@/components/fixbar";
 
 import "aplayer/dist/APlayer.min.css";
@@ -196,7 +196,7 @@ export default {
 	},
 	mounted() {
 		//获取基本信息
-		getConfig((res) => {
+		get_config((res) => {
 			if (res.success) {
 				let baseInfo = res.data.item;
 				new APlayer({
@@ -211,6 +211,23 @@ export default {
 				);
 			}
 		});
+		
+		get_author((res) => {
+			if (res.success) {
+				this.$store.commit("SET_AUTHOR", res.data.item);
+			}
+		});
+		get_web_info((res) => {
+			if (res.success) {
+				this.$store.commit("SET_WEB_INFO", res.data.item);
+				this.$store.commit("SET_NOTICES", res.data.items);
+			}
+		});
+		get_category_top(res=>{
+			if (res.success) {
+				this.$store.commit("SET_CATEGORY", res.data.items);
+			}
+		})
 
 		let that = this;
 		// 增加事件

@@ -2,17 +2,17 @@
 	<div>
 		<el-card shadow="hover" class="card" style="text-align: center">
 			<div>
-				<el-avatar :size="100" :src="admin.avatar"></el-avatar>
+				<el-avatar :size="100" :src="author.avatar"></el-avatar>
 			</div>
-			<div class="admin-name" v-text="admin.name"></div>
-			<div class="admin-describe" v-text="admin.description"></div>
-			<div class="admin-web">
+			<div class="author-name" v-text="author.name"></div>
+			<div class="author-describe" v-text="author.description"></div>
+			<div class="author-web">
 				<el-row type="flex" justify="space-between">
 					<el-col :span="12">
 						<router-link tag="a" to="/shijianzhou">
 							<div>文章</div>
 							<div
-								v-text="webInfo.article_count"
+								v-text="web_info.article_count"
 								style="margin-top: 5px"
 							></div>
 						</router-link>
@@ -21,22 +21,22 @@
 						<router-link tag="a" to="/category">
 							<div>分类</div>
 							<div
-								v-text="webInfo.category_count"
+								v-text="web_info.category_count"
 								style="margin-top: 5px"
 							></div>
 						</router-link>
 					</el-col>
 				</el-row>
 			</div>
-			<div class="admin-gitee" @click="toTarget(admin.gitee)">
+			<div class="author-gitee" @click="toTarget(author.gitee)">
 				<svg class="icon" aria-hidden="true">
 					<use xlink:href="#icon-mayun"></use>
 				</svg>
 				<span>&emsp;我的Gitee</span>
 			</div>
-			<div class="admin-other">
+			<div class="author-other">
 				<img
-					v-for="other in admin.other"
+					v-for="other in author.other"
 					:key="other.name"
 					:src="other.icon"
 					:alt="other.name"
@@ -90,23 +90,23 @@
             <div class="card-content">
                 <div class="info-item">
                     <div>文章数目：</div>
-                    <div v-text="webInfo.article_count"></div>
+                    <div v-text="web_info.article_count"></div>
                 </div>
                 <div class="info-item">
                     <div>以运行时间：</div>
-                    <div>{{webInfo.run_time}}&emsp;天</div>
+                    <div>{{web_info.run_time}}&emsp;天</div>
                 </div>
                 <div class="info-item">
                     <div>文章总字数：</div>
-                    <div>{{webInfo.word_count}}&emsp;K</div>
+                    <div>{{web_info.word_count}}&emsp;K</div>
                 </div>
                 <div class="info-item">
                     <div>本站总访问量：</div>
-                    <div v-text="webInfo.access_count"></div>
+                    <div v-text="web_info.access_count"></div>
                 </div>
                 <div class="info-item">
                     <div>最后更新时间：</div>
-                    <div v-text="webInfo.last_update"></div>
+                    <div v-text="web_info.last_update"></div>
                 </div>
             </div>
 		</el-card>
@@ -114,49 +114,15 @@
 </template>
 
 <script>
-import { getAuthor, getWebInfo, get_category_top } from "@/api/global";
+import { mapGetters } from "vuex";
 
 export default {
 	data() {
 		return {
-			admin: {
-				avatar: "",
-				name: "",
-				description: "",
-				gitee: "",
-				other: [],
-			},
-			webInfo: {
-				article_count: 0,
-				tag_count: 0,
-				category_count: 0,
-				run_time: "1",
-                person_count: 0,
-				access_count: 0,
-				last_update: "",
-			},
-			tags: [],
-			category: [],
-			notices: [],
 		};
 	},
-	created() {
-        getAuthor((res) => {
-			if (res.success) {
-				this.admin = res.data.item;
-			}
-		});
-		getWebInfo((res) => {
-			if (res.success) {
-				this.webInfo = res.data.item;
-				this.notices = res.data.items;
-			}
-		});
-        get_category_top(res=>{
-			if (res.success) {
-				this.category = res.data.items;
-			}
-		})
+	computed: {
+		...mapGetters(["author", "web_info", "notices", "category"]),
 	},
 	methods: {
 		toTarget(target) {
@@ -182,19 +148,19 @@ a {
 .card {
 	margin-top: 20px;
 }
-.admin-name {
+.author-name {
 	margin-top: 20px;
 	font-size: 20px;
 	color: #409eff;
 }
-.admin-describe {
+.author-describe {
 	font-size: 14px;
 	margin-top: 5px;
 }
-.admin-web {
+.author-web {
 	margin-top: 20px;
 }
-.admin-gitee {
+.author-gitee {
 	margin-top: 20px;
 	background-color: #52a6fa;
 	color: #ffffff;
@@ -203,9 +169,9 @@ a {
 	font-size: 14px;
 	cursor: pointer;
 }
-.admin-gitee:hover,
-.admin-gitee:focus,
-.admin-gitee:active {
+.author-gitee:hover,
+.author-gitee:focus,
+.author-gitee:active {
 	-webkit-transition: all 0.5s linear;
 	-moz-transition: all 0.5s linear;
 	-o-transition: all 0.5s linear;
@@ -213,13 +179,13 @@ a {
 	background-color: #303643;
 }
 
-.admin-other {
+.author-other {
 	margin-top: 20px;
 	height: 14px;
 	margin-bottom: 20px;
 	cursor: pointer;
 }
-.admin-other img {
+.author-other img {
 	border-radius: 16px;
 }
 .card-title {

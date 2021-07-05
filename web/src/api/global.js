@@ -6,7 +6,7 @@ import axios from '@/utils/axios'
  * 获取作者信息
  * 
  */
-export function getAuthor(success) {
+export function get_author(success) {
     axios({
         url: '/global/author',
         method: 'GET'
@@ -34,7 +34,7 @@ export function getAuthor(success) {
  * 获取网站数据
  * 
  */
-export function getWebInfo(success) {
+export function get_web_info(success) {
     axios({
         url: '/global/web_info',
         method: 'GET'
@@ -52,7 +52,7 @@ export function getAbout(success) {
     })
 }
 
-export function getConfig(success) {
+export function get_config(success) {
     axios({
         url: '/global/config',
         method: 'GET'
