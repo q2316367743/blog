@@ -3,7 +3,7 @@ package xyz.esion.blog.controller.portal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import xyz.esion.blog.entity.CategoryList;
-import xyz.esion.blog.entity.dto.ArticleQueryDTO;
+import xyz.esion.blog.entity.dto.ArticleQuery;
 import xyz.esion.blog.global.Result;
 import xyz.esion.blog.service.ArticleService;
 import xyz.esion.blog.service.CategoryService;
@@ -22,8 +22,8 @@ public class ArticleController {
     private CategoryService categoryService;
 
     @GetMapping("all")
-    public Result page(ArticleQueryDTO articleQueryDTO){
-        return Result.success().page(articleService.pageByCondition(articleQueryDTO));
+    public Result page(ArticleQuery articleQuery){
+        return Result.success().page(articleService.pageByCondition(articleQuery));
     }
 
     @GetMapping("info/{id}")
@@ -40,7 +40,7 @@ public class ArticleController {
         if (categoryList == null){
             return Result.fail().message("分类ID错误");
         }
-        ArticleQueryDTO articleQueryDTO = new ArticleQueryDTO();
+        ArticleQuery articleQueryDTO = new ArticleQuery();
         articleQueryDTO.setPage(page);
         articleQueryDTO.setSize(size);
         articleQueryDTO.setCategoryId(categoryId);

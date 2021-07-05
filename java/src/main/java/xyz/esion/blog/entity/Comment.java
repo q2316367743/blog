@@ -40,9 +40,9 @@ public class Comment implements Serializable {
     private Date createTime;
 
     /**
-     * 是否展示
+     * 是否展示，0：未审查，1：通过，2：不通过
      */
-    private Boolean isShow;
+    private Integer isShow;
 
     /**
      * 浏览器版本
@@ -57,7 +57,7 @@ public class Comment implements Serializable {
     /**
      * 评论类型；1：访客
      */
-    private Byte type;
+    private Integer type;
 
     /**
      * 文章ID
@@ -155,14 +155,14 @@ public class Comment implements Serializable {
     /**
      * 是否展示
      */
-    public Boolean getIsShow() {
+    public Integer getIsShow() {
         return isShow;
     }
 
     /**
      * 是否展示
      */
-    public void setIsShow(Boolean isShow) {
+    public void setIsShow(Integer isShow) {
         this.isShow = isShow;
     }
 
@@ -197,14 +197,14 @@ public class Comment implements Serializable {
     /**
      * 评论类型；1：访客
      */
-    public Byte getType() {
+    public Integer getType() {
         return type;
     }
 
     /**
      * 评论类型；1：访客
      */
-    public void setType(Byte type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 

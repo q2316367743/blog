@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.esion.blog.entity.ArticleInfo;
 import xyz.esion.blog.entity.ArticleList;
-import xyz.esion.blog.entity.dto.ArticleQueryDTO;
+import xyz.esion.blog.entity.dto.ArticleQuery;
 import xyz.esion.blog.enumerate.ArticleOrderEnum;
 import xyz.esion.blog.mapper.ArticleListMapper;
 import xyz.esion.blog.mapper.ArticleMapper;
@@ -26,7 +26,7 @@ public class ArticleServiceImpl implements ArticleService {
     private ArticleInfoMapper articleInfoMapper;
 
     @Override
-    public Page<ArticleList> pageByCondition(ArticleQueryDTO condition) {
+    public Page<ArticleList> pageByCondition(ArticleQuery condition) {
         QueryWrapper<ArticleList> wrapper = new QueryWrapper<>();
         wrapper.like(ObjectUtil.isNotEmpty(condition.getTitle()), "title", condition.getTitle());
         wrapper.eq(ObjectUtil.isNotEmpty(condition.getCategoryId()), "category_id", condition.getCategoryId());

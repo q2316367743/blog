@@ -48,7 +48,7 @@ create table t_comment
     website varchar(64) default '' not null comment '个人网站',
     nickname varchar(32) default '' not null comment '昵称',
     create_time datetime default '1998-08-06 00:00:00' not null comment '创建时间',
-    is_show tinyint(1) unsigned default 0 not null comment '是否展示',
+    is_show tinyint(1) unsigned default 0 not null comment '是否展示，0：未审查，1：通过，2：不通过',
     browser varchar(64) default '' not null comment '浏览器版本',
     system_version varchar(32) default '' not null comment '系统',
     type tinyint unsigned default 1 not null comment '评论类型；1：访客',

@@ -7,7 +7,7 @@ import java.util.List;
  * @author qiao shengda
  * @since 2021/6/21
  */
-public class ArticleQueryDTO implements Serializable {
+public class ArticleQuery implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -49,7 +49,7 @@ public class ArticleQueryDTO implements Serializable {
         this.title = title;
     }
 
-    public ArticleQueryDTO() {
+    public ArticleQuery() {
         this.page = 1;
         this.size = 10;
     }

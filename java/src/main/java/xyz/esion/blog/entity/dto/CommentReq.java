@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author Esion
  * @since 2021/7/4
  */
-public class CommentSaveDTO implements Serializable {
+public class CommentReq implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -18,7 +18,8 @@ public class CommentSaveDTO implements Serializable {
     private String content;
     private String system;
     private String browser;
-    private String commentId;
+    private Integer articleId;
+    private Integer commentId;
 
     public String getNickname() {
         return nickname;
@@ -68,11 +69,19 @@ public class CommentSaveDTO implements Serializable {
         this.browser = browser;
     }
 
-    public String getCommentId() {
+    public Integer getArticleId() {
+        return articleId;
+    }
+
+    public void setArticleId(Integer articleId) {
+        this.articleId = articleId;
+    }
+
+    public Integer getCommentId() {
         return commentId;
     }
 
-    public void setCommentId(String commentId) {
+    public void setCommentId(Integer commentId) {
         this.commentId = commentId;
     }
 
@@ -85,6 +94,7 @@ public class CommentSaveDTO implements Serializable {
                 ", content='" + content + '\'' +
                 ", system='" + system + '\'' +
                 ", browser='" + browser + '\'' +
+                ", articleId=" + articleId +
                 ", commentId='" + commentId + '\'' +
                 '}';
     }
