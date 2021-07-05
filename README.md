@@ -45,4 +45,3 @@
 ## 开源框架
 
 - [vditor](https://github.com/Vanessa219/vditor)：一款浏览器端的 Markdown 编辑器，支持所见即所得（富文本）、即时渲染（类似 Typora）和分屏预览模式。
-- [sa-vue-admin](https://gitee.com/click33/sa-vue-admin)：一个多窗口后台模板，流畅、易上手、提高生产力
