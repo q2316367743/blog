@@ -7,62 +7,11 @@ import axios from '@/utils/axios'
  * @param {Function} success 成功回调
  */
 export function getComment(id, success) {
-    success({
-        success: true,
-        code: 200,
-        message: 'success',
-        data: {
-            items: [{
-                id: '1',
-                email: '1583720084@qq.com',
-                nickname: '浅梦凉城',
-                website: '',
-                type: 1,
-                browser: 'Edge 86.0.622.51',
-                system_version: 'Windows 10.0',
-                create_time: '2021-02-03',
-                content: '真强',
-                reply: [
-                    {
-                        id: '3',
-                        email: '2316367743@qq.com',
-                        nickname: '落雨不悔',
-                        website: 'javascript:;',
-                        type: 3,
-                        target_nickname: '落雨不悔',
-                        target_website: '',
-                        browser: 'Edge 86.0.622.51',
-                        system_version: 'Windows 10.0',
-                        create_time: '2021-02-03',
-                        content: '真强',
-                    }, {
-                        id: '3',
-                        email: '2316367743@qq.com',
-                        nickname: '落雨不悔',
-                        website: 'javascript:;',
-                        type: 3,
-                        target_nickname: '落雨不悔',
-                        target_website: '',
-                        browser: 'Edge 86.0.622.51',
-                        system_version: 'Windows 10.0',
-                        create_time: '2021-02-03',
-                        content: '真强',
-                    }
-                ]
-            }, {
-                id: '1',
-                email: '1583720084@qq.com',
-                nickname: '剑锋寒',
-                website: 'javascript:;',
-                type: 2,
-                browser: 'Edge 86.0.622.51',
-                system: 'Windows 10.0',
-                createTime: '2021-02-03',
-                content: '真强'
-    
-            }],
-            total: 2,
-        }
+    axios({
+        url: `/comment/${id}`,
+        method: 'GET',
+    }).then(res => {
+        success(res)
     })
 }
 
@@ -82,11 +31,11 @@ export function getComment(id, success) {
  */
 export function addComment(data, success) {
     axios({
-        url: '/blog/comment',
+        url: '/comment',
         method: 'POST',
         data: data
     }).then(res => {
-        success(res.data)
+        success(res)
     })
 }
 
@@ -105,10 +54,10 @@ export function addComment(data, success) {
  */
 export function addReply(data, success) {
     axios({
-        url: '/blog/comment/reply',
+        url: '/comment',
         method: 'POST',
         data: data
     }).then(res => {
-        success(res.data)
+        success(res)
     })
 }

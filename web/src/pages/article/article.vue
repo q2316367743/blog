@@ -263,7 +263,7 @@
 										<div>
 											<el-button
 												size="mini"
-												@click="reply(comment)"
+												@click="reply(comment.id, comment.nickname)"
 												>回复</el-button
 											>
 										</div>
@@ -274,9 +274,9 @@
 									></div>
 								</el-col>
 							</el-row>
-							<el-row v-if="comment.reply && comment.reply.length > 0">
+							<el-row v-if="comment.children && comment.children.length > 0">
 								<el-row
-									v-for="(item, index) in comment.reply"
+									v-for="(item, index) in comment.children"
 									:key="index"
 									style="margin-top: 40px"
 								>
@@ -376,7 +376,7 @@
 											<div>
 												<el-button
 													size="mini"
-													@click="reply(item)"
+													@click="reply(item.id, item.nickname)"
 												>回复</el-button
 												>
 											</div>
@@ -459,6 +459,7 @@ const highlightCode = () => {
 export default {
 	data() {
 		return {
+			id: 0,
 			winWidth: 0,
 			winHeight: 0,
 			href: "",
@@ -484,7 +485,6 @@ export default {
 			replyIndex: -1,
 			replyDialogIndex: -1,
 			comments: [],
-			total: 0,
 			step: 0,
 			loading: null,
 		};
@@ -493,6 +493,7 @@ export default {
 		// 获取文章信息
 		this.href = window.location.href;
 		// 获取文章信息
+		this.id = this.$route.params.id;
 		getArticle(this.$route.params.id, (res) => {
 			if (res.success) {
 				this.article = res.data.item;
@@ -505,9 +506,9 @@ export default {
 			}
 		});
 		getComment(this.$route.params.id, (res) => {
+			console.log(res)
 			if (res.success) {
 				this.comments = res.data.items;
-				this.total = res.data.total;
 				this.step += 2;
 			}
 		});
@@ -670,8 +671,9 @@ export default {
 				" " +
 				appVersion[3].substring(0, appVersion[3].length - 1);
 			let browser_version = appVersion[appVersion.length - 1];
-			this.comment.system = osVersion;
+			this.comment.system_version = osVersion;
 			this.comment.browser = browser_version;
+			this.comment.article_id = this.id;
 			addComment(this.comment, (res) => {
 				if (res.success) {
 					window.layer.msg("评论成功，审核中");
@@ -689,7 +691,8 @@ export default {
 				content: "",
 			};
 		},
-		reply(comment) {
+		reply(id, nickname) {
+			let article_id = this.id;
 			// 打开对话框
 			if (this.replyDialogIndex !== -1) {
 				window.layer.close(this.replyDialogIndex);
@@ -697,7 +700,7 @@ export default {
 			}
 			this.replyDialogIndex = window.layer.open({
 				type: 1,
-				title: "回复 " + comment.nickname,
+				title: "回复 " + nickname,
 				content:
                     '<div style="padding: 10px 20px;">' +
 					'<div class="layui-row">' +
@@ -763,9 +766,10 @@ export default {
 						email: email,
 						website: website,
 						content: content,
-						system: osVersion,
+						system_version: osVersion,
 						browser: browser_version,
-						comment_id: comment.id,
+						comment_id: id,
+						article_id: article_id
 					},
 					(res) => {
 						if (res.success) {
@@ -773,15 +777,6 @@ export default {
 						}
 					}
 				);
-				console.log({
-					nickname: nickname,
-					email: email,
-					website: website,
-					content: content,
-					system: osVersion,
-					browser: browser_version,
-					comment_id: comment.id,
-				});
 				window.layer.close(that.replyDialogIndex);
 				that.replyDialogIndex = -1;
 			});

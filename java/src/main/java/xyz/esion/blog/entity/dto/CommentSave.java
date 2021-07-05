@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author Esion
  * @since 2021/7/4
  */
-public class CommentReq implements Serializable {
+public class CommentSave implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -16,7 +16,7 @@ public class CommentReq implements Serializable {
     private String email;
     private String website;
     private String content;
-    private String system;
+    private String systemVersion;
     private String browser;
     private Integer articleId;
     private Integer commentId;
@@ -53,12 +53,12 @@ public class CommentReq implements Serializable {
         this.content = content;
     }
 
-    public String getSystem() {
-        return system;
+    public String getSystemVersion() {
+        return systemVersion;
     }
 
-    public void setSystem(String system) {
-        this.system = system;
+    public void setSystemVersion(String systemVersion) {
+        this.systemVersion = systemVersion;
     }
 
     public String getBrowser() {
@@ -92,7 +92,7 @@ public class CommentReq implements Serializable {
                 ", email='" + email + '\'' +
                 ", website='" + website + '\'' +
                 ", content='" + content + '\'' +
-                ", system='" + system + '\'' +
+                ", systemVersion='" + systemVersion + '\'' +
                 ", browser='" + browser + '\'' +
                 ", articleId=" + articleId +
                 ", commentId='" + commentId + '\'' +

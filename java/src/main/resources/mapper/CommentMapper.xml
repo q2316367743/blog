@@ -18,6 +18,7 @@
             <result property="pId" column="p_id" jdbcType="INTEGER"/>
             <result property="targetNickname" column="target_nickname" jdbcType="VARCHAR"/>
             <result property="targetWebsite" column="target_website" jdbcType="VARCHAR"/>
+            <result property="content" column="content" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -25,6 +26,6 @@
         nickname,create_time,is_show,
         browser,system_version,type,
         article_id,p_id,target_nickname,
-        target_website
+        target_website,content
     </sql>
 </mapper>

@@ -5,9 +5,9 @@ import xyz.esion.blog.entity.Comment;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
- * @author Esion
  * @Entity xyz.esion.blog.entity.Comment
- * @since 2021/7/4
+ * @author Esion
+ * @since 2021/7/5
  */
 @Mapper
 public interface CommentMapper extends BaseMapper<Comment> {

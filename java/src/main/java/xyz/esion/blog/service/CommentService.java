@@ -1,8 +1,10 @@
 package xyz.esion.blog.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import xyz.esion.blog.entity.dto.CommentReq;
-import xyz.esion.blog.entity.dto.CommentRsp;
+import xyz.esion.blog.entity.Comment;
+import xyz.esion.blog.entity.dto.CommentListFront;
+import xyz.esion.blog.entity.dto.CommentSave;
+
+import java.util.List;
 
 /**
  * 评论接口
@@ -15,19 +17,17 @@ public interface CommentService {
     /**
      * 新增评论
      *
-     * @param commentReq 评论内容
+     * @param commentSave 评论内容
      * @return 评论结果
      * */
-    Integer save(CommentReq commentReq);
+    Integer save(CommentSave commentSave);
 
     /**
      * 根据文章ID分页查询评论
      *
-     * @param page 页码
-     * @param size 没有数
      * @param articleId 文章ID
      * @return 文章评论
      * */
-    Page<CommentRsp> page(Integer page, Integer size, Integer articleId);
+    List<CommentListFront> listByFront(Integer articleId);
 
 }

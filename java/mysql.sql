@@ -54,8 +54,10 @@ create table t_comment
     type tinyint unsigned default 1 not null comment '评论类型；1：访客',
     article_id int unsigned default 0 not null comment '文章ID',
     p_id int unsigned default 0 not null comment '所在评论的ID',
+    target_id int unsigned comment '回复对象ID，冗余',
     target_nickname varchar(32) default '' not null comment '回复对象昵称，冗余',
-    target_website varchar(64) default '' not null comment '回复对象个人网站，冗余'
+    target_website varchar(64) default '' not null comment '回复对象个人网站，冗余',
+    content text not null comment '评论内容'
 ) comment '评论表';
 
 create view v_article_list as
