@@ -87,13 +87,11 @@ public class Result implements Serializable {
     }
 
     public static Result success(){
-        Result r = new Result(true, ResultCode.SUCCESS);
-        return r;
+        return new Result(true, ResultCode.SUCCESS);
     }
 
     public static Result fail(){
-        Result r = new Result(false, ResultCode.FAIL);
-        return r;
+        return new Result(false, ResultCode.FAIL);
     }
 
     public static Result choose(boolean flag){
