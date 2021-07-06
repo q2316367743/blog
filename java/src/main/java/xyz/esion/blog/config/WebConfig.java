@@ -1,5 +1,6 @@
 package xyz.esion.blog.config;
 
+import cn.dev33.satoken.interceptor.SaRouteInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -31,6 +32,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        // 访问量计算
         registry.addInterceptor(new HandlerInterceptor() {
             @Override
             public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -38,6 +40,8 @@ public class WebConfig implements WebMvcConfigurer {
                 return true;
             }
         }).addPathPatterns("/global/config");
+        // 权限拦截
+        registry.addInterceptor(new SaRouteInterceptor()).addPathPatterns("/manage/**");
     }
 
     @Autowired
