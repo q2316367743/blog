@@ -2,7 +2,7 @@
 
 前端采用**Vue+Element-UI**，后台采用**Spring Boot**
 
-## 目录设计
+## 网站设计
 
 `/`：前台前端地址
 
@@ -12,9 +12,36 @@
 
 `/manage/api/*`：后台后端地址
 
-## 图片存储
+## 项目安装
+
+软件及推荐版本：
+
+- JDK@1.8+
+- maven@3.8.1
+- mysql@5.7+ / MariaDB@10.0+
+- node@14.17.0
+- npm@6.14.13
+- nginx@1.18
+
+>  图片存储
 
 采用springboot进行上传到nginx映射目录下，再采用nginx进行访问
+
+所以首先安装nginx，假设安装目录是`/opt/nginx`，html未见位于`/opt/nginx/html`
+
+```sh
+git clone https://gitee.com/qiaoshengda/blog.git
+cd blog
+# 构建java
+cd java
+mvn package -Dmaven.test.skip=true -Dspring.profiles,active=pro
+# 运行后台
+nohad java -jar blog-0.0.1-SNAPSHOT.jar /opt/nginx/html/assets/image/blog > info.log 2&>1 &
+# 构建前台
+
+```
+
+
 
 ## 版本
 

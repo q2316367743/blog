@@ -1,5 +1,6 @@
 package xyz.esion.blog;
 
+import cn.hutool.core.lang.Console;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.system.SystemUtil;
 
@@ -24,6 +25,7 @@ public class ImageServer {
     }
 
     public static void main(String[] args) {
+        Console.log(args);
         HttpUtil.createServer(80)
                 // 设置默认根目录
                 .setRoot(ROOT_PATH)
