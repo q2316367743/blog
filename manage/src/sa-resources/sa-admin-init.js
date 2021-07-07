@@ -8,7 +8,7 @@ export default function(sa_admin, sa) {
 
 
 	// ================================= 示例：模板基础信息  =================================
-	sa_admin.title = 'SA-后台模板';
+	sa_admin.title = '个人博客管理';
 	// sa_admin.logo_url = '图片地址';    // 设置logo图标地址   默认值空, 代表使用：./admin-logo.png
 	// sa_admin.icon_url = '图片地址';    // 设置icon图标地址   默认值空, 代表使用：./favicon.ico
 
@@ -22,7 +22,7 @@ export default function(sa_admin, sa) {
 	// 
 	sa_admin.$nextTick(function() {
 		sa_admin.user = {
-			username: 'root', // 昵称 
+			username: '管理员', // 昵称
 			avatar: document.querySelector('.admin-logo').src // 头像地址  
 		}
 	})

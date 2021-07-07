@@ -43,17 +43,15 @@
 						<el-form-item>
 							<el-button type="primary" size="small" style="width: 100%;" @click="ok()">登录</el-button>
 						</el-form-item>
-						<el-form-item>
-							<span style="color: #999;">测试账号：sa/sa123456</span>
-							<el-link style="float: right; color: #999;" @click="isShow=false">暂不登录</el-link>
-						</el-form-item>
 					</el-form>
 				</div>
 			</div>
 		</div>
 		<!-- 底部 版权 -->
 		<div style="position: absolute; bottom: 40px; width: 100%; text-align: center; color: #666;">
-			Copyright ©2020 sa-admin模板 | xx省xxx网络科技有限公司 - 提供技术支持
+			<span>Copyright ©2021 个人博客 | </span>
+            <el-link type="primary" target="_blank" href="https://esion.xyz" style="line-height: 16px;">云落天都</el-link>
+            <span> - 提供技术支持</span>
 		</div>
 	</div>
 </template>
@@ -79,7 +77,7 @@
 				}
 				// 开始登录
 				this.sa.ajax2('/acc/doLogin', this.m, function() {
-					this.sa.ok2('登录成功，欢迎你：' + this.m.username);
+					this.sa.ok2('登录成功，欢迎你：管理员');
 					setTimeout(function() {
 						this.isShow = false;
 					}.bind(this), 800);
