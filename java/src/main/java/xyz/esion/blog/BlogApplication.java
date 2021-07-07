@@ -28,7 +28,7 @@ public class BlogApplication {
             ROOT_PATH = args[0];
             File file = new File(ROOT_PATH);
             if (!file.exists()){
-                file.mkdir();
+                file.mkdirs();
             }
         }
         SpringApplication.run(BlogApplication.class, args);

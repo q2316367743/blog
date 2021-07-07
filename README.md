@@ -27,7 +27,7 @@
 
 采用springboot进行上传到nginx映射目录下，再采用nginx进行访问
 
-所以首先安装nginx，假设安装目录是`/opt/nginx`，html未见位于`/opt/nginx/html`
+所以首先安装nginx，假设安装目录是`/opt/nginx`，html文件位于`/opt/nginx/html`
 
 ```sh
 git clone https://gitee.com/qiaoshengda/blog.git
@@ -38,7 +38,56 @@ mvn package -Dmaven.test.skip=true -Dspring.profiles,active=pro
 # 运行后台
 nohad java -jar blog-0.0.1-SNAPSHOT.jar /opt/nginx/html/assets/image/blog > info.log 2&>1 &
 # 构建前台
+cd ../web
+npm install
+npm build
+cp -r -f dist/* /opt/nginx/html
+# 构建管理
+cd ../manage
+npm install
+npm build
+mkdir /opt/nginx/html/mamage
+cp -r -f dist/* /opt/nginx/html/mamage
+```
 
+nginx配置文件
+
+```conf
+worker_processes  1;
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    sendfile        on;
+
+    keepalive_timeout  65;
+
+    server {
+        listen       80;
+        server_name  localhost;
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        location /api/ {
+            proxy_pass http://127.0.0.1:8990/api/
+        }
+        location /manage/api/ {
+            proxy_pass http://127.0.0.1:8990/manage/
+        }
+        location / {
+            root   html;
+            index  index.html index.htm;
+		}
+    }
+}
 ```
 
 
