@@ -6,7 +6,7 @@ package xyz.esion.blog.enumerate;
  * @author Esion
  * @since 2021/7/4
  */
-public enum ArticleOrderEnum {
+public enum ArticleOrderFieldEnum {
 
     // 创建时间
     CREATE_TIME(1, "create_time"),
@@ -20,7 +20,7 @@ public enum ArticleOrderEnum {
     COMMENT_COUNT(5, "comment_count");
 
     public static String getFieldById(Integer id){
-        for (ArticleOrderEnum item : values()) {
+        for (ArticleOrderFieldEnum item : values()) {
             if (item.getId().equals(id)){
                 return item.getField();
             }
@@ -38,7 +38,7 @@ public enum ArticleOrderEnum {
      * */
     private String field;
 
-    ArticleOrderEnum(Integer id, String field) {
+    ArticleOrderFieldEnum(Integer id, String field) {
         this.id = id;
         this.field = field;
     }

@@ -1,9 +1,10 @@
 /* eslint-disable */
 
 import Vue from 'vue';
+import da from "element-ui/src/locale/lang/da";
 
 // =========================== sa对象封装一系列工具方法 ===========================  
-var sa = {
+let sa = {
 	version: '2.1',
 	update_time: '2020-2-13',
 	info: '改了loading框的样式'
@@ -12,21 +13,16 @@ var sa = {
 // ===========================  当前环境配置  ======================================= 
 (function(){
 	// 公司开发环境
-	var cfg_dev = {
-		api_url: 'http://localhost:8000',	// 所有ajax请求接口父地址
-		web_url: 'http://www.baidu.com'		// 此项目前台地址 (此配置项非必须)
+	let cfg_dev = {
+		api_url: 'http://localhost:8990',	// 所有ajax请求接口父地址
+		web_url: 'http://localhost'		// 此项目前台地址 (此配置项非必须)
 	}
 	// 服务器测试环境
-	var cfg_test = {
-		api_url: 'http://www.baidu.com',
-		web_url: 'http://www.baidu.com'
+	let cfg_prod = {
+		api_url: './api/',
+		web_url: 'https://esion.xyz/assets/image/blog/'
 	}
-	// 服务器测试环境
-	var cfg_prod = {
-		api_url: 'http://www.baidu.com',
-		web_url: 'http://www.baidu.com'
-	}
-	sa.cfg = cfg_dev; // 最终环境 , 上线前请选择正确的环境 
+	sa.cfg = process.env.NODE_ENV === 'production' ? cfg_prod : cfg_dev; // 最终环境 , 上线前请选择正确的环境
 })();
 
 
@@ -78,7 +74,7 @@ var sa = {
 		}
 		
 		// 默认配置
-		var defaultCfg = {
+		let defaultCfg = {
 			msg: '努力加载中...',	// 提示语
 			baseUrl: (url.indexOf('http') === 0 ? '' : sa.cfg.api_url),// 父url，拼接在url前面
 			sleep: 0,	// 休眠n毫秒处理回调函数 
@@ -155,6 +151,12 @@ var sa = {
 			type: 'get'
 		})
 	}
+
+	sa.get = function (url, data, success){
+		sa.ajax(sa.cfg.api_url + url, data, success, {
+			type: 'get'
+		})
+	}
 	
 	// 模拟一个ajax
 	// 请注意: 本模板中所有ajax请求调用的均为此模拟函数 
@@ -197,7 +199,7 @@ var sa = {
 (function() {
 	
 	// ============== 小提示 ===================== 
-	var me = sa;
+	let me = sa;
 	layer.ready(function(){});
 	
 	// tips提示文字  
@@ -279,7 +281,7 @@ var sa = {
 	me.showImage = function(src, w, h) {
 		w = w || '80%';
 		h = h || '80%';
-		var content = '<div style="height: 100%; overflow: hidden !important;">' + 
+		let content = '<div style="height: 100%; overflow: hidden !important;">' + 
 			'<img src="' + src + ' " style="width: 100%; height: 100%;" />' + 
 		 '</div>';
 		layer.open({
@@ -311,7 +313,7 @@ var sa = {
 		}
 		
 		// 开始展示 
-		var arr_list = [];
+		let arr_list = [];
 		srcList.forEach(function(item) {
 			arr_list.push({
 				alt: '左右键切换',
@@ -339,7 +341,7 @@ var sa = {
 		h = h || '95%'; 
 		shadeClose = (shadeClose === undefined ? false : shadeClose);
 		// 弹出面板 
-		var index = layer.open({
+		let index = layer.open({
 			type: 2,	
 			title: title,	// 标题 
 			shadeClose: shadeClose,	// 是否点击遮罩关闭
@@ -370,7 +372,7 @@ var sa = {
 		w = w || '95%'; 
 		h = h || '95%'; 
 		// 弹出面板 
-		var index = layer.open({
+		let index = layer.open({
 			type: 2,	
 			title: title,	// 标题 
 			closeBtn: (title ? 1 : 0),	// 是否显示关闭按钮
@@ -387,8 +389,8 @@ var sa = {
 				
 			},
 			yes: function(index, layero) {
-				var iframe = document.getElementById('layui-layer-iframe' + index);
-				var iframeWindow = iframe.contentWindow;
+				let iframe = document.getElementById('layui-layer-iframe' + index);
+				let iframeWindow = iframe.contentWindow;
 				iframeWindow.eval(evalStr);
 			}
 		}); 
@@ -398,7 +400,7 @@ var sa = {
 	// 当前iframe关闭自身  (在iframe中调用)
 	me.closeCurrIframe = function() {
 		try{
-			var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+			let index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
 			parent.layer.close(index); //再执行关闭   
 		}catch(e){
 			//TODO handle the exception
@@ -409,9 +411,9 @@ var sa = {
 	
 	//执行一个函数, 解决layer拉伸或者最大化的时候，iframe高度不能自适应的问题
 	function solveLayerBug(index) {
-		var selected = '#layui-layer' + index;
-		var height = $(selected).height();
-		var title_height = $(selected).find('.layui-layer-title').height();
+		let selected = '#layui-layer' + index;
+		let height = $(selected).height();
+		let title_height = $(selected).find('.layui-layer-title').height();
 		$(selected).find('iframe').css('height', (height - title_height) + 'px');
 	}
 	
@@ -423,17 +425,17 @@ var sa = {
 (function () {
 	
 	// 超级对象
-    var me = sa;
+    let me = sa;
 	
 	// ===========================  常用util函数封装   ======================================= 
 	if(true) {
 		
 		// 从url中查询到指定参数值 
 		me.p = function(name, defaultValue){
-			var query = window.location.search.substring(1);
-			var vars = query.split("&");
-			for (var i=0;i<vars.length;i++) {
-				var pair = vars[i].split("=");
+			let query = window.location.search.substring(1);
+			let lets = query.split("&");
+			for (let i=0;i<lets.length;i++) {
+				let pair = lets[i].split("=");
 				if(pair[0] == name){return pair[1];}
 			}
 			return(defaultValue == undefined ? null : defaultValue);
@@ -442,7 +444,7 @@ var sa = {
 		// 判断一个变量是否为null
 		// 返回true或false，如果return_obj有值，则在true的情况下返回return_obj
 		me.isNull = function(obj, return_obj){
-			var flag = [null, undefined, '', 'null', 'undefined'].indexOf(obj) != -1;
+			let flag = [null, undefined, '', 'null', 'undefined'].indexOf(obj) != -1;
 			if(return_obj === undefined){
 				return flag;
 			} else {
@@ -460,16 +462,16 @@ var sa = {
 			if(me.isNull(inputTime) == true){
 				return "";
 			}
-			var date = new Date(inputTime);
-			var y = date.getFullYear();  
-			var m = date.getMonth() + 1;  
+			let date = new Date(inputTime);
+			let y = date.getFullYear();  
+			let m = date.getMonth() + 1;  
 			m = m < 10 ? ('0' + m) : m;  
-			var d = date.getDate();  
+			let d = date.getDate();  
 			d = d < 10 ? ('0' + d) : d;  
-			var h = date.getHours();
+			let h = date.getHours();
 			h = h < 10 ? ('0' + h) : h;
-			var minute = date.getMinutes();
-			var second = date.getSeconds();
+			let minute = date.getMinutes();
+			let second = date.getSeconds();
 			minute = minute < 10 ? ('0' + minute) : minute;  
 			second = second < 10 ? ('0' + second) : second; 
 			
@@ -493,7 +495,7 @@ var sa = {
 		// d1 之于 d2 ，d2不填则默认取当前时间 
 		me.forDate2 = function(d, d2){
 			
-			var hou = "前";
+			let hou = "前";
 			
 			if(d == null || d == '') {
 				return '';
@@ -503,16 +505,16 @@ var sa = {
 			}
 			d2 = new Date(d2).getTime();
 			
-			var timestamp = new Date(d).getTime() - 1000;
-			var mistiming = Math.round((d2 - timestamp) / 1000);
+			let timestamp = new Date(d).getTime() - 1000;
+			let mistiming = Math.round((d2 - timestamp) / 1000);
 			if(mistiming < 0) {
 				mistiming = 0 - mistiming;
 				hou = '后'
 			}
-			var arrr = ['年', '月', '周', '天', '小时', '分钟', '秒'];
-			var arrn = [31536000, 2592000, 604800, 86400, 3600, 60, 1];
-			for (var i = 0; i < arrn.length; i++) {
-				var inm = Math.floor(mistiming / arrn[i]);
+			let arrr = ['年', '月', '周', '天', '小时', '分钟', '秒'];
+			let arrn = [31536000, 2592000, 604800, 86400, 3600, 60, 1];
+			for (let i = 0; i < arrn.length; i++) {
+				let inm = Math.floor(mistiming / arrn[i]);
 				if (inm != 0) {
 					return inm + arrr[i] + hou;
 				}
@@ -525,7 +527,7 @@ var sa = {
 			if(d == null || d == '' ) {
 				return '';
 			}
-			var cha = new Date().getTime() - new Date(d).getTime();
+			let cha = new Date().getTime() - new Date(d).getTime();
 			cha = (cha > 0 ? cha : 0 - cha);
 			if(cha < (86400 * 1000)) {
 				return me.forDate2(d);
@@ -535,23 +537,23 @@ var sa = {
 		
 		// 返回时间差, 此格式数组：[x, x, x, 天, 时, 分, 秒]
 		me.getSJC = function (small_time, big_time) {
-			var date1 = new Date(small_time); //开始时间
-			var date2 = new Date(big_time); //结束时间
-			var date3 = date2.getTime() - date1.getTime(); //时间差秒
+			let date1 = new Date(small_time); //开始时间
+			let date2 = new Date(big_time); //结束时间
+			let date3 = date2.getTime() - date1.getTime(); //时间差秒
 			//计算出相差天数
-			var days = Math.floor(date3 / (24 * 3600 * 1000));
+			let days = Math.floor(date3 / (24 * 3600 * 1000));
 		
 			//计算出小时数
-			var leave1 = date3 % (24 * 3600 * 1000); //计算天数后剩余的毫秒数
-			var hours = Math.floor(leave1 / (3600 * 1000));
+			let leave1 = date3 % (24 * 3600 * 1000); //计算天数后剩余的毫秒数
+			let hours = Math.floor(leave1 / (3600 * 1000));
 		
 			//计算相差分钟数
-			var leave2 = leave1 % (3600 * 1000); //计算小时数后剩余的毫秒数
-			var minutes = Math.floor(leave2 / (60 * 1000));
+			let leave2 = leave1 % (3600 * 1000); //计算小时数后剩余的毫秒数
+			let minutes = Math.floor(leave2 / (60 * 1000));
 		
 			//计算相差秒数
-			var leave3 = leave2 % (60 * 1000); //计算分钟数后剩余的毫秒数
-			var seconds = Math.round(leave3 / 1000);
+			let leave3 = leave2 % (60 * 1000); //计算分钟数后剩余的毫秒数
+			let seconds = Math.round(leave3 / 1000);
 			
 			// 返回数组
 			return [0, 0, 0, days, hours, minutes, seconds];
@@ -559,7 +561,7 @@ var sa = {
 		
 		// 将日期，加上指定天数
 		me.dateAdd = function(d, n) {
-			var s = new Date(d).getTime();
+			let s = new Date(d).getTime();
 			s += 86400000 * n;
 			return new Date(s);
 		}
@@ -601,12 +603,12 @@ var sa = {
 		// 获得一段文字中所有图片的路径
 		me.getSrcList = function(str){
 			try{
-				var imgReg = /<img.*?(?:>|\/>)/gi;	//匹配图片（g表示匹配所有结果i表示区分大小写）
-				var srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i;	//匹配src属性
-				var arr = str.match(imgReg);	// 图片数组
-				var srcList = [];
-				for (var i = 0; i < arr.length; i++) {
-					var src = arr[i].match(srcReg);
+				let imgReg = /<img.*?(?:>|\/>)/gi;	//匹配图片（g表示匹配所有结果i表示区分大小写）
+				let srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i;	//匹配src属性
+				let arr = str.match(imgReg);	// 图片数组
+				let srcList = [];
+				for (let i = 0; i < arr.length; i++) {
+					let src = arr[i].match(srcReg);
 					srcList.push(src[1]);
 				}
 				return srcList;
@@ -617,7 +619,7 @@ var sa = {
 		
 		// 无精度损失的乘法
 		me.accMul = function(arg1, arg2) {
-			var m = 0,
+			let m = 0,
 				s1 = arg1.toString(),
 				s2 = arg2.toString(),
 				t;
@@ -648,9 +650,9 @@ var sa = {
 		// 产生随机字符串
 		me.randomString = function(len) {
 		　　len = len || 32;
-		　　var $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';    /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
-		　　var maxPos = $chars.length;
-		　　var str = '';
+		　　let $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';    /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
+		　　let maxPos = $chars.length;
+		　　let str = '';
 		　　for (i = 0; i < len; i++) {
 		　　　　str += $chars.charAt(Math.floor(Math.random() * maxPos));
 		　　}
@@ -667,7 +669,7 @@ var sa = {
 		
 		// 从数组里获取数据,根据指定数据
 		me.arrayGet = function(arr, prop, value){
-			for (var i = 0; i < arr.length; i++) {
+			for (let i = 0; i < arr.length; i++) {
 				if(arr[i][prop] == value){
 					return arr[i];
 				}
@@ -677,7 +679,7 @@ var sa = {
 		
 		// 从数组删除指定记录
 		me.arrayDelete = function(arr, item){
-			var index = arr.indexOf(item);
+			let index = arr.indexOf(item);
 		    if (index > -1) {
 		        arr.splice(index, 1);
 		    }
@@ -685,7 +687,7 @@ var sa = {
 		
 		// 从数组删除指定id的记录
 		me.arrayDeleteById = function(arr, id){
-			var item = me.arrayGet(arr, 'id', id);
+			let item = me.arrayGet(arr, 'id', id);
 			me.arrayDelete(arr, item);
 		}
 		
@@ -718,17 +720,17 @@ var sa = {
 		// set cookie 值 
 		me.setCookie = function setCookie(cname, cvalue, exdays) { 
 			exdays = exdays || 30;
-		    var d = new Date();
+		    let d = new Date();
 		    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-		    var expires = "expires=" + d.toGMTString();
+		    let expires = "expires=" + d.toGMTString();
 		    document.cookie = cname + "=" + escape(cvalue) + "; " + expires + "; path=/";
 		}
 		
 		// get cookie 值
 		me.getCookie = function(objName){
-			var arrStr = document.cookie.split("; ");
-		    for (var i = 0; i < arrStr.length; i++) {
-		        var temp = arrStr[i].split("=");
+			let arrStr = document.cookie.split("; ");
+		    for (let i = 0; i < arrStr.length; i++) {
+		        let temp = arrStr[i].split("=");
 		        if (temp[0] == objName){
 		        	return unescape(temp[1])
 		        };
@@ -738,7 +740,7 @@ var sa = {
 		
 		// 复制指定文本
 		me.copyText = function(str){
-			var oInput = document.createElement('input');
+			let oInput = document.createElement('input');
 		    oInput.value = str;
 		    document.body.appendChild(oInput);
 		    oInput.select(); // 选择对象
@@ -749,7 +751,7 @@ var sa = {
 		
 		// jquery序列化表单增强版： 排除空值
 		me.serializeNotNull = function(selected){
-			var serStr = $(selected).serialize();
+			let serStr = $(selected).serialize();
 		    return serStr.split("&").filter(function(str){return !str.endsWith("=")}).join("&");
 		}
 		
@@ -761,7 +763,7 @@ var sa = {
 		// 回到顶部
 		me.goTop = function() {
 			function smoothscroll(){
-				var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+				let currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
 				if (currentScroll > 0) {
 					 window.requestAnimationFrame(smoothscroll);
 					 window.scrollTo (0,currentScroll - (currentScroll/5));
@@ -779,9 +781,9 @@ var sa = {
 	if (true) {
 		// 去除json对象中的空值 
 		me.removeNull = function(obj){
-			var newObj = {};
+			let newObj = {};
 			if(obj != undefined && obj != null) {
-				for(var key in obj) {
+				for(let key in obj) {
 					if(obj[key] === undefined || obj[key] === null || obj[key] == '') {
 						// 
 					} else {
@@ -797,8 +799,8 @@ var sa = {
 			if(obj === null || obj === undefined) {
 				return obj;
 			};
-			var new_obj = {};
-			for(var key in obj) {
+			let new_obj = {};
+			for(let key in obj) {
 				new_obj[key] = obj [key];
 			}
 			return new_obj;
@@ -809,7 +811,7 @@ var sa = {
 			if(!userOption) {
 				return defaultOption;
 			};
-			for(var key in defaultOption) {
+			for(let key in defaultOption) {
 				if(userOption[key] === undefined) {
 					userOption[key] = defaultOption[key];
 				} else if(userOption[key] == null){
@@ -830,7 +832,7 @@ var sa = {
 		// 获取指定key的list
 		me.keyListGet = function(key){
 			try{
-				var str = localStorage.getItem('LIST_' + key);
+				let str = localStorage.getItem('LIST_' + key);
 				if(str == undefined || str == null || str =='' || str == 'undefined' || typeof(JSON.parse(str)) == 'string'){
 					//alert('key' + str);
 					str = '[]';
@@ -846,19 +848,19 @@ var sa = {
 		},
 		
 		me.keyListHas = function(key, item){
-			var arr2 = me.keyListGet(key);
+			let arr2 = me.keyListGet(key);
 			return arr2.indexOf(item) != -1;
 		},
 		
 		me.keyListAdd = function(key, item){
-			var arr = me.keyListGet(key);
+			let arr = me.keyListGet(key);
 			arr.push(item);
 			me.keyListSet(key,arr);
 		},
 		
 		me.keyListRemove = function(key, item){
-			var arr = me.keyListGet(key);
-			var index = arr.indexOf(item);
+			let arr = me.keyListGet(key);
+			let index = arr.indexOf(item);
 			if (index > -1) {
 			    arr.splice(index, 1);
 			}
@@ -875,11 +877,11 @@ var sa = {
 (function(){
 	
 	// 超级对象
-    var me = {};
+    let me = {};
     sa.$sys = me;
 	
 	// 定义key
-	var pcode_key = 'permission_code';
+	let pcode_key = 'permission_code';
 	
 	// 写入当前会话的权限码集合
 	sa.setAuth = function(codeList) {
@@ -899,7 +901,7 @@ var sa = {
 	// 检查当前会话是否拥有一个权限码, 如果没有, 则跳转到无权限页面 
 	// 注意: 非二级目录页面请注意调整路径问题 
 	sa.checkAuth = function(pcode) {
-		var is_have = sa.keyListHas(pcode_key, pcode);	
+		let is_have = sa.keyListHas(pcode_key, pcode);	
 		if(is_have == false) {
 			Vue.prototype.sa_admin.open403();
 			throw '暂无权限: ' + pcode;
@@ -917,7 +919,7 @@ var sa = {
 (function(){
 	
 	// 超级对象
-    var me={};
+    let me={};
     sa.$page = me;
 	
 	

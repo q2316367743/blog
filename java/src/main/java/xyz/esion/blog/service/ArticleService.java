@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import xyz.esion.blog.entity.ArticleInfo;
 import xyz.esion.blog.entity.ArticleList;
 import xyz.esion.blog.entity.dto.ArticleQuery;
+import xyz.esion.blog.entity.view.ArticleListView;
 
 /**
  * 文章操作
@@ -28,5 +29,13 @@ public interface ArticleService {
      * @return 文章内容
      * */
     ArticleInfo infoById(Integer id);
+
+    /**
+     * 根据条件分页查询文章列表，后端
+     *
+     * @param condition 查询条件
+     * @return 文章列表
+     * */
+    Page<ArticleListView> pageBackByCondition(ArticleQuery condition);
 
 }

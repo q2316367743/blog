@@ -34,4 +34,12 @@
         set view_count = #{viewCount}
         where id = #{id}
     </update>
+    <select id="selectAllList" resultType="xyz.esion.blog.entity.dto.ArticleListBack">
+        select id,title,image,
+               category_id,tags,sequence,
+               description,create_time,update_time,
+               is_delete,word_count,read_time,
+               view_count,comment_count
+        from t_article
+    </select>
 </mapper>

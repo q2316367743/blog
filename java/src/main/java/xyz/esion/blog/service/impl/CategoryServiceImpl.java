@@ -1,8 +1,8 @@
 package xyz.esion.blog.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import xyz.esion.blog.cache.CategoryCache;
 import xyz.esion.blog.entity.CategoryList;
 import xyz.esion.blog.mapper.CategoryListMapper;
 import xyz.esion.blog.service.CategoryService;
@@ -16,25 +16,28 @@ import java.util.List;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-    private CategoryListMapper categoryMapper;
+    private CategoryListMapper categoryListMapper;
+
+    private CategoryCache categoryCache;
 
     @Override
     public List<CategoryList> getCategoryTop() {
-        return categoryMapper.selectList(new QueryWrapper<CategoryList>().orderByDesc("article_count").last("limit 5"));
+        return categoryCache.get().subList(0, 5);
     }
 
     @Override
     public List<CategoryList> getCategory() {
-        return categoryMapper.selectList(new QueryWrapper<>());
+        return categoryCache.get();
     }
 
     @Override
     public CategoryList infoById(Integer id) {
-        return categoryMapper.selectById(id);
+        return categoryListMapper.selectById(id);
     }
 
     @Autowired
-    public CategoryServiceImpl(CategoryListMapper categoryMapper) {
-        this.categoryMapper = categoryMapper;
+    public CategoryServiceImpl(CategoryListMapper categoryListMapper, CategoryCache categoryCache) {
+        this.categoryListMapper = categoryListMapper;
+        this.categoryCache = categoryCache;
     }
 }
