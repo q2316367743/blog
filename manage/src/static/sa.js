@@ -149,10 +149,14 @@ var sa = {
 		});
 		
 	};
+
+	sa.getJSON = function (url, success){
+		sa.ajax(url, success, {
+			type: 'get'
+		})
+	}
 	
-	
-	
-	// 模拟一个ajax 
+	// 模拟一个ajax
 	// 请注意: 本模板中所有ajax请求调用的均为此模拟函数 
 	sa.ajax2 = function(url, data, success200, cfg){
 		// 如果是简写模式(省略了data参数)

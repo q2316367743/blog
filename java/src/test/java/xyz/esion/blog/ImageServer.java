@@ -1,6 +1,7 @@
 package xyz.esion.blog;
 
 import cn.hutool.core.lang.Console;
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.system.SystemUtil;
 
@@ -18,9 +19,13 @@ public class ImageServer {
 
     static {
         ROOT_PATH = SystemUtil.get("user.home") + File.separator + "blog";
-        File file = new File(ROOT_PATH);
+        String path = ArrayUtil.join(new String[]{"assets", "image", "blog"}, File.separator);
+        File file = new File(ROOT_PATH + File.separator + path);
         if (!file.exists()){
-            file.mkdir();
+            boolean mkdirs = file.mkdirs();
+            if (!mkdirs){
+                Console.error("文件夹创建失败，请检查权限");
+            }
         }
     }
 

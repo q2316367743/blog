@@ -1,9 +1,4 @@
 <style scoped>
-	.vue-box {
-		background-color: #EEE;font-size: 14px;
-		font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-	}
-	.content-box {margin: 1em;padding: 1em;background-color: #FFF;color: #666;}
 	.el-tag{border-radius: 1px;}
 	/*800之下*/
 	@media(max-width: 800px) {

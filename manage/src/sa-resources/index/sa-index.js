@@ -127,11 +127,6 @@ export default {
 			// 初始化swiper对象 
 			this.initSwiper(); 
 			
-			// 打印版本等信息
-			if(option.printVesion !== false) {
-				this.printVesion();
-			}
-			
 			// 开始一些初始化动作
 			this.showTabByHash();	// 打开上次最后的一个窗口 
 			window.onresize();		// 手动触发一下窗口变动监听

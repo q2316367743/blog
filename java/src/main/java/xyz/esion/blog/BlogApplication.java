@@ -1,5 +1,7 @@
 package xyz.esion.blog;
 
+import cn.hutool.core.lang.Console;
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.system.SystemUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,15 +21,23 @@ public class BlogApplication {
         // 上传文件根目录
         if (args.length == 0){
             ROOT_PATH = SystemUtil.get("user.home") + File.separator + "blog";
-            File file = new File(ROOT_PATH);
+            String path = ArrayUtil.join(new String[]{"assets", "image", "blog"}, File.separator);
+            File file = new File(ROOT_PATH + File.separator + path);
             if (!file.exists()){
-                file.mkdir();
+                boolean mkdirs = file.mkdirs();
+                if (!mkdirs){
+                    Console.error("默认文件夹创建失败，请检查权限");
+                }
             }
         }else {
             ROOT_PATH = args[0];
             File file = new File(ROOT_PATH);
             if (!file.exists()){
-                file.mkdirs();
+                Console.error("指定文件夹文件夹不存在，准备创建");
+                boolean mkdirs = file.mkdirs();
+                if (!mkdirs){
+                    Console.error("指定文件夹文件夹创建失败，请检查权限");
+                }
             }
         }
         SpringApplication.run(BlogApplication.class, args);
