@@ -35,6 +35,3 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
   mapper-locations: classpath:mapper/*.xml
-
-path:
-  image: C:\Users\Administrator\blog

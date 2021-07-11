@@ -5,6 +5,8 @@ import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.system.SystemUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import xyz.esion.blog.global.Admin;
 
 import java.io.File;
 
@@ -13,6 +15,7 @@ import java.io.File;
  * @since 2021/6/20
  */
 @SpringBootApplication
+@EnableConfigurationProperties(value = {Admin.class})
 public class BlogApplication {
 
     public static String ROOT_PATH;
