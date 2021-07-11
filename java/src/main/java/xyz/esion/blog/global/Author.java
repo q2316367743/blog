@@ -1,10 +1,6 @@
 package xyz.esion.blog.global;
 
-import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
 import java.io.Serializable;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -14,7 +10,6 @@ import java.util.List;
  * @author qiao shengda
  * @since 2021/6/20
  */
-@Component
 public class Author implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -31,35 +26,7 @@ public class Author implements Serializable {
      * */
     private String baseInfo;
 
-    /**
-     * 初始化
-     * */
-    @PostConstruct
-    public void init(){
-        this.name = "云落天都";
-        this.description = "主要是Java技术栈，略带部分源码，随笔";
-        this.avatar = "https://portrait.gitee.com/uploads/avatars/user/1786/5358547_qiaoshengda_1578985319.png!avatar200";
-        this.gitee = "https://gitee.com/qiaoshengda";
-        List<Other> other = new LinkedList<>();
-        other.add(new Other("CSDN", "https://g.csdnimg.cn/static/logo/favicon32.ico", "https://blog.csdn.net/q2316367743"));
-        this.other = other;
-        this.baseInfo = "<h1>基本信息</h1>\n" +
-                "\t\t\t\t\t<p>\uD83D\uDC68基本情况：大四在读，计算机科学与技术专业。</p>\n" +
-                "\t\t\t\t\t<p>\n" +
-                "\t\t\t\t\t\t\uD83C\uDFAB昵称：云落天都。云落天都，月出九皋。\n" +
-                "\t\t\t\t\t</p>\n" +
-                "\t\t\t\t\t<p>\uD83C\uDF0D地址：目前在湖北孝感。</p>\n" +
-                "\t\t\t\t\t<p>\n" +
-                "\t\t\t\t\t\t\uD83D\uDCE7邮箱：<a href=\"mailto:m17762618644@163.com\"\n" +
-                "\t\t\t\t\t\t\t>m17762618644@163.com</a\n" +
-                "\t\t\t\t\t\t>\n" +
-                "\t\t\t\t\t</p>\n" +
-                "\t\t\t\t\t<p>\uD83D\uDD28技术方向：主Java，会考虑学一点前端和大数据。</p>\n" +
-                "\t\t\t\t\t<p>\uD83D\uDC93兴趣爱好：游戏，编程。</p>\n" +
-                "\t\t\t\t\t<p>\uD83D\uDCDD写作风格：一般以学习笔记为主，少量的心得感悟。</p>";
-    }
-
-    class Other implements Serializable {
+    public static class Other implements Serializable {
 
         private static final long serialVersionUID = 1L;
 

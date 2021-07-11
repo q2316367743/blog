@@ -52,9 +52,6 @@ export default {
         }
     },
     created() {
-        this.sa.getJSON("https://esion.xyz/blog/api/global/category/list", (res) => {
-            this.category = res.data.items;
-        })
     }
 }
 </script>

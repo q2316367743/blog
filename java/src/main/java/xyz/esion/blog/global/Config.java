@@ -1,9 +1,6 @@
 package xyz.esion.blog.global;
 
-import org.springframework.stereotype.Component;
-
 import java.io.Serializable;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -12,7 +9,6 @@ import java.util.List;
  * @author qiao shengda
  * @since 2021/6/20
  */
-@Component
 public class Config implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -20,12 +16,6 @@ public class Config implements Serializable {
     private String background;
 
     public List<Music> music;
-
-    public Config() {
-        this.background = "background.jpg";
-        List<Music> music = new LinkedList<>();
-        this.music = music;
-    }
 
     class Music implements Serializable {
 

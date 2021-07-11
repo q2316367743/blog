@@ -94,6 +94,10 @@ public class Result implements Serializable {
         return new Result(false, ResultCode.FAIL);
     }
 
+    public static Result fail(ResultCode resultCode){
+        return new Result(false, resultCode);
+    }
+
     public static Result choose(boolean flag){
         return flag ? success() : fail();
     }
@@ -105,6 +109,8 @@ public class Result implements Serializable {
         FAIL(500, "失败"),
         // 未认证
         UN_AUTHENTICATION(401, "未认证"),
+        // 无效
+        INVALID(402, "token无效"),
         // 未授权
         UN_AUTHORIZE(403, "未授权");
 

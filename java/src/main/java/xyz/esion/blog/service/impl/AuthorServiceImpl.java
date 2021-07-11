@@ -1,6 +1,7 @@
 package xyz.esion.blog.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.ObjectUtil;
 import org.springframework.stereotype.Service;
 import xyz.esion.blog.global.Author;
 import xyz.esion.blog.service.AuthorService;
@@ -34,7 +35,24 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public boolean update(Author author) {
-        BeanUtil.copyProperties(author, this.author);
+        if (ObjectUtil.isNotEmpty(author.getName())){
+            this.author.setName(author.getName());
+        }
+        if (ObjectUtil.isNotEmpty(author.getAvatar())){
+            this.author.setAvatar(author.getAvatar());
+        }
+        if (ObjectUtil.isNotEmpty(author.getDescription())){
+            this.author.setDescription(author.getDescription());
+        }
+        if (ObjectUtil.isNotEmpty(author.getGitee())){
+            this.author.setGitee(author.getGitee());
+        }
+        if (ObjectUtil.isNotNull(author.getOther()) && !author.getOther().isEmpty()){
+            this.author.setOther(author.getOther());
+        }
+        if (ObjectUtil.isNotEmpty(author.getBaseInfo())){
+            this.author.setBaseInfo(author.getBaseInfo());
+        }
         return true;
     }
 
