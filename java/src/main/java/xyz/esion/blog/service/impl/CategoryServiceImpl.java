@@ -22,7 +22,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryList> getCategoryTop() {
-        return categoryCache.get().subList(0, 5);
+        return categoryCache.get().size() > 5 ? categoryCache.get().subList(0, 5) : categoryCache.get();
     }
 
     @Override

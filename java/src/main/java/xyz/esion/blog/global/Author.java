@@ -2,6 +2,7 @@ package xyz.esion.blog.global;
 
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,7 +31,11 @@ public class Author implements Serializable {
      * */
     private String baseInfo;
 
-    public Author() {
+    /**
+     * 初始化
+     * */
+    @PostConstruct
+    public void init(){
         this.name = "云落天都";
         this.description = "主要是Java技术栈，略带部分源码，随笔";
         this.avatar = "https://portrait.gitee.com/uploads/avatars/user/1786/5358547_qiaoshengda_1578985319.png!avatar200";

@@ -22,17 +22,8 @@ public class Config implements Serializable {
     public List<Music> music;
 
     public Config() {
-        this.background = "https://esion.xyz/assets/image/background.jpg";
+        this.background = "background.jpg";
         List<Music> music = new LinkedList<>();
-//        music.add(new Music("http://esion.xyz/music/刘瑞琦 - 房间 (新版).flac", "https://esion.xyz/assets/image/default.jpg", "房间", "刘瑞琪"));
-//        music.add(new Music("http://esion.xyz/music/陈粒 - 走马.flac", "https://esion.xyz/assets/image/default.jpg", "走马", "陈粒"));
-//        music.add(new Music("http://esion.xyz/music/水木年华 - 一生有你.flac", "https://esion.xyz/assets/image/default.jpg", "一生有你", "水木年华"));
-//        music.add(new Music("http://esion.xyz/music/程jiajia - 山楂树の恋.flac", "https://esion.xyz/assets/image/default.jpg", "山楂树之恋", "程佳佳"));
-//        music.add(new Music("http://esion.xyz/music/蒋雪儿 - 燕无歇.flac", "https://esion.xyz/assets/image/default.jpg", "燕无歌", "蒋雪儿"));
-//        music.add(new Music("http://esion.xyz/music/火箭少女101段奥娟 - 陪我长大.flac", "https://esion.xyz/assets/image/default.jpg", "陪我长大", "段奥娟"));
-//        music.add(new Music("http://esion.xyz/music/陈一发儿 - 童话镇.flac", "https://esion.xyz/assets/image/default.jpg", "童话镇", "陈一发"));
-//        music.add(new Music("http://esion.xyz/music/汪苏泷、By2 - 有点甜.flac", "https://esion.xyz/assets/image/default.jpg", "有点甜", "汪苏泷、By2"));
-//        music.add(new Music("http://esion.xyz/music/王力宏 - 需要人陪.flac", "https://esion.xyz/assets/image/default.jpg", "需要人陪", "王力宏"));
         this.music = music;
     }
 

@@ -19,16 +19,12 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public boolean updateUsername(String target) {
-        this.admin.setUsername(target);
+    public boolean update(Admin admin) {
+        this.admin.setUsername(admin.getUsername());
+        this.admin.setPassword(admin.getPassword());
         return true;
     }
 
-    @Override
-    public boolean updatePassword(String target) {
-        this.admin.setPassword(target);
-        return true;
-    }
 
     public AdminServiceImpl(Admin admin) {
         this.admin = admin;

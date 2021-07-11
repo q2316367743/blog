@@ -1,5 +1,7 @@
 package xyz.esion.blog.service;
 
+import xyz.esion.blog.global.Admin;
+
 /**
  * @author Esion
  * @since 2021/7/11
@@ -16,19 +18,11 @@ public interface AdminService {
     boolean login(String username, String password);
 
     /**
-     * 更新用户名
+     * 更新管理员
      *
-     * @param target 要更改的用户名
+     * @param admin 管理员信息
      * @return 修改结果
      * */
-    boolean updateUsername(String target);
-
-    /**
-     * 更新密码
-     *
-     * @param target 要更改的密码（未加密）
-     * @return 修改结果
-     * */
-    boolean updatePassword(String target);
+    boolean update(Admin admin);
 
 }
