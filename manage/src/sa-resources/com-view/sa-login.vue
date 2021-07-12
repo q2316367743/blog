@@ -137,11 +137,13 @@ export default {
             }
             // 开始登录
             this.sa.get('admin/login', this.m, (res) => {
-                this.sa.ok2('登录成功，欢迎你：管理员');
-                setTimeout(function () {
-                    this.isShow = false;
-                    sessionStorage.setItem("token", res.data.item)
-                }.bind(this), 800);
+                if(res.success){
+					this.sa.ok2('登录成功，欢迎你：管理员');
+					setTimeout(function () {
+						this.isShow = false;
+						sessionStorage.setItem("token", res.data.item)
+					}.bind(this), 800);
+                }
             }, () => {
                 this.sa.alert('用户名或密码错误')
             })
