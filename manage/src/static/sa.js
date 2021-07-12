@@ -22,7 +22,7 @@ let sa = {
 	// 服务器测试环境
 	let cfg_prod = {
 		api_url: './api/',
-		web_url: 'https://esion.xyz/assets/image/blog/'
+		web_url: 'https://esion.xyz/assets/blog/'
 	}
 	sa.cfg = process.env.NODE_ENV === 'production' ? cfg_prod : cfg_dev; // 最终环境 , 上线前请选择正确的环境
 })();
