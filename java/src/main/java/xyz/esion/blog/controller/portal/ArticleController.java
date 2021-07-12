@@ -28,7 +28,7 @@ public class ArticleController {
 
     @GetMapping("info/{id}")
     public Result info(@PathVariable("id") Integer id){
-        return Result.success().data("item", articleService.infoById(id));
+        return Result.success().item(articleService.infoById(id));
     }
 
     @GetMapping("category/{categoryId}")

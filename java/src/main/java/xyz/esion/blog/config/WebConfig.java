@@ -23,6 +23,7 @@ import xyz.esion.blog.global.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -153,7 +154,8 @@ public class WebConfig implements WebMvcConfigurer {
     @Bean
     public Config config(){
         Config config = new Config();
-        config.setBackground("background.jpg");
+        config.setBackground("https://esion.xyz/assets/image/background.jpg");
+        config.setMusic(new ArrayList<>());
         return config;
     }
 

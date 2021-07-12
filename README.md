@@ -14,6 +14,42 @@
 
 ## 项目安装
 
+### 测试环境（本地运行）
+
+1. 下载代码
+
+```bash
+git clone https://gitee.com/qiaoshengda/blog.git
+```
+
+2. 运行后端项目
+
+```bash
+cd blog
+mvn package -Dmaven.test.skip=true
+java -jar blog-0.0.1-SNAPSHOT.jar
+```
+
+3. 运行前台项目
+
+```bash
+cd ../web
+npm install
+npm run serve
+```
+
+3. 运行后台项目
+
+```bash
+cd ../manage
+npm install
+npm run serve
+```
+
+4. 访问<localhost:8080>进入前台，访问<localhost:9090>进入后台
+
+### 生产环境
+
 软件及推荐版本：
 
 - JDK@1.8+
@@ -34,9 +70,9 @@ git clone https://gitee.com/qiaoshengda/blog.git
 cd blog
 # 构建java
 cd java
-mvn package -Dmaven.test.skip=true -Dspring.profiles,active=pro
+mvn package -Dmaven.test.skip=true
 # 运行后台
-nohad java -jar blog-0.0.1-SNAPSHOT.jar /opt/nginx/html/assets/image/blog > info.log 2&>1 &
+nohad java -jar blog-0.0.1-SNAPSHOT.jar /opt/nginx/html  --spring.profiles,active=pro > info.log 2&>1 &
 # 构建前台
 cd ../web
 npm install

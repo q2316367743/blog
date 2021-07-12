@@ -31,7 +31,7 @@ public class UploadController {
         }
         try {
             IoUtil.copy(file.getInputStream(), new FileOutputStream(Constant.MUSIC_PATH + name));
-            return Result.success().data("item", name);
+            return Result.success().item(name);
         } catch (IOException e) {
             return Result.fail();
         }
@@ -47,7 +47,7 @@ public class UploadController {
         }
         try {
             IoUtil.copy(file.getInputStream(), new FileOutputStream(Constant.IMAGE_PATH + name));
-            return Result.success().data("item", name);
+            return Result.success().item(name);
         } catch (IOException e) {
             return Result.fail();
         }

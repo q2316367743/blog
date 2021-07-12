@@ -21,16 +21,6 @@ public class Config implements Serializable {
 
         private static final long serialVersionUID = 1L;
 
-        public Music() {
-        }
-
-        public Music(String url, String cover, String name, String artist) {
-            this.url = url;
-            this.cover = cover;
-            this.name = name;
-            this.artist = artist;
-        }
-
         private String url;
 
         private String cover;

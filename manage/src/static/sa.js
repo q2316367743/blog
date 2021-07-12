@@ -76,11 +76,6 @@ instance.interceptors.response.use(
 				success: false,
 			};
 		} else if (response.data.code === 500) {
-			Message({
-				message: '操作错误，请联系管理员。' + response.data.message,
-				type: 'error',
-				duration: 5 * 1000
-			})
 			return {
 				success: false,
 			};
@@ -140,6 +135,9 @@ instance.interceptors.response.use(
 			url: url,
 			method: 'GET'
 		}).then(res => {
+			if (!res.success && error){
+				error();
+			}
 			success(res)
 		}).catch((err) => {
 			console.error(err)
@@ -161,6 +159,9 @@ instance.interceptors.response.use(
 			method: 'GET',
 			params: data
 		}).then(res => {
+			if (!res.success && error){
+				error();
+			}
 			success(res)
 		}).catch(() => {
 			if (error){
@@ -181,6 +182,9 @@ instance.interceptors.response.use(
 			method: 'POST',
 			data: data
 		}).then(res => {
+			if (!res.success && error){
+				error();
+			}
 			success(res)
 		}).catch(() => {
 			if (error){
@@ -201,6 +205,9 @@ instance.interceptors.response.use(
 			method: 'PUT',
 			data: data
 		}).then(res => {
+			if (!res.success && error){
+				error();
+			}
 			success(res)
 		}).catch(() => {
 			if (error){

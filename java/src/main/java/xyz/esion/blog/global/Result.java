@@ -86,6 +86,16 @@ public class Result implements Serializable {
         return this;
     }
 
+    public Result item(Object value){
+        this.data.put("item", value);
+        return this;
+    }
+
+    public Result items(Object value){
+        this.data.put("items", value);
+        return this;
+    }
+
     public static Result success(){
         return new Result(true, ResultCode.SUCCESS);
     }

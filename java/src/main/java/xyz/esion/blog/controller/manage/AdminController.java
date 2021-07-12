@@ -21,7 +21,7 @@ public class AdminController {
         boolean login = adminService.login(username, password);
         if (login){
             StpUtil.setLoginId(username);
-            return Result.success().data("item", StpUtil.getTokenValue());
+            return Result.success().item(StpUtil.getTokenValue());
         }
         return Result.fail();
     }

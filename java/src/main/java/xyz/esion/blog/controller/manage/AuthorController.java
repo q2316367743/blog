@@ -17,7 +17,7 @@ public class AuthorController {
 
     @GetMapping
     public Result info(){
-        return Result.success().data("item", authorService.getAll());
+        return Result.success().item(authorService.getAll());
     }
 
     @PutMapping

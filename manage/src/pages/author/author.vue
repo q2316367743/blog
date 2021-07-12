@@ -39,15 +39,21 @@
                     <el-form-item label="其他网站" v-for="(item, index) in author.other" :key="index">
                         <el-form-item label="网站名称">
                             <el-input v-model="item.name" class="author-input"></el-input>
+                            <el-button @click="remove(index)" style="margin-left: 10px;">删除</el-button>
                         </el-form-item>
-                        <el-form-item label="网站图标">
+                        <el-form-item label="网站图标" style="margin-top: 10px;">
                             <el-input v-model="item.icon" class="author-input"></el-input>
                         </el-form-item>
-                        <el-form-item label="网站连接">
+                        <el-form-item label="网站连接" style="margin-top: 10px;">
                             <el-input v-model="item.href" class="author-input"></el-input>
                         </el-form-item>
-                        <el-form-item v-if="author.other.length === index + 1">
-                            <el-button type="primary" @click="add_other">新增</el-button>
+                        <el-form-item v-if="author.other.length === index + 1" style="margin-top: 10px;">
+                            <el-button type="primary" @click="add_other = true">新增</el-button>
+                        </el-form-item>
+                    </el-form-item>
+                    <el-form-item v-if="author.other.length === 0" style="margin-top: 10px;">
+                        <el-form-item>
+                            <el-button type="primary" @click="add_other = true">新增</el-button>
                         </el-form-item>
                     </el-form-item>
                     <el-form-item>
@@ -57,6 +63,34 @@
                 </el-form>
             </div>
         </el-card>
+        <el-dialog title="新增其他网站" :visible.sync="add_other" width="50%" :modal-append-to-body='false'
+                   custom-class="index">
+            <el-form>
+                <el-form-item label="网站名称">
+                    <el-input v-model="other.name" class="author-input"></el-input>
+                </el-form-item>
+                <el-form-item label="网站图标" style="margin-top: 10px;">
+                    <div style="display: flex;">
+                        <el-input v-model="other.icon" class="author-input"></el-input>
+                        <el-upload
+                            style="width: 70px;"
+                            :action="image_api"
+                            :headers="{token: token}"
+                            :show-file-list="false"
+                            :on-success="handleIconSuccess">
+                            <el-button>上传</el-button>
+                        </el-upload>
+                    </div>
+                </el-form-item>
+                <el-form-item label="网站连接" style="margin-top: 10px;">
+                    <el-input v-model="other.href" class="author-input"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="add">新增</el-button>
+                    <el-button @click="clear">重置</el-button>
+                </el-form-item>
+            </el-form>
+        </el-dialog>
     </div>
 </template>
 
@@ -75,9 +109,15 @@ export default {
                 other: [],
                 base_info: ''
             },
+            other: {
+                name: '',
+                icon: '',
+                href: ''
+            },
             avatar_input: false,
             image_api: this.sa.cfg.api_url + 'upload/image',
-            token: sessionStorage.getItem('token')
+            token: sessionStorage.getItem('token'),
+            add_other: false
         }
     },
     mounted() {
@@ -102,7 +142,7 @@ export default {
                     token: sessionStorage.getItem('token')
                 }
                 editor.customConfig.uploadImgHooks = {
-                    customInsert: function(insertImgFn, result) {
+                    customInsert: function (insertImgFn, result) {
                         console.log('customInsert', result)
 
                         insertImgFn(image_web + result.data.item)
@@ -124,6 +164,9 @@ export default {
         handleAvatarSuccess(res) {
             this.author.avatar = this.sa.cfg.web_url + 'image/' + res.data.item;
         },
+        handleIconSuccess(res) {
+            this.other.icon = this.sa.cfg.web_url + 'image/' + res.data.item;
+        },
         update() {
             this.sa.put("author", this.author, res => {
                 if (res.success) {
@@ -136,9 +179,37 @@ export default {
                 }
             })
         },
-        add_other(){
-            console.log(this.author.other)
-            this.author.other.push({name: '', icon: '', href: ''})
+        add() {
+            this.author.other.push(this.other)
+            this.other = {
+                name: '',
+                icon: '',
+                href: ''
+            };
+            this.add_other = false;
+        },
+        clear() {
+            this.other = {
+                name: '',
+                icon: '',
+                href: ''
+            };
+        },
+        remove(index) {
+            this.$confirm('是否删除此网站?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                for (let i = index; i < this.author.other.length; i++) {
+                    this.author.other[i] = this.author.other[i + 1];
+                }
+                this.author.other.pop()
+                this.$message({
+                    type: 'success',
+                    message: '删除成功!'
+                });
+            })
         }
     }
 }
@@ -172,13 +243,12 @@ export default {
     display: block;
 }
 
-.small-avatar {
-    width: 178px;
-    height: 178px;
-    display: block;
-}
-
 .author-input {
     width: 500px;
 }
+
+.el-dialog__wrapper {
+    z-index: 10002 !important;
+}
+
 </style>

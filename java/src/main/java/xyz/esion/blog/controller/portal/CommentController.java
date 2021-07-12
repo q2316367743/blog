@@ -18,7 +18,7 @@ public class CommentController {
 
     @GetMapping("{articleId}")
     public Result all(@PathVariable("articleId") Integer articleId){
-        return Result.success().data("items", commentService.listByFront(articleId));
+        return Result.success().items(commentService.listByFront(articleId));
     }
 
     @PostMapping

@@ -62,11 +62,10 @@ export default function(sa_admin, sa) {
 			click: function() {
 				// sa_admin.$message('点击了退出登录，你可以参照文档重写此函数');
 				sa.confirm('退出登录？', function() {
-					sa.ajax2('/acc/exit', function() {
-						sa.alert('注销成功', function() {
-							sa_admin.openLogin();
-						})
-					}, {msg: '正在注销'});
+					sessionStorage.removeItem('token')
+					sa.alert('注销成功', function() {
+						sa_admin.openLogin();
+					})
 				});
 			}
 		}

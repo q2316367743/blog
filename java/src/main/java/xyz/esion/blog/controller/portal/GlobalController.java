@@ -34,32 +34,32 @@ public class GlobalController {
 
     @GetMapping("author")
     public Result author(){
-        return Result.success().data("item", authorService.getBase());
+        return Result.success().item(authorService.getBase());
     }
 
     @GetMapping("about")
     public Result about(){
-        return Result.success().data("item", authorService.getOther());
+        return Result.success().item(authorService.getOther());
     }
 
     @GetMapping("config")
     public Result config(){
-        return Result.success().data("item", configService.get());
+        return Result.success().item(configService.get());
     }
 
     @GetMapping("category/top")
     public Result categoryTop(){
-        return Result.success().data("items", categoryService.getCategoryTop());
+        return Result.success().items(categoryService.getCategoryTop());
     }
 
     @GetMapping("category/list")
     public Result categoryList(){
-        return Result.success().data("items", categoryService.getCategory());
+        return Result.success().items(categoryService.getCategory());
     }
 
     @GetMapping("web_info")
     public Result notice(){
-        return Result.success().data("items", noticeService.list()).data("item", website);
+        return Result.success().items(noticeService.list()).item(website);
     }
 
     public GlobalController(AuthorService authorService, ConfigService configService, CategoryService categoryService, NoticeService noticeService, Website website) {
