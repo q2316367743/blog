@@ -34,27 +34,35 @@
                         <el-input v-model="author.gitee" class="author-input"></el-input>
                     </el-form-item>
                     <el-form-item label="作者关于">
-                        <div id="editor" ref="editor" style="text-align:left"></div>
+                        <div id="editor" ref="editor" style="text-align:left;width: 800px;"></div>
                     </el-form-item>
-                    <el-form-item label="其他网站" v-for="(item, index) in author.other" :key="index">
-                        <el-form-item label="网站名称">
-                            <el-input v-model="item.name" class="author-input"></el-input>
-                            <el-button @click="remove(index)" style="margin-left: 10px;">删除</el-button>
-                        </el-form-item>
-                        <el-form-item label="网站图标" style="margin-top: 10px;">
-                            <el-input v-model="item.icon" class="author-input"></el-input>
-                        </el-form-item>
-                        <el-form-item label="网站连接" style="margin-top: 10px;">
-                            <el-input v-model="item.href" class="author-input"></el-input>
-                        </el-form-item>
-                        <el-form-item v-if="author.other.length === index + 1" style="margin-top: 10px;">
-                            <el-button type="primary" @click="add_other = true">新增</el-button>
-                        </el-form-item>
-                    </el-form-item>
-                    <el-form-item v-if="author.other.length === 0" style="margin-top: 10px;">
-                        <el-form-item>
-                            <el-button type="primary" @click="add_other = true">新增</el-button>
-                        </el-form-item>
+                    <el-form-item label="其他网站">
+                        <el-button type="primary" @click="add_other = true;other_update_status = false;">新增</el-button>
+                        <el-table
+                            :data="author.other"
+                            style="width: 100%">
+                            <el-table-column
+                                prop="name"
+                                label="网站名称"
+                                width="180">
+                            </el-table-column>
+                            <el-table-column
+                                prop="icon"
+                                label="网站图标">
+                            </el-table-column>
+                            <el-table-column
+                                prop="href"
+                                label="网站连接">
+                            </el-table-column>
+                            <el-table-column
+                                label="操作"
+                                width="280">
+                                <template slot-scope="scope">
+                                    <el-button type="primary" @click="other = scope.row;add_other = true;other_update_index = scope.$index;other_update_status = true;">修改</el-button>
+                                    <el-button type="danger" @click="remove(scope.$index)">删除</el-button>
+                                </template>
+                            </el-table-column>
+                        </el-table>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="update">修改</el-button>
@@ -63,7 +71,7 @@
                 </el-form>
             </div>
         </el-card>
-        <el-dialog title="新增其他网站" :visible.sync="add_other" width="50%" :modal-append-to-body='false'
+        <el-dialog :title="other_update_status ? '修改其他网站' : '新增其他网站'" :visible.sync="add_other" width="50%" :modal-append-to-body='false'
                    custom-class="index">
             <el-form>
                 <el-form-item label="网站名称">
@@ -86,7 +94,7 @@
                     <el-input v-model="other.href" class="author-input"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="add">新增</el-button>
+                    <el-button type="primary" @click="add">{{ other_update_status ? '修改' : '新增'}}</el-button>
                     <el-button @click="clear">重置</el-button>
                 </el-form-item>
             </el-form>
@@ -117,7 +125,9 @@ export default {
             avatar_input: false,
             image_api: this.sa.cfg.api_url + 'upload/image',
             token: sessionStorage.getItem('token'),
-            add_other: false
+            add_other: false,
+            other_update_index: -1,
+            other_update_status: false
         }
     },
     mounted() {
@@ -180,12 +190,22 @@ export default {
             })
         },
         add() {
-            this.author.other.push(this.other)
-            this.other = {
-                name: '',
-                icon: '',
-                href: ''
-            };
+            if (this.other_update_status){
+                this.author.other[this.other_update_index] = this.other;
+                this.other = {
+                    name: '',
+                    icon: '',
+                    href: ''
+                };
+            }else {
+                this.author.other.push(this.other)
+                this.other = {
+                    name: '',
+                    icon: '',
+                    href: ''
+                };
+            }
+            this.other_update_index = -1;
             this.add_other = false;
         },
         clear() {
@@ -245,6 +265,10 @@ export default {
 
 .author-input {
     width: 500px;
+}
+
+.el-dialog {
+    z-index: 10003 !important;
 }
 
 .el-dialog__wrapper {
