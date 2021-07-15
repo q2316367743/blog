@@ -11,10 +11,10 @@
                     </el-form-item>
                     <el-form-item label="作者描述">
                         <el-input v-model="author.description"
-                                  type="textarea"
-                                  :rows="2"
-                                  placeholder="请输入内容"
-                                  class="author-input"></el-input>
+                            type="textarea"
+                            :rows="2"
+                            placeholder="请输入内容"
+                            class="author-input"></el-input>
                     </el-form-item>
                     <el-form-item label="头像">
                         <el-upload
@@ -23,7 +23,7 @@
                             :headers="{token: token}"
                             :show-file-list="false"
                             :on-success="handleAvatarSuccess">
-                            <img v-if="author.avatar" :src="author.avatar" class="avatar">
+                            <img v-if="author.avatar" :src="author.avatar" alt="头像" class="avatar">
                             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                         </el-upload>
                         <el-input v-model="author.avatar" :disabled="!avatar_input" class="author-input"></el-input>
@@ -72,7 +72,7 @@
             </div>
         </el-card>
         <el-dialog :title="other_update_status ? '修改其他网站' : '新增其他网站'" :visible.sync="add_other" width="50%" :modal-append-to-body='false'
-                   custom-class="index">
+            custom-class="index">
             <el-form>
                 <el-form-item label="网站名称">
                     <el-input v-model="other.name" class="author-input"></el-input>
