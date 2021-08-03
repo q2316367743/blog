@@ -1,9 +1,6 @@
 package xyz.esion.blog.controller.manage;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import xyz.esion.blog.global.Config;
 import xyz.esion.blog.global.Result;
 import xyz.esion.blog.service.ConfigService;
@@ -24,7 +21,7 @@ public class ConfigController {
     }
 
     @PutMapping
-    public Result update(Config config){
+    public Result update(@RequestBody Config config){
         return Result.choose(configService.update(config));
     }
 

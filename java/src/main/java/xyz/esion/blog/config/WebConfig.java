@@ -1,19 +1,12 @@
 package xyz.esion.blog.config;
 
 import cn.dev33.satoken.exception.NotLoginException;
-import cn.dev33.satoken.interceptor.SaRouteInterceptor;
-import cn.dev33.satoken.servlet.model.SaRequestForServlet;
-import cn.dev33.satoken.servlet.model.SaResponseForServlet;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -37,13 +30,6 @@ public class WebConfig implements WebMvcConfigurer {
     private Website website;
 
     private final static Logger logger = LoggerFactory.getLogger(WebConfig.class);
-
-    /**
-     * 当前环境
-     * */
-    @Value("${spring.profiles.active}")
-    private String active;
-    private final static String PROFILES = "dev";
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -104,24 +90,6 @@ public class WebConfig implements WebMvcConfigurer {
         })
                 .addPathPatterns("/manage/**")
                 .excludePathPatterns("/manage/admin/login");
-    }
-
-    @Autowired
-    public void setWebsite(Website website) {
-        this.website = website;
-        // 如果是开发环境，启动图片服务器
-        if (active.equals(PROFILES)){
-            logger.debug("当前为开发环境，启动静态资源服务器");
-            startImageServer();
-            logger.debug("启动成功，服务器地址：127.0.0.1");
-        }
-    }
-
-    public void startImageServer() {
-        HttpUtil.createServer(80)
-                // 设置默认根目录
-                .setRoot(Constant.ROOT_PATH)
-                .start();
     }
 
     @Bean
