@@ -5,22 +5,22 @@
 <mapper namespace="xyz.esion.blog.mapper.ArticleMapper">
 
     <resultMap id="BaseResultMap" type="xyz.esion.blog.entity.Article">
-            <id property="id" column="id" jdbcType="INTEGER"/>
-            <result property="title" column="title" jdbcType="VARCHAR"/>
-            <result property="image" column="image" jdbcType="VARCHAR"/>
-            <result property="categoryId" column="category_id" jdbcType="INTEGER"/>
-            <result property="tags" column="tags" jdbcType="VARCHAR"/>
-            <result property="sequence" column="sequence" jdbcType="BIGINT"/>
-            <result property="description" column="description" jdbcType="VARCHAR"/>
-            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
-            <result property="isDelete" column="is_delete" jdbcType="BOOLEAN"/>
-            <result property="wordCount" column="word_count" jdbcType="INTEGER"/>
-            <result property="readTime" column="read_time" jdbcType="INTEGER"/>
-            <result property="viewCount" column="view_count" jdbcType="INTEGER"/>
-            <result property="commentCount" column="comment_count" jdbcType="INTEGER"/>
-            <result property="content" column="content" jdbcType="VARCHAR"/>
-            <result property="originalContent" column="original_content" jdbcType="VARCHAR"/>
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="image" column="image" jdbcType="VARCHAR"/>
+        <result property="categoryId" column="category_id" jdbcType="INTEGER"/>
+        <result property="tags" column="tags" jdbcType="VARCHAR"/>
+        <result property="sequence" column="sequence" jdbcType="BIGINT"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="isDelete" column="is_delete" jdbcType="BOOLEAN"/>
+        <result property="wordCount" column="word_count" jdbcType="INTEGER"/>
+        <result property="readTime" column="read_time" jdbcType="INTEGER"/>
+        <result property="viewCount" column="view_count" jdbcType="INTEGER"/>
+        <result property="commentCount" column="comment_count" jdbcType="INTEGER"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="originalContent" column="original_content" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -31,4 +31,13 @@
         view_count,comment_count,content,
         original_content
     </sql>
+    <select id="countByCategory" resultType="xyz.esion.blog.global.KeyValue">
+        select category_id as `key`, count(1) as `value`
+        from article
+        where category_id in
+        <foreach collection="categoryIds" open="(" close=")" separator="," item="categoryId">
+            #{categoryId}
+        </foreach>
+        group by category_id
+    </select>
 </mapper>

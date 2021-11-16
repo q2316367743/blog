@@ -1,6 +1,9 @@
 package xyz.esion.blog.view;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,29 +15,32 @@ import java.util.List;
  * @since 2021/11/16
  */
 @Data
-public class PageRspView<T> implements Serializable {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class PageView<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
      * 页码
      */
-    private Integer pageNum;
+    private Long pageNum;
 
     /**
      * 每页数量
      */
-    private Integer pageSize;
+    private Long pageSize;
 
     /**
      * 页数
      */
-    private Integer count;
+    private Long count;
 
     /**
      * 总数
      */
-    private Integer total;
+    private Long total;
 
     /**
      * 记录

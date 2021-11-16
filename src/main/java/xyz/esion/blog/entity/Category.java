@@ -1,9 +1,7 @@
 package xyz.esion.blog.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.io.Serializable;
 import java.util.Date;
 import lombok.Data;
@@ -17,10 +15,11 @@ import lombok.Data;
 @TableName(value ="category")
 @Data
 public class Category implements Serializable {
+
     /**
      * 分类ID
      */
-    @TableId
+    @TableId(type = IdType.ASSIGN_ID)
     private Integer id;
 
     /**
@@ -29,13 +28,20 @@ public class Category implements Serializable {
     private String name;
 
     /**
+     * 父级分类
+     */
+    private Integer pId;
+
+    /**
      * 创建时间
      */
+    @TableField(fill = FieldFill.INSERT)
     private Date createTime;
 
     /**
      * 更新时间
      */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
 
     /**

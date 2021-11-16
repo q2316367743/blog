@@ -38,6 +38,34 @@ a {
 *::-webkit-scrollbar-track {
     background-color: transparent;
 }
+.icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+    font-size: 15px;
+}
+/* 引入字体 */
+
+@font-face {
+    font-family: "JetBrainsMono";
+url("http://esion.xyz/assets/JetBrainsMono/web/JetBrainsMono-Medium.woff2") format("woff2"), /* Super Modern Browsers */
+url("http://esion.xyz/assets/JetBrainsMono/ttf/JetBrainsMono-Medium.ttf") format("truetype");
+    /* Safari, Android, iOS */
+}
+a {
+    color: #000000;
+    text-decoration: none;
+}
+
+.back-top{
+    border-radius: 0;
+    background-color: transparent;
+    box-shadow: 0 0 0;
+    width: 30px;
+    height: 30px;
+}
 
 #app {
     width: 100%;
@@ -48,6 +76,7 @@ a {
     position: absolute;
     overflow-y: auto;
     overflow-x: hidden;
+    background-color: #f2f2f2;
 }
 
 #app {
@@ -155,7 +184,7 @@ a {
 }
 
 .footer {
-    color: #ffffff;
+    color: #000000;
     padding: 30px;
     text-align: center;
 }

@@ -2,10 +2,10 @@ package xyz.esion.blog.module.portal.view;
 
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
-import xyz.esion.blog.view.CategoryView;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Esion
@@ -32,14 +32,19 @@ public class ArticleListView implements Serializable {
     private String image;
 
     /**
-     * 分类，顺序层级
+     * 分类ID
      */
-    private CategoryView categories;
+    private Integer categoryId;
+
+    /**
+     * 分类名称
+     */
+    private String  categoryName;
 
     /**
      * 标签，使用英文逗号隔开
      */
-    private String tags;
+    private List<String> tags;
 
     /**
      * 排序，默认更新时间截，正序，1：指定，时间戳：更新时间

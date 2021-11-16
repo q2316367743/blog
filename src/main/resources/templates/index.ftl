@@ -16,8 +16,17 @@
     <script src="https://cdn.bootcdn.net/ajax/libs/typeit/7.0.4/typeit.min.js"></script>
     <script src="util/time.js"></script>
     <script src="util/window.js"></script>
-    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/main.css"/>
     <link rel="stylesheet" href="css/index.css">
+    <script src="icon/iconfont.js"></script>
+    <link rel="stylesheet" href="icon/iconfont.css"/>
+    <link rel="stylesheet" href="css/article_list.css">
+    <link rel="stylesheet" href="css/broadside.css">
+    <style>
+        #welcome {
+            background: rgba(0, 0, 0, 0) url("${config.background}") repeat scroll 0% 0%;
+        }
+    </style>
 </head>
 <body>
 <div id="app" @scroll="appScroll($event)">
@@ -107,7 +116,7 @@
                             :xl="6"
                             :span="6"
                     >
-                        <broadside></broadside>
+                        <#include "/components/broadside.ftl" />
                     </el-col>
                     <el-col
                             :xs="24"
@@ -117,17 +126,15 @@
                             :xl="18"
                             :span="18"
                     >
-                        <el-card
-                                shadow="hover"
-                                class="item"
-                                v-if="articles.length === 0"
-                        >
-                            <div style="text-align: center;line-height: 242px;font-size: 36px;">
-                                没有文章
-                            </div>
-                        </el-card>
-                        <my-article v-for="(article, index) in articles" :key="index" :data="article" @click="toA"
-                                    style="margin-top: 20px;"></my-article>
+                        <#list page.records as item>
+                            <#include "/components/article_list.ftl" />
+                        <#else>
+                            <el-card shadow="hover" class="item">
+                                <div style="text-align: center;line-height: 242px;font-size: 36px;">
+                                    没有文章
+                                </div>
+                            </el-card>
+                        </#list>
                         <el-pagination
                                 background
                                 layout="prev, pager, next"
@@ -153,24 +160,23 @@
             target="#app"
             :bottom="40"
             :right="8"
-            style="
-				border-radius: 0;
-				background-color: transparent;
-				box-shadow: 0 0 0;
-				width: 30px;
-				height: 30px;
-			"
+            class="back-top"
     >
         <div class="back_top">
             <i class="el-icon-top"></i>
         </div>
     </el-backtop>
     <!-- 设置音乐显示 -->
-    <fix-bar target="#app" :bottom="70" :right="8" @click="isShowMusic()">
+    <el-backtop
+            target="#app"
+            :bottom="80"
+            :right="8"
+            class="back-top"
+            @click="isShowMusic()">
         <div class="back_top">
             <span class="iconfont icon-yinle"></span>
         </div>
-    </fix-bar>
+    </el-backtop>
 
     <!-- 侧边菜单 -->
     <el-drawer
@@ -179,7 +185,7 @@
             :show-close="false"
             size="250"
     >
-        <div style="width: 205px; text-align: left">
+        <div style="width: 205px; text-align: left" v-if="menuShow">
             <div style="margin-top: 10%; margin-bottom: 100px">
                 <ul class="nav" :class="{ 'nav-item-a': scrollOver }">
                     <li class="nav-item" @click="search_click">
@@ -375,6 +381,14 @@
             toA(href) {
                 window.location.href = href;
             },
+            toTarget(target) {
+                window.open(target);
+            },
+            open_notice(content){
+                this.$alert(content, '通知内容', {
+                    dangerouslyUseHTMLString: true
+                });
+            }
         },
     })
 </script>

@@ -1,4 +1,4 @@
-package xyz.esion.blog.view;
+package xyz.esion.blog.module.portal.view;
 
 import lombok.Data;
 
@@ -13,8 +13,19 @@ public class CategoryView implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 分类ID
+     */
     private Integer id;
 
+    /**
+     * 分类标题
+     */
     private String name;
+
+    /**
+     * 数量
+     */
+    private Long count;
 
 }

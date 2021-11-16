@@ -7,13 +7,14 @@
     <resultMap id="BaseResultMap" type="xyz.esion.blog.entity.Category">
             <id property="id" column="id" jdbcType="INTEGER"/>
             <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="pId" column="p_id" jdbcType="INTEGER"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
             <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
             <result property="isDelete" column="is_delete" jdbcType="BOOLEAN"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,name,create_time,
-        update_time,is_delete
+        id,name,p_id,
+        create_time,update_time,is_delete
     </sql>
 </mapper>

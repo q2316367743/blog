@@ -7,7 +7,6 @@
     <resultMap id="BaseResultMap" type="xyz.esion.blog.entity.Message">
             <id property="id" column="id" jdbcType="INTEGER"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
             <result property="isDelete" column="is_delete" jdbcType="BOOLEAN"/>
             <result property="type" column="type" jdbcType="TINYINT"/>
             <result property="name" column="name" jdbcType="VARCHAR"/>
@@ -16,8 +15,8 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,create_time,update_time,
-        is_delete,type,name,
-        email,content
+        id,create_time,is_delete,
+        type,name,email,
+        content
     </sql>
 </mapper>

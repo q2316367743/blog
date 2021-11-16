@@ -6,6 +6,7 @@ create table category
 (
     id int unsigned primary key comment '分类ID',
     name varchar(32) default '' not null comment '分类标题',
+    p_id int unsigned default 0 not null comment '父级分类',
     create_time datetime default '1998-08-06 00:00:00' not null comment '创建时间',
     update_time datetime default '1998-08-06 00:00:00' not null comment '更新时间',
     is_delete tinyint(1) unsigned default 0 not null comment '逻辑删除'
@@ -54,7 +55,8 @@ create table comment
     system_version varchar(32) default '' not null comment '系统',
     type tinyint unsigned default 1 not null comment '评论类型；1：访客',
     article_id int unsigned default 0 not null comment '文章ID',
-    p_id int unsigned default 0 not null comment '所在评论的ID',
+    p_id int unsigned default 0 not null comment '所在评论的ID，顶级为0',
+    root_id int unsigned default 0 not null comment '所属跟评论，顶级为0',
     target_id int unsigned comment '回复对象ID，冗余',
     target_nickname varchar(32) default '' not null comment '回复对象昵称，冗余',
     target_website varchar(64) default '' not null comment '回复对象个人网站，冗余',
@@ -65,7 +67,6 @@ create table message
 (
     id int unsigned primary key comment 'ID',
     create_time datetime default '1998-08-06 00:00:00' not null comment '创建时间',
-    update_time datetime default '1998-08-06 00:00:00' not null comment '更新时间',
     is_delete tinyint(1) unsigned default 0 not null comment '逻辑删除',
     type tinyint unsigned default 0 not null comment '类型',
     name varchar(32) default '' not null comment '名称',
