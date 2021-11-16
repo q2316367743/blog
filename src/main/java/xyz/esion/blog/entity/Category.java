@@ -11,6 +11,8 @@ import lombok.Data;
 /**
  * 文章分类表
  * @TableName category
+ * @author Esion
+ * @since 2021/11/16
  */
 @TableName(value ="category")
 @Data

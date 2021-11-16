@@ -1,25 +1,24 @@
-package xyz.esion.blog.entity;
+package xyz.esion.blog.module.portal.view;
 
-import com.baomidou.mybatisplus.annotation.*;
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+import xyz.esion.blog.view.CategoryView;
 
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 
 /**
- * 文章
- * @TableName article
  * @author Esion
  * @since 2021/11/16
  */
-@TableName(value ="article")
 @Data
-public class Article implements Serializable {
+public class ArticleListView implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * 文章ID
      */
-    @TableId(type = IdType.ASSIGN_ID)
     private Integer id;
 
     /**
@@ -33,9 +32,9 @@ public class Article implements Serializable {
     private String image;
 
     /**
-     * 分类ID
+     * 分类，顺序层级
      */
-    private Integer categoryId;
+    private CategoryView categories;
 
     /**
      * 标签，使用英文逗号隔开
@@ -55,19 +54,14 @@ public class Article implements Serializable {
     /**
      * 创建时间
      */
-    @TableField(fill = FieldFill.INSERT)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     /**
      * 更新时间
      */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
-
-    /**
-     * 逻辑删除
-     */
-    private Boolean isDelete;
 
     /**
      * 字数统计
@@ -94,11 +88,4 @@ public class Article implements Serializable {
      */
     private String content;
 
-    /**
-     * 文章原始内容，内容为Markdown文档
-     */
-    private String originalContent;
-
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
 }

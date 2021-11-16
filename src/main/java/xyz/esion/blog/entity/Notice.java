@@ -11,6 +11,8 @@ import lombok.Data;
 /**
  * 通知
  * @TableName notice
+ * @author Esion
+ * @since 2021/11/16
  */
 @TableName(value ="notice")
 @Data

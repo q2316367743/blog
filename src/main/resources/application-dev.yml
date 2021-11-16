@@ -33,6 +33,7 @@ spring:
   freemarker:
     template-loader-path: classpath:/templates/
     suffix: .ftl
+    cache: false
 
 mybatis-plus:
   configuration:

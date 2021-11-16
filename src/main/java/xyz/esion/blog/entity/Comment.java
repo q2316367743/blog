@@ -11,6 +11,8 @@ import lombok.Data;
 /**
  * 评论表
  * @TableName comment
+ * @author Esion
+ * @since 2021/11/16
  */
 @TableName(value ="comment")
 @Data

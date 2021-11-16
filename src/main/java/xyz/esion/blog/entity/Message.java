@@ -11,6 +11,8 @@ import lombok.Data;
 /**
  * 留言板
  * @TableName message
+ * @author Esion
+ * @since 2021/11/16
  */
 @TableName(value ="message")
 @Data

@@ -17,4 +17,9 @@ public class RouterController {
         return "index";
     }
 
+    @GetMapping("index.html")
+    public String home() {
+        return index();
+    }
+
 }

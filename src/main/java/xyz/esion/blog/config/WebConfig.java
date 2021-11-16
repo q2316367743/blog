@@ -3,19 +3,28 @@ package xyz.esion.blog.config;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.json.JSONUtil;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import xyz.esion.blog.enumeration.ResultCodeEnum;
 import xyz.esion.blog.global.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * @author qiao shengda
@@ -75,6 +84,35 @@ public class WebConfig implements WebMvcConfigurer {
         })
                 .addPathPatterns("/manage/**")
                 .excludePathPatterns("/manage/admin/login");
+    }/**
+     * 模型下划线名称绑定处理器
+     */
+    @Bean
+    public BeanPostProcessor beanPostProcessor() {
+        return new BeanPostProcessor() {
+            @Override
+            public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+                return bean;
+            }
+
+            @Override
+            public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+                if (bean instanceof RequestMappingHandlerAdapter) {
+                    RequestMappingHandlerAdapter adapter = (RequestMappingHandlerAdapter) bean;
+                    List<HandlerMethodArgumentResolver> argumentResolvers
+                            = new ArrayList<>(Objects.requireNonNull(adapter.getArgumentResolvers()));
+                    argumentResolvers.add(0, nameConvertModelProcessor(adapter));
+                    adapter.setArgumentResolvers(argumentResolvers);
+                }
+                return bean;
+            }
+
+            private NameConvertModelProcessor nameConvertModelProcessor(RequestMappingHandlerAdapter adapter) {
+                NameConvertModelProcessor processor = new NameConvertModelProcessor(adapter);
+                processor.setPropertyNamingStrategyBase(new PropertyNamingStrategy.SnakeCaseStrategy());
+                return processor;
+            }
+        };
     }
 
 }

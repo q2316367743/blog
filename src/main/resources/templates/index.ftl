@@ -3,16 +3,17 @@
 
 <head>
     <meta charset="utf-8"/>
-    <title>halo编辑器</title>
-    <meta name="keywords" content="halo,halo编辑器,仿VSCode的halo编辑器">
-    <meta name="description" content="仿VSCode的halo编辑器">
+    <title>云落天都的博客</title>
+    <meta name="keywords" content="个人博客,网络日志,云落天都">
+    <meta name="description" content="云落天都的博客">
     <meta name="author" content="云落天都">
-    <meta name="application-name" content="halo编辑器">
+    <meta name="application-name" content="博客">
     <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
     <script src="https://unpkg.com/element-ui@2.15.6/lib/index.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/element-ui@2.15.6/lib/theme-chalk/index.css">
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/typeit/7.0.4/typeit.min.js"></script>
     <script src="util/time.js"></script>
     <script src="util/window.js"></script>
     <link rel="stylesheet" href="css/main.css" />
@@ -30,7 +31,7 @@
         >
             <div>
                 <div class="logo" :class="{ 'nav-item-a': scrollOver }">
-                    <a href="/">落雨不悔的博客</a>
+                    <a href="/">云落天都的博客</a>
                 </div>
             </div>
             <div v-show="!isSm">
@@ -268,45 +269,11 @@
             articles: [],
         },
         mounted() {
-            //获取基本信息
-            get_config((res) => {
-                if (res.success) {
-                    let baseInfo = res.data.item;
-                    new APlayer({
-                        container: document.getElementById("fix-bar"),
-                        fixed: true,
-                        loop: "all",
-                        audio: baseInfo.music,
-                    });
-                    $("#app").css(
-                        "background-image",
-                        "url(" + baseInfo.background + ")"
-                    );
-                }
-            });
-
-            get_author((res) => {
-                if (res.success) {
-                    this.$store.commit("SET_AUTHOR", res.data.item);
-                }
-            });
-            get_web_info((res) => {
-                if (res.success) {
-                    this.$store.commit("SET_WEB_INFO", res.data.item);
-                    this.$store.commit("SET_NOTICES", res.data.items);
-                }
-            });
-            get_category_top(res => {
-                if (res.success) {
-                    this.$store.commit("SET_CATEGORY", res.data.items);
-                }
-            })
-
             let that = this;
             // 增加事件
             $(".nav-item").on("click", function (e) {
                 if ($(e.currentTarget).attr("to")) {
-                    that.$router.push($(e.currentTarget).attr("to"));
+                    window.location.href = $(e.currentTarget).attr("to");
                 }
             });
             this.getWindow();
@@ -358,7 +325,7 @@
                     $(".nav-item").on("click", function (e) {
                         that.menuShow = false;
                         if ($(e.currentTarget).attr("to")) {
-                            that.$router.push($(e.currentTarget).attr("to"));
+                            window.location.href = $(e.currentTarget).attr("to");
                         }
                     });
                 });
@@ -378,12 +345,7 @@
                 this.is_search = false;
                 let title = this.title;
                 this.title = '';
-                this.$router.push({
-                    path: "/search",
-                    query: {
-                        title: title
-                    }
-                })
+                window.location.href = '/search?title=' + title;
             },
             getWindow() {
                 findDimensions((winWidth, winHeight) => {
@@ -400,25 +362,11 @@
                 down.css("width", this.winWidth);
                 down.css("padding-top", this.winHeight / 2 - 115);
 
-                this.$parent.isSm = this.winWidth < 768;
+                this.isSm = this.winWidth < 768;
             },
             downMain() {
                 // 下滑
                 $("#app").animate({scrollTop: this.winHeight + "px"}, 800);
-            },
-            getArticle() {
-                getList(
-                    {
-                        page: this.page,
-                        limit: this.limit,
-                    },
-                    (res) => {
-                        if (res.success) {
-                            this.total = res.data.total;
-                            this.articles = res.data.items;
-                        }
-                    }
-                );
             },
             currentChange(page) {
                 this.page = page;
