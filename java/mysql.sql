@@ -4,7 +4,7 @@
 
 create table t_category
 (
-    id int unsigned primary key auto_increment comment '分类ID',
+    id int unsigned primary key comment '分类ID',
     name varchar(32) default '' not null comment '分类标题',
     create_time datetime default '1998-08-06 00:00:00' not null comment '创建时间',
     update_time datetime default '1998-08-06 00:00:00' not null comment '更新时间',
@@ -13,7 +13,7 @@ create table t_category
 
 create table t_article
 (
-    id int unsigned primary key auto_increment comment '文章ID',
+    id int unsigned primary key comment '文章ID',
     title varchar(32) default '' not null comment '文章标题',
     image varchar(255) default '' not null comment '文章展示图片',
     category_id int unsigned default 0 not null comment '分类ID',
@@ -27,13 +27,14 @@ create table t_article
     read_time int unsigned default 0 not null comment '阅读时间，根据字数，单位分钟',
     view_count int unsigned default 0 not null comment '阅读人数',
     comment_count int unsigned default 0 not null comment '评论数量',
-    content text comment '文章内容，内容为Markdown文档',
+    content text comment '文章内容，内容为html文件',
+    original_content text comment '文章原始内容，内容为Markdown文档',
     constraint fk_article_category foreign key(category_id) references t_category(id)
 ) comment '文章';
 
 create table t_notice
 (
-    id int unsigned primary key auto_increment comment 'ID',
+    id int unsigned primary key comment 'ID',
     title varchar(64) default '' not null comment '通知标题',
     content varchar(255) default '' not null comment '通知内容，html字符串',
     create_time datetime default '1998-08-06 00:00:00' not null comment '创建时间',
@@ -43,7 +44,7 @@ create table t_notice
 
 create table t_comment
 (
-    id int unsigned primary key auto_increment comment 'ID',
+    id int unsigned primary key comment 'ID',
     email varchar(64) default '' not null comment '电子邮箱',
     website varchar(64) default '' not null comment '个人网站',
     nickname varchar(32) default '' not null comment '昵称',
@@ -59,6 +60,18 @@ create table t_comment
     target_website varchar(64) default '' not null comment '回复对象个人网站，冗余',
     content text not null comment '评论内容'
 ) comment '评论表';
+
+create table t_message
+(
+    id int unsigned primary key comment 'ID',
+    create_time datetime default '1998-08-06 00:00:00' not null comment '创建时间',
+    update_time datetime default '1998-08-06 00:00:00' not null comment '更新时间',
+    is_delete tinyint(1) unsigned default 0 not null comment '逻辑删除',
+    type tinyint unsigned default 0 not null comment '类型',
+    name varchar(32) default '' not null comment '名称',
+    email varchar(48) default '' not null comment '电子邮箱',
+    content text comment '内容'
+) comment '留言板';
 
 create view v_article_list as
     select a.id, a.title, a.image, a.category_id, c.name category_name,
