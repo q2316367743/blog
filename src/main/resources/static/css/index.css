@@ -1,0 +1,38 @@
+#main {
+    text-align: center;
+}
+#title {
+    font-size: 40px;
+    font-weight: bold;
+    color: #ffffff;
+}
+#subtitle {
+    font-size: 30px;
+    color: #ffffff;
+    margin: 10px;
+}
+#down {
+    color: #ffffff;
+    font-size: 30px;
+    text-align: center;
+    animation: shadow 1.5s linear infinite;
+}
+@keyframes shadow {
+    0%,
+    100% {
+        transform: scaleY(1);
+    }
+    50% {
+        transform: scaleY(1.1);
+    }
+}
+
+.item {
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.pagination {
+    margin-top: 30px;
+    text-align: center;
+}

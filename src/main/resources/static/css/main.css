@@ -1,0 +1,194 @@
+/* 全局样式 */
+*::selection {
+    color: #ffffff;
+    background-color: #30c2b4;
+    text-shadow: none;
+}
+
+*::-moz-selection {
+    color: #ffffff;
+    background-color: #30c2b4;
+    text-shadow: none;
+}
+
+a {
+    color: #14d1b2;
+    text-decoration: none;
+}
+
+*::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #49b1f5;
+    background-image: -webkit-linear-gradient(
+            45deg,
+            rgba(255, 255, 255, 0.4) 25%,
+            transparent 25%,
+            transparent 50%,
+            rgba(255, 255, 255, 0.4) 50%,
+            rgba(255, 255, 255, 0.4) 75%,
+            transparent 75%,
+            transparent
+    );
+}
+
+*::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+#app {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    position: absolute;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#app {
+    width: 100%;
+    height: 100%;
+}
+
+/* 布局 */
+.topT {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    background-color: transparent;
+    color: #ffffff;
+}
+
+.topT .nav .nav-item a {
+    color: #ffffff;
+}
+
+.topT .logo a {
+    color: #ffffff;
+}
+
+.topS {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    background: rgba(255, 255, 255, 0.8);
+    color: #000000;
+}
+
+.topS .nav-item a {
+    color: #000000;
+}
+
+.topS .logo a {
+    color: #000000;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: bold;
+    padding-left: 20px;
+}
+
+.logo a {
+    text-decoration: none;
+}
+
+.nav {
+    position: relative;
+    padding: 0 20px;
+    background: transparent;
+    border-radius: 2px;
+    font-size: 0;
+}
+
+.nav-item {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 14px;
+    line-height: 60px;
+    list-style: none;
+    padding: 0 20px;
+}
+
+.nav a {
+    text-decoration: none;
+}
+
+.nav-item-a a:hover {
+    color: #49b1f5;
+}
+
+/*利用:before实现下划线宽度从0-100%*/
+.nav-item:before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    width: 0;
+    height: 100%;
+    border-bottom: 5px solid #49b1f5;
+    transition: 0.2s all linear; /*动画效果*/
+    right: 100%; /*下划线从右侧开始显示*/
+    cursor: pointer;
+}
+
+.nav-item:hover:before {
+    right: 0; /*鼠标滑过时，下划线从右向左移动*/
+    width: 100%; /*同时，下划线宽度从0-100%*/
+}
+
+.nav-item:hover ~ .nav-item:before {
+    /*~ 选择器：查找指定元素后面的所有兄弟结点*/
+    left: 0; /*处于hover后面元素的下划线从左侧开始显示*/
+}
+
+.footer {
+    color: #ffffff;
+    padding: 30px;
+    text-align: center;
+}
+
+.back_top {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    line-height: 30px;
+    color: #ffffff;
+    background-color: #1989fa;
+}
+
+/* 搜素 */
+.search-main {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.search-input {
+    margin-top: 10vh;
+    text-align: center;
+}
+
+.search-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #000000;
+    opacity: 0.6;
+}
