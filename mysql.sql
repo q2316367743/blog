@@ -15,6 +15,7 @@ create table category
 create table article
 (
     id int unsigned primary key comment '文章ID',
+    identification varchar(32) not null comment '文章标识',
     title varchar(32) default '' not null comment '文章标题',
     image varchar(255) default '' not null comment '文章展示图片',
     category_id int unsigned default 0 not null comment '分类ID',
@@ -30,8 +31,12 @@ create table article
     comment_count int unsigned default 0 not null comment '评论数量',
     content text comment '文章内容，内容为html文件',
     original_content text comment '文章原始内容，内容为Markdown文档',
-    constraint fk_article_category foreign key(category_id) references category(id)
+    constraint fk_article_category foreign key(category_id) references category(id),
+    constraint uk_article_identification unique (identification)
 ) comment '文章';
+
+create index idx_article_identification
+on article(identification);
 
 create table notice
 (
@@ -78,8 +83,8 @@ create table message
 
 insert into category(id, name) value (1, '个人杂谈');
 
-insert into article (id, title, image, category_id, tags, sequence, description, create_time, update_time, is_delete,
+insert into article (id, identification, title, image, category_id, tags, sequence, description, create_time, update_time, is_delete,
                        word_count, read_time, view_count, comment_count, content, original_content)
-values (1, '测试文章标题', 'https://img-blog.csdnimg.cn/img_convert/cce6857f9276c2ba78d3f4b9af3b036f.png', 1, '杂谈,随笔', 1,
+values (1, 'ce_shi_wen_zhang', '测试文章标题', 'https://img-blog.csdnimg.cn/img_convert/cce6857f9276c2ba78d3f4b9af3b036f.png', 1, '杂谈,随笔', 1,
         '测试文章', '2021-06-21 00:00:00', '2021-06-21 00:00:00', 0, 1315, 120, 0, 0,
         '测试内容', '测试内容');

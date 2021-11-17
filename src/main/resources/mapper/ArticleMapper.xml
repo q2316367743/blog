@@ -6,6 +6,7 @@
 
     <resultMap id="BaseResultMap" type="xyz.esion.blog.entity.Article">
         <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="identification" column="identification" jdbcType="VARCHAR"/>
         <result property="title" column="title" jdbcType="VARCHAR"/>
         <result property="image" column="image" jdbcType="VARCHAR"/>
         <result property="categoryId" column="category_id" jdbcType="INTEGER"/>
@@ -24,7 +25,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,title,image,
+        id,identification,title,image,
         category_id,tags,sequence,
         description,create_time,update_time,
         is_delete,word_count,read_time,

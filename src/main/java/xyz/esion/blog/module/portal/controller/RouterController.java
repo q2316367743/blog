@@ -38,13 +38,31 @@ public class RouterController {
     private final Config config;
     private final Website website;
 
-    @GetMapping
-    public String index(@NameConvertModel PageParam pageParam, Model model) {
-        PageView<ArticleListView> page = articleService.page(pageParam);
-        model.addAttribute("page", page);
+    /**
+     * 前置加载项，所有请求都会加载
+     */
+    private void preLoad(Model model) {
         model.addAttribute("author", author);
         model.addAttribute("config", config);
         model.addAttribute("website", website);
+    }
+
+    @GetMapping
+    public String index(@NameConvertModel PageParam pageParam, Model model) {
+        preLoad(model);
+        PageView<ArticleListView> page = articleService.page(pageParam);
+        model.addAttribute("page", page);
+        return "index";
+    }
+
+    @GetMapping("index.html")
+    public String home(@NameConvertModel PageParam pageParam, Model model) {
+        return index(pageParam, model);
+    }
+
+    @GetMapping("category")
+    public String category(Model model) {
+        preLoad(model);
         List<Category> categories = categoryService.list(new QueryWrapper<Category>()
                 .orderByDesc("update_time")
                 .last("limit 5"));
@@ -57,15 +75,7 @@ public class RouterController {
             view.setCount(categoryMap.containsKey(item.getId()) ? categoryMap.get(item.getId()) : 0);
             return view;
         }).collect(Collectors.toList()));
-        model.addAttribute("notices", noticeService.list(new QueryWrapper<Notice>()
-                .orderByDesc("update_time")
-                .last("limit 5")));
-        return "index";
-    }
-
-    @GetMapping("index.html")
-    public String home(@NameConvertModel PageParam pageParam, Model model) {
-        return index(pageParam, model);
+        return "category";
     }
 
 }

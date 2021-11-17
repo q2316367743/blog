@@ -23,6 +23,11 @@ public class Article implements Serializable {
     private Integer id;
 
     /**
+     * 文章标识
+     */
+    private String identification;
+
+    /**
      * 文章标题
      */
     private String title;
