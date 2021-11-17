@@ -13,7 +13,7 @@ Fluid.plugins = {
             return;
         }
 
-        var typed = new window.Typed('#subtitle', {
+        let typed = new window.Typed('#subtitle', {
             strings: [
                 '  ',
                 text + '&nbsp;'
@@ -23,7 +23,7 @@ Fluid.plugins = {
             loop: CONFIG.typing.loop
         });
         typed.stop();
-        var subtitle = document.getElementById('subtitle');
+        let subtitle = document.getElementById('subtitle');
         if (subtitle) {
             subtitle.innerText = '';
         }
@@ -34,12 +34,12 @@ Fluid.plugins = {
     },
 
     initTocBot: function () {
-        var toc = jQuery('#toc');
+        let toc = jQuery('#toc');
         if (toc.length === 0 || !window.tocbot) {
             return;
         }
-        var boardCtn = jQuery('#board-ctn');
-        var boardTop = boardCtn.offset().top;
+        let boardCtn = jQuery('#board-ctn');
+        let boardTop = boardCtn.offset().top;
 
         window.tocbot.init({
             tocSelector: '#toc-body',
@@ -60,28 +60,29 @@ Fluid.plugins = {
     },
 
     initFancyBox: function (selector) {
+        console.log(!('fancybox' in jQuery))
         if (!('fancybox' in jQuery)) {
             return;
         }
 
         jQuery(selector || '.markdown-body :not(a) > img, .markdown-body > img').each(function () {
-            var $image = jQuery(this);
-            var imageUrl = $image.attr('data-src') || $image.attr('src') || '';
+            let $image = jQuery(this);
+            let imageUrl = $image.attr('data-src') || $image.attr('src') || '';
             if (CONFIG.image_zoom.img_url_replace) {
-                var rep = CONFIG.image_zoom.img_url_replace;
-                var r1 = rep[0] || '';
-                var r2 = rep[1] || '';
+                let rep = CONFIG.image_zoom.img_url_replace;
+                let r1 = rep[0] || '';
+                let r2 = rep[1] || '';
                 if (r1) {
                     if (/^re:/.test(r1)) {
                         r1 = r1.replace(/^re:/, '');
-                        var reg = new RegExp(r1, 'gi');
+                        let reg = new RegExp(r1, 'gi');
                         imageUrl = imageUrl.replace(reg, r2);
                     } else {
                         imageUrl = imageUrl.replace(r1, r2);
                     }
                 }
             }
-            var $imageWrap = $image.wrap(
+            let $imageWrap = $image.wrap(
                 `
         <a class="fancybox fancybox.image" href="${imageUrl}"
           itemscope itemtype="http://schema.org/ImageObject" itemprop="url"></a>`
@@ -92,7 +93,7 @@ Fluid.plugins = {
                 $imageWrap.attr('data-fancybox', 'default').attr('rel', 'default');
             }
 
-            var imageTitle = $image.attr('title') || $image.attr('alt');
+            let imageTitle = $image.attr('title') || $image.attr('alt');
             if (imageTitle) {
                 $imageWrap.append(`<p class="image-caption">${imageTitle}</p>`);
                 $imageWrap.attr('title', imageTitle).attr('data-caption', imageTitle);
@@ -122,8 +123,8 @@ Fluid.plugins = {
         if (CONFIG.anchorjs.icon) {
             window.anchors.options.icon = CONFIG.anchorjs.icon;
         }
-        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-        var res = [];
+        let el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        let res = [];
         for (const item of el) {
             res.push('.markdown-body > ' + item);
         }
@@ -139,16 +140,16 @@ Fluid.plugins = {
             if (ele.length === 0) {
                 return 'copy-btn-dark';
             }
-            var rgbArr = ele.css('background-color').replace(/rgba*\(/, '').replace(')', '').split(',');
-            var color = (0.213 * rgbArr[0]) + (0.715 * rgbArr[1]) + (0.072 * rgbArr[2]) > 255 / 2;
+            let rgbArr = ele.css('background-color').replace(/rgba*\(/, '').replace(')', '').split(',');
+            let color = (0.213 * rgbArr[0]) + (0.715 * rgbArr[1]) + (0.072 * rgbArr[2]) > 255 / 2;
             return color ? 'copy-btn-dark' : 'copy-btn-light';
         }
 
-        var copyHtml = '';
+        let copyHtml = '';
         copyHtml += '<button class="copy-btn" data-clipboard-snippet="">';
         copyHtml += '<i class="iconfont icon-copy"></i><span>Copy</span>';
         copyHtml += '</button>';
-        var blockElement = jQuery('.markdown-body pre');
+        let blockElement = jQuery('.markdown-body pre');
         blockElement.each(function () {
             const pre = jQuery(this);
             if (pre.find('code.mermaid').length > 0) {
@@ -159,7 +160,7 @@ Fluid.plugins = {
             }
             pre.append(copyHtml);
         });
-        var clipboard = new window.ClipboardJS('.copy-btn', {
+        let clipboard = new window.ClipboardJS('.copy-btn', {
             target: function (trigger) {
                 return trigger.previousElementSibling;
             }
@@ -167,7 +168,7 @@ Fluid.plugins = {
         jQuery('.copy-btn').addClass(getBgClass(blockElement));
         clipboard.on('success', function (e) {
             e.clearSelection();
-            var tmp = e.trigger.outerHTML;
+            let tmp = e.trigger.outerHTML;
             e.trigger.innerHTML = 'Success';
             setTimeout(function () {
                 e.trigger.outerHTML = tmp;

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.esion.blog.mapper.MenuMapper">
+
+    <resultMap id="BaseResultMap" type="xyz.esion.blog.entity.Menu">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="icon" column="icon" jdbcType="VARCHAR"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="target" column="target" jdbcType="TINYINT"/>
+            <result property="href" column="href" jdbcType="VARCHAR"/>
+            <result property="pId" column="p_id" jdbcType="INTEGER"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="isDelete" column="is_delete" jdbcType="BOOLEAN"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,icon,name,
+        target,href,p_id,
+        create_time,update_time,is_delete
+    </sql>
+</mapper>

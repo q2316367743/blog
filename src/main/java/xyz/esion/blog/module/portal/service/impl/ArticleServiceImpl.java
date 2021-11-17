@@ -17,6 +17,7 @@ import xyz.esion.blog.param.PageParam;
 import xyz.esion.blog.view.PageView;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -39,9 +40,13 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
                 new QueryWrapper<>());
         List<Article> records = page.getRecords();
         // 获取全部分类
-        Map<Integer, Category> categoryMap = categoryMapper.selectList(new QueryWrapper<Category>()
-                        .in("id", records.stream().map(Article::getCategoryId).collect(Collectors.toList())))
-                .stream().collect(Collectors.toMap(Category::getId, e -> e));
+        List<Integer> categoryIds = records.stream().map(Article::getCategoryId).collect(Collectors.toList());
+        Map<Integer, Category> categoryMap = new HashMap<>(categoryIds.size());
+        if (!categoryIds.isEmpty()) {
+            categoryMap.putAll(categoryMapper
+                    .selectList(new QueryWrapper<Category>().in("id", categoryIds))
+                    .stream().collect(Collectors.toMap(Category::getId, e -> e)));
+        }
         return new PageView<>(
                 page.getCurrent(),
                 page.getSize(),
@@ -50,7 +55,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
                 records.stream()
                         .map(item -> {
                             ArticleListView view = BeanUtil.copyProperties(item, ArticleListView.class);
-                            view.setCategoryName(categoryMap.get(item.getCategoryId()).getName());
+                            if (categoryMap.containsKey(item.getCategoryId())) {
+                                view.setCategoryName(categoryMap.get(item.getCategoryId()).getName());
+                            }
                             view.setTags(Arrays.asList(item.getTags().split(",")));
                             return view;
                         })
@@ -61,6 +68,11 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     public List<KeyValue<Integer, Long>> countByCategory(List<Integer> categoryIds) {
         return articleMapper.countByCategory(categoryIds);
+    }
+
+    @Override
+    public Article info(String identification) {
+        return articleMapper.selectPortalByIdentification(identification);
     }
 
 }

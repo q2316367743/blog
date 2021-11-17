@@ -31,3 +31,13 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
   mapper-locations: classpath:mapper/*.xml
+
+config:
+  href: https://esion.xyz
+  name: 云落天都的博客
+  keywords:
+    - 云落天都
+    - 博客
+    - 网络日志
+  favicon: /favicon.ico
+  background: https://static.zkqiang.cn/images/20191231163321.jpg-slim

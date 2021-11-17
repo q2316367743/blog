@@ -22,10 +22,7 @@ import xyz.esion.blog.global.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @author qiao shengda
@@ -126,14 +123,6 @@ public class WebConfig implements WebMvcConfigurer {
         author.setOther(new LinkedList<>());
         author.setBaseInfo("无");
         return author;
-    }
-
-    @Bean
-    public Config config() {
-        Config config = new Config();
-        config.setBackground("https://esion.xyz/upload/2021/10/%E5%BE%AE%E8%BD%AFWin10%E5%A4%9C%E7%A9%BA%E9%A3%8E%E6%99%AF2k%E9%AB%98%E6%B8%85%E5%A3%81%E7%BA%B8-59c60602caaf42119ff1d9b253a05dc7.jpg");
-        config.setMusic(new LinkedList<>());
-        return config;
     }
 
 }

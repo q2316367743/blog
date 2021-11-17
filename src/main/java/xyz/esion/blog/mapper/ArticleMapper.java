@@ -22,6 +22,14 @@ public interface ArticleMapper extends BaseMapper<Article> {
      */
     List<KeyValue<Integer, Long>> countByCategory(@Param("categoryIds") List<Integer> categoryIds);
 
+    /**
+     * 根据ID，查询一个前端信息
+     *
+     * @param identification 唯一标识
+     * @return 前端页面，没有原始内容
+     */
+    Article selectPortalByIdentification(String identification);
+
 }
 
 

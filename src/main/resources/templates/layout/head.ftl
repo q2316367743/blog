@@ -2,6 +2,7 @@
 <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
 <link rel="icon" href="/img/favicon.png">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
 <!-- 主题依赖的图标库，不要自行修改 -->
 <link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
 <link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
@@ -9,9 +10,9 @@
 <meta name="generator" content="Hexo 5.4.0">
 <!-- 自定义样式保持在最底部 -->
 <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    var CONFIG = {
-        "hostname": "fluid-dev.cn",
+    let Fluid = window.Fluid || {};
+    let CONFIG = {
+        "hostname": "${config.href}",
         "root": "/",
         "version": "1.8.11",
         "typing": {"enable": true, "typeSpeed": 70, "cursorChar": "_", "loop": false},
@@ -40,14 +41,8 @@
             "tencent": {"sid": null, "cid": null},
             "woyaola": null,
             "cnzz": null,
-            "leancloud": {
-                "app_id": "LyT8mpSI2Jq9CRhOtNOgBXkE-9Nh9j0Va",
-                "app_key": "fUOlkXhD9wcmxOTed9NdlqPH",
-                "server_url": "https://lyt8mpsi.lc-cn-e1-shared.com",
-                "path": "window.location.pathname"
-            }
-        },
-        "search_path": "/local-search.xml"
+            "leancloud": null
+        }
     };
 </script>
 <script src="/js/util.js"></script>

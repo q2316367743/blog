@@ -3,22 +3,22 @@
 
 
 <head>
-    <title>云落天都的网络日志</title>
+    <title>${config.name}</title>
+    <link rel="icon" href="${config.favicon}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="theme-color" content="#2f4154">
-    <meta name="description" content="An elegant Material-Design theme for Hexo">
-    <meta name="author" content="Fluid">
-    <meta name="keywords" content="hexo,theme,fluid,material,material-design,blog">
-    <meta name="description" content="An elegant Material-Design theme for Hexo">
+    <meta name="author" content="${author.name}">
+    <meta name="keywords" content="<#list config.keywords as keyword>${keyword}<#sep>,</#sep></#list>">
+    <meta name="description" content="${author.description}">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Hexo Theme Fluid">
-    <meta property="og:url" content="https://fluid-dev.cn/index.html">
-    <meta property="og:site_name" content="Hexo Theme Fluid">
-    <meta property="og:description" content="An elegant Material-Design theme for Hexo">
+    <meta property="og:title" content="${config.name}">
+    <meta property="og:url" content="${config.href}/index.html">
+    <meta property="og:site_name" content="${config.name}">
+    <meta property="og:description" content="${author.description}">
     <meta property="og:locale" content="zh_CN">
-    <meta property="article:author" content="Fluid">
-    <meta property="article:tag" content="hexo,theme,fluid,material,material-design,blog">
+    <meta property="article:author" content="${author.name}">
+    <meta property="article:tag" content="<#list config.keywords as keyword>${keyword}<#sep>,</#sep></#list>">
     <meta name="twitter:card" content="summary_large_image">
     <#include "./layout/head.ftl" />
 </head>
@@ -26,7 +26,7 @@
 <header style="height: 100vh;">
     <#include "./layout/menu.ftl" />
     <div class="banner" id="banner" parallax=true
-         style="background: url('https://static.zkqiang.cn/images/20191231163321.jpg-slim') center center / cover no-repeat; transform: translate3d(0px, 0px, 0px);">
+         style="background: url('${config.background}') center center / cover no-repeat; transform: translate3d(0px, 0px, 0px);">
         <div class="full-bg-img">
             <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
                 <div class="page-header text-center fade-in-up">
@@ -73,7 +73,8 @@
                                     <div class="index-btm post-metas">
                                         <div class="post-meta mr-3">
                                             <i class="iconfont icon-date"></i>
-                                            <time datetime="${article.updateTime?string('yyyy-MM-dd HH:mm:ss')}" pubdate>
+                                            <time datetime="${article.updateTime?string('yyyy-MM-dd HH:mm:ss')}"
+                                                  pubdate>
                                                 ${article.updateTime?string('yyyy-MM-dd HH:mm:ss')}
                                             </time>
                                         </div>
@@ -94,13 +95,37 @@
                             <div>暂无文章</div>
                         </#list>
                         <!-- 分页 -->
+
                         <nav aria-label="navigation">
                             <span class="pagination" id="pagination">
-                              <span class="page-number current">1</span>
-                                <a class="page-number" href="/page/2/#board">2</a>
-                                <a class="extend next" rel="next" href="/page/2/#board">
-                                    <i class="iconfont icon-arrowright"></i>
-                                </a>
+                                <#if page.pageNum - 1 &gt; 0>
+                                    <a class="extend prev" rel="prev" href="index.html?pageNum=${page.pageNum - 1}&pageSize=${page.pageSize}">
+                                        <i class="iconfont icon-arrowleft"></i>
+                                    </a>
+                                </#if>
+                                <#if page.pageNum - 2 &gt; 0>
+                                    <a class="page-number"
+                                       href="index.html?pageNum=${page.pageNum - 2}&pageSize=${page.pageSize}">${page.pageNum - 2}</a>
+                                </#if>
+                                <#if page.pageNum - 1 &gt; 0>
+                                    <a class="page-number"
+                                       href="index.html?pageNum=${page.pageNum - 1}&pageSize=${page.pageSize}">${page.pageNum - 1}</a>
+                                </#if>
+                                <span class="page-number current">${page.pageNum}</span>
+                                <#if page.pageNum + 1 &lt; page.count>
+                                    <a class="page-number"
+                                       href="index.html?pageNum=${page.pageNum + 1}&pageSize=${page.pageSize}">${page.pageNum + 1}</a>
+                                </#if>
+                                <#if page.pageNum + 2 &lt; page.count>
+                                    <a class="page-number"
+                                       href="index.html?pageNum=${page.pageNum + 2}&pageSize=${page.pageSize}">${page.pageNum + 2}</a>
+                                </#if>
+                                <#if page.pageNum + 1 &lt; page.count>
+                                    <a class="extend next" rel="next"
+                                       href="index.html?pageNum=${page.pageNum + 1}&pageSize=${page.pageSize}">
+                                        <i class="iconfont icon-arrowright"></i>
+                                    </a>
+                                </#if>
                             </span>
                         </nav>
                     </div>

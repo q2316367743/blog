@@ -41,4 +41,14 @@
         </foreach>
         group by category_id
     </select>
+    <select id="selectPortalByIdentification" resultMap="BaseResultMap">
+        select id,identification,title,image,
+               category_id,tags,
+               description,create_time,update_time,
+               is_delete,word_count,read_time,
+               view_count,comment_count,content
+        from article
+        where identification = #{identification}
+        and is_delete = 0
+    </select>
 </mapper>
