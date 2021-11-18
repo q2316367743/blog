@@ -1,7 +1,6 @@
 package xyz.esion.blog;
 
 import xyz.esion.blog.markdown.Markdown;
-import xyz.esion.blog.markdown.MarkdownParser;
 
 /**
  * @author Esion
