@@ -18,6 +18,9 @@ public class SpanParser {
     private static int deleteStartIndex = 0;
     private static int deleteEndIndex = 0;
 
+    private static int codeStep = 0;
+    private static int codeIndex = 0;
+
     /**
      * 渲染内容<br />
      * 通过标记的方法渲染
@@ -31,12 +34,15 @@ public class SpanParser {
         for (char item : items) {
             if (item == DELETE) {
                 deleteRender(sb);
+            }else if (item == CODE) {
+                codeRender(sb);
             } else {
                 sb.append(item);
             }
         }
         // 收尾
         deleteEnd(sb);
+        codeEnd(sb);
         return sb.toString();
     }
 
@@ -65,7 +71,7 @@ public class SpanParser {
                 if (sb.length() == deleteEndIndex) {
                     // 渲染全部
                     sb.insert(deleteStartIndex, "<s>");
-                    sb.insert(deleteEndIndex + 3, "</s>");
+                    sb.append("</s>");
                 } else {
                     // 还原
                     sb.insert(deleteStartIndex, DELETE);
@@ -83,18 +89,62 @@ public class SpanParser {
         switch (deleteStep) {
             case 1:
                 sb.insert(deleteStartIndex, DELETE);
+                updateIndex(deleteStartIndex, 1);
                 break;
             case 2:
                 sb.insert(deleteStartIndex, DELETE);
                 sb.insert(deleteStartIndex, DELETE);
+                updateIndex(deleteStartIndex, 2);
                 break;
             case 3:
                 // 还原
                 sb.insert(deleteStartIndex, DELETE);
                 sb.insert(deleteStartIndex, DELETE);
                 sb.insert(deleteEndIndex + 2, DELETE);
+                updateIndex(deleteStartIndex, 3);
             default:
                 break;
+        }
+    }
+
+    public static void codeRender(StringBuilder sb) {
+        if (codeStep == 0) {
+            codeIndex = sb.length();
+            codeStep = 1;
+        }else {
+            sb.insert(codeIndex, "<code>");
+            sb.append("</code>");
+            codeStep = 0;
+        }
+    }
+
+    public static void codeEnd(StringBuilder sb) {
+        if (codeStep == 1) {
+            sb.insert(codeIndex, CODE);
+        }
+        codeStep = 0;
+    }
+
+    public static void updateIndex(int index, int length) {
+        // code
+        if (codeStep == 1) {
+            if (codeIndex > index) {
+                codeIndex += length;
+            }
+        }
+        // 删除
+        if (deleteStep == 1 || deleteStep == 2) {
+            if (deleteStartIndex > index) {
+                deleteStartIndex += length;
+            }
+        }else if (deleteStep == 3) {
+            if (deleteStartIndex > index) {
+                deleteStartIndex += length;
+                deleteEndIndex += length;
+            }
+            if (deleteEndIndex > index) {
+                deleteEndIndex += length;
+            }
         }
     }
 

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import xyz.esion.blog.markdown.Template;
 
 import java.io.Serializable;
 import java.util.List;
@@ -42,7 +43,7 @@ public class TitleParser {
         private String value;
 
         public String html() {
-            return StrUtil.format("<h{}>{}</h{}>", level, value, level);
+            return StrUtil.format(Template.TITLE, level, value, level);
         }
 
     }
