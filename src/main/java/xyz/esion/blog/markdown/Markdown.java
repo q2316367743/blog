@@ -1,6 +1,11 @@
 package xyz.esion.blog.markdown;
 
-import xyz.esion.blog.markdown.div.TitleParser;
+import xyz.esion.blog.global.KeyValue;
+import xyz.esion.blog.markdown.parser.SpanParser;
+import xyz.esion.blog.markdown.parser.TitleParser;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * markdown文档解析器
@@ -11,8 +16,10 @@ import xyz.esion.blog.markdown.div.TitleParser;
 public class Markdown {
 
     private final String html;
+    private final List<KeyValue<Integer, String>> menus;
 
     public Markdown(String original) {
+        this.menus = new LinkedList<>();
         this.html = parse(original);
     }
 
@@ -22,7 +29,10 @@ public class Markdown {
         for (String line : lines) {
             // 解析
             if (line.startsWith("#")) {
-                sb.append(new TitleParser(line).html());
+                TitleParser.Title title = TitleParser.render(line);
+                title.setValue(SpanParser.render(title.getValue()));
+                sb.append(title.html());
+                menus.add(new KeyValue<>(title.getLevel(), title.getValue()));
             }
         }
         return sb.toString();

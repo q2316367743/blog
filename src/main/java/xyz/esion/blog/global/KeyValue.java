@@ -1,6 +1,8 @@
 package xyz.esion.blog.global;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -9,6 +11,8 @@ import java.io.Serializable;
  * @since 2021/11/16
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class KeyValue<K, V> implements Serializable {
 
     private static final long serialVersionUID = 1L;

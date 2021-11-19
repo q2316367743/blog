@@ -9,7 +9,7 @@ import xyz.esion.blog.markdown.Markdown;
 public class MarkdownTest {
 
     public static void main(String[] args) {
-        Markdown markdown = new Markdown("## 你**真**好");
+        Markdown markdown = new Markdown("## 你~~真~~好");
         System.out.println(markdown.html());
     }
 
