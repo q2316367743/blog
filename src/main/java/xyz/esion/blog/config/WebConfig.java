@@ -47,42 +47,41 @@ public class WebConfig implements WebMvcConfigurer {
         // 访问量计算
         // 权限拦截
         String OPTIONS = "OPTIONS";
-        registry.addInterceptor(new HandlerInterceptor(){
-            @Override
-            public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-                if (OPTIONS.equals(request.getMethod())){
-                    return true;
-                }else {
-                    try {
-                        StpUtil.checkLogin();
-                    }catch (NotLoginException exception){
-                        response.setCharacterEncoding("utf-8");
-                        response.setContentType("text/json;charset=UTF-8 ");
-                        if(exception.getType().equals(NotLoginException.NOT_TOKEN)) {
+        registry.addInterceptor(new HandlerInterceptor() {
+                    @Override
+                    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+                        if (OPTIONS.equals(request.getMethod())) {
+                            return true;
+                        } else {
                             try {
-                                response.getWriter().print(JSONUtil.toJsonStr(Result.fail(ResultCodeEnum.UN_AUTHENTICATION)));
-                                return false;
-                            } catch (IOException ignored) {
+                                StpUtil.checkLogin();
+                            } catch (NotLoginException exception) {
+                                response.setCharacterEncoding("utf-8");
+                                response.setContentType("text/json;charset=UTF-8 ");
+                                if (exception.getType().equals(NotLoginException.NOT_TOKEN)) {
+                                    try {
+                                        response.getWriter().print(JSONUtil.toJsonStr(Result.fail(ResultCodeEnum.UN_AUTHENTICATION)));
+                                        return false;
+                                    } catch (IOException ignored) {
+                                    }
+                                } else if (exception.getType().equals(NotLoginException.INVALID_TOKEN) || exception.getType().equals(NotLoginException.TOKEN_TIMEOUT)) {
+                                    try {
+                                        response.getWriter().print(JSONUtil.toJsonStr(Result.fail(ResultCodeEnum.INVALID)));
+                                        return false;
+                                    } catch (IOException ignored) {
+                                    }
+                                }
                             }
                         }
-                        else if(exception.getType().equals(NotLoginException.INVALID_TOKEN) || exception.getType().equals(NotLoginException.TOKEN_TIMEOUT)) {
-                            try {
-                                response.getWriter().print(JSONUtil.toJsonStr(Result.fail(ResultCodeEnum.INVALID)));
-                                return false;
-                            } catch (IOException ignored) {
-                            }
-                        }
+                        // 通过验证
+                        return true;
                     }
-                }
+                })
+                .addPathPatterns("/manage/api")
+                .excludePathPatterns("/manage/api/admin/login");
+    }
 
-
-                // 通过验证
-                return true;
-            }
-        })
-                .addPathPatterns("/manage/**")
-                .excludePathPatterns("/manage/admin/login");
-    }/**
+    /**
      * 模型下划线名称绑定处理器
      */
     @Bean
@@ -111,18 +110,6 @@ public class WebConfig implements WebMvcConfigurer {
                 return processor;
             }
         };
-    }
-
-    @Bean
-    public Author author() {
-        Author author = new Author();
-        author.setName("云落天都");
-        author.setDescription("我的个人博客");
-        author.setAvatar("https://portrait.gitee.com/uploads/avatars/user/1786/5358547_qiaoshengda_1578985319.png");
-        author.setGitee("https://gitee.com/qiaoshengda");
-        author.setOther(new LinkedList<>());
-        author.setBaseInfo("无");
-        return author;
     }
 
 }

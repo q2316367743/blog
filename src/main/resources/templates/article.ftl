@@ -7,7 +7,8 @@
     <link rel="icon" href="${config.favicon}">
     <meta charset="UTF-8">
     <link rel="apple-touch-icon" sizes="76x76" href="${config.favicon}">
-    <link rel="icon" href="${config.favicon}">
+    <meta property="og:site_name" content="${config.name}">
+    <meta property="og:image" content="${config.favicon}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
@@ -19,10 +20,8 @@
     <meta property="og:type" content="article">
     <meta property="og:title" content="${article.title}">
     <meta property="og:url" content="${config.href}/article/${article.identification}.html">
-    <meta property="og:site_name" content="${config.name}">
     <meta property="og:description" content="${article.description}">
     <meta property="og:locale" content="zh_CN">
-    <meta property="og:image" content="${config.favicon}">
     <meta property="article:published_time" content="${article.createTime?string('yyyy-MM-dd HH:mm:ss')}">
     <meta property="article:modified_time" content="${article.updateTime?string('yyyy-MM-dd HH:mm:ss')}">
     <meta property="article:author" content="${author.name}">
@@ -36,7 +35,7 @@
 <header style="height: 70vh;">
     <#include "./layout/menu.ftl" />
     <div class="banner" id="banner" parallax=true
-         style="background: url('https://static.zkqiang.cn/images/20190728030406.jpeg-slim') no-repeat center center;
+         style="background: url('<#if article.image?length == 0>${config.pageBackground}<#else>${article.image}</#if>') no-repeat center center;
            background-size: cover;">
         <div class="full-bg-img">
             <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.5)">

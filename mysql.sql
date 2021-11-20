@@ -28,6 +28,7 @@ create table article
     read_time        int unsigned        default 0                     not null comment '阅读时间，根据字数，单位分钟',
     view_count       int unsigned        default 0                     not null comment '阅读人数',
     comment_count    int unsigned        default 0                     not null comment '评论数量',
+    type             tinyint unsigned    default 1                     not null comment '文章内容编写类型',
     content          text comment '文章内容，内容为html文件',
     original_content text comment '文章原始内容，内容为Markdown文档',
     constraint fk_article_category foreign key (category_id) references category (id),
@@ -120,17 +121,21 @@ insert into menu
 insert into menu
     value (4, 'icon-user-fill', '关于', 0, '/about.html', 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
 insert into menu
-    value (5, 'icon-link-fill', '友链', 0, '/page/link.html', 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
+    value (5, 'icon-link-fill', '连接', 0, '/', 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
 insert into menu
-    value (6, 'icon-books', '文档', 0, '/', 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
+    value (6, '', '友链', 0, '/page/link.html', 5, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
 insert into menu
-    value (7, '', '安装主题', 1, 'https://hexo.fluid-dev.com/docs/start/', 6, '2021-11-17 00:00:00', '2021-11-17 00:00:00',
+    value (7, '', '我的页面', 0, '/page/ce_shi_ye_mian.html', 5, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
+insert into menu
+    value (8, 'icon-books', '文档', 0, '/', 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
+insert into menu
+    value (9, '', '安装主题', 1, 'https://hexo.fluid-dev.com/docs/start/', 8, '2021-11-17 00:00:00', '2021-11-17 00:00:00',
            0);
 insert into menu
-    value (8, '', '配置指南', 1, 'https://hexo.fluid-dev.com/docs/guide/', 6, '2021-11-17 00:00:00', '2021-11-17 00:00:00',
+    value (10, '', '配置指南', 1, 'https://hexo.fluid-dev.com/docs/guide/', 8, '2021-11-17 00:00:00', '2021-11-17 00:00:00',
            0);
 insert into menu
-    value (9, '', '图标用法', 1, 'https://hexo.fluid-dev.com/docs/icon/', 6, '2021-11-17 00:00:00', '2021-11-17 00:00:00',
+    value (11, '', '图标用法', 1, 'https://hexo.fluid-dev.com/docs/icon/', 8, '2021-11-17 00:00:00', '2021-11-17 00:00:00',
            0);
 
 insert into category(id, name) value (1, '个人杂谈');
@@ -142,3 +147,9 @@ values (1, 'ce_shi_wen_zhang', '测试文章标题', 'https://img-blog.csdnimg.c
         1, '杂谈,随笔', 1,
         '测试文章', '2021-06-21 00:00:00', '2021-06-21 00:00:00', 0, 1315, 120, 0, 0,
         '测试内容', '测试内容');
+
+insert into page (id, identification, title, image, description, create_time,
+                     update_time, is_delete, view_count, comment_count, content, original_content)
+values (1, 'ce_shi_ye_mian', '测试页面标题', 'https://img-blog.csdnimg.cn/img_convert/cce6857f9276c2ba78d3f4b9af3b036f.png',
+        '测试文章', '2021-06-21 00:00:00', '2021-06-21 00:00:00', 0, 1315, 120,
+        '测试内容<a href="https://esion.xyz" target="_blank">我的页面</a>', '测试内容[我的页面](https://esion.xyz)');

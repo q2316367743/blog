@@ -5,24 +5,40 @@
 <mapper namespace="xyz.esion.blog.mapper.PageMapper">
 
     <resultMap id="BaseResultMap" type="xyz.esion.blog.entity.Page">
-            <id property="id" column="id" jdbcType="INTEGER"/>
-            <result property="identification" column="identification" jdbcType="VARCHAR"/>
-            <result property="title" column="title" jdbcType="VARCHAR"/>
-            <result property="image" column="image" jdbcType="VARCHAR"/>
-            <result property="description" column="description" jdbcType="VARCHAR"/>
-            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
-            <result property="isDelete" column="is_delete" jdbcType="BOOLEAN"/>
-            <result property="viewCount" column="view_count" jdbcType="INTEGER"/>
-            <result property="commentCount" column="comment_count" jdbcType="INTEGER"/>
-            <result property="content" column="content" jdbcType="VARCHAR"/>
-            <result property="originalContent" column="original_content" jdbcType="VARCHAR"/>
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="identification" column="identification" jdbcType="VARCHAR"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="image" column="image" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="isDelete" column="is_delete" jdbcType="BOOLEAN"/>
+        <result property="viewCount" column="view_count" jdbcType="INTEGER"/>
+        <result property="commentCount" column="comment_count" jdbcType="INTEGER"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="originalContent" column="original_content" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,identification,title,
+        id
+        ,identification,title,
         image,description,create_time,
         update_time,is_delete,view_count,
         comment_count,content,original_content
     </sql>
+    <select id="selectByIdentification" resultType="xyz.esion.blog.module.portal.view.PageInfoView">
+        select id,
+               identification,
+               title,
+               image,
+               description,
+               create_time,
+               update_time,
+               view_count,
+               comment_count,
+               content
+        from page
+        where identification = #{identification}
+          and is_delete = 0
+    </select>
 </mapper>

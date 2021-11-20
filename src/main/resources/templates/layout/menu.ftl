@@ -1,7 +1,7 @@
 <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <strong>云落天都的网络日志</strong>
+            <strong>${config.name}</strong>
         </a>
         <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
                 data-target="#navbarSupportedContent"
@@ -16,7 +16,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="${menu.href}"
                                target="<#if menu.target == 0>_self<#else>_blank</#if>">
-                                <i class="iconfont ${menu.icon}"></i>
+                                <i class="${menu.icon}"></i>
                                 ${menu.name}
                             </a>
                         </li>
@@ -24,7 +24,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="iconfont ${menu.icon}"></i>
+                                <i class="${menu.icon}"></i>
                                 ${menu.name}
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">

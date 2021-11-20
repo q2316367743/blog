@@ -142,14 +142,9 @@
 <#include './layout/script.ftl' />
 <script>
     new TypeIt("#subtitle", {
-        strings: [
-            "真正的大师永远怀着一颗学徒的心。",
-            "任何时候都不要被骄傲蒙蔽了双眼！",
-            "绝对不要坐等胜利的到来。",
-            "愤怒，带来冲动。",
-        ],
-        speed: 150,
-        loop: true,
+        strings: [<#list config.index.texts as text>"${text}"<#sep>,</#sep></#list>],
+        speed: ${config.index.speed},
+        loop: <#if config.index.loop>true<#else>false</#if>,
         lifeLike: true,
         startDelay: 500,
         breakLines: false,

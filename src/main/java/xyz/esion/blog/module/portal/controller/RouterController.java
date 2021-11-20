@@ -8,17 +8,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import xyz.esion.blog.entity.Article;
-import xyz.esion.blog.entity.Category;
-import xyz.esion.blog.entity.Notice;
+import xyz.esion.blog.entity.*;
 import xyz.esion.blog.global.*;
-import xyz.esion.blog.module.portal.service.ArticleService;
-import xyz.esion.blog.module.portal.service.CategoryService;
-import xyz.esion.blog.module.portal.service.MenuService;
-import xyz.esion.blog.module.portal.service.NoticeService;
+import xyz.esion.blog.module.portal.service.*;
 import xyz.esion.blog.module.portal.view.ArticleInfoView;
 import xyz.esion.blog.module.portal.view.ArticleListView;
 import xyz.esion.blog.module.portal.view.CategoryView;
+import xyz.esion.blog.module.portal.view.PageInfoView;
 import xyz.esion.blog.param.PageParam;
+import xyz.esion.blog.service.AuthorService;
+import xyz.esion.blog.service.ConfigService;
+import xyz.esion.blog.service.WebsiteService;
 import xyz.esion.blog.view.PageView;
 
 import java.util.Arrays;
@@ -39,18 +39,19 @@ public class RouterController {
     private final NoticeService noticeService;
     private final CategoryService categoryService;
     private final MenuService menuService;
+    private final PageService pageService;
 
-    private final Author author;
-    private final Config config;
-    private final Website website;
+    private final AuthorService authorService;
+    private final ConfigService configService;
+    private final WebsiteService websiteService;
 
     /**
      * 前置加载项，所有请求都会加载
      */
     private void preLoad(Model model) {
-        model.addAttribute("author", author);
-        model.addAttribute("config", config);
-        model.addAttribute("website", website);
+        model.addAttribute("author", authorService.info());
+        model.addAttribute("config", configService.info());
+        model.addAttribute("website", websiteService.info());
         model.addAttribute("menus", menuService.tree());
     }
 
@@ -67,30 +68,12 @@ public class RouterController {
         return index(pageParam, model);
     }
 
-    @GetMapping("category")
-    public String category(Model model) {
-        preLoad(model);
-        List<Category> categories = categoryService.list(new QueryWrapper<Category>()
-                .orderByDesc("update_time")
-                .last("limit 5"));
-        List<KeyValue<Integer, Long>> keyValues = articleService.countByCategory(categories.stream().map(Category::getId).collect(Collectors.toList()));
-        Map<Integer, Long> categoryMap = keyValues.stream().collect(Collectors.toMap(KeyValue::getKey, KeyValue::getValue));
-        model.addAttribute("categories", categories.stream().map(item -> {
-            CategoryView view = new CategoryView();
-            view.setId(item.getId());
-            view.setName(item.getName());
-            view.setCount(categoryMap.containsKey(item.getId()) ? categoryMap.get(item.getId()) : 0);
-            return view;
-        }).collect(Collectors.toList()));
-        return "category";
-    }
-
     @GetMapping("article/{identification}.html")
     public String article(@PathVariable String identification, Model model) {
         preLoad(model);
         Article article = articleService.info(identification);
         if (article == null) {
-            return "404";
+            return "error/404";
         }
         Category category = categoryService.getById(article.getCategoryId());
         ArticleInfoView view = new ArticleInfoView();
@@ -111,6 +94,59 @@ public class RouterController {
         view.setContent(article.getContent());
         model.addAttribute("article", view);
         return "article";
+    }
+
+    @GetMapping("/page/{identification}.html")
+    public String page(@PathVariable String identification, Model model) {
+        preLoad(model);
+        PageInfoView page = pageService.selectByIdentification(identification);
+        if (page == null) {
+            return "error/404";
+        }
+        model.addAttribute("page", page);
+        return "page";
+    }
+
+    @GetMapping("category.html")
+    public String category(Model model) {
+        preLoad(model);
+        List<Category> categories = categoryService.list(new QueryWrapper<Category>()
+                .orderByDesc("update_time")
+                .last("limit 5"));
+        List<KeyValue<Integer, Long>> keyValues = articleService.countByCategory(categories.stream().map(Category::getId).collect(Collectors.toList()));
+        Map<Integer, Long> categoryMap = keyValues.stream().collect(Collectors.toMap(KeyValue::getKey, KeyValue::getValue));
+        model.addAttribute("categories", categories.stream().map(item -> {
+            CategoryView view = new CategoryView();
+            view.setId(item.getId());
+            view.setName(item.getName());
+            view.setCount(categoryMap.containsKey(item.getId()) ? categoryMap.get(item.getId()) : 0);
+            return view;
+        }).collect(Collectors.toList()));
+        return "category";
+    }
+
+    @GetMapping("archive.html")
+    public String archive(Model model) {
+        preLoad(model);
+        return "archive";
+    }
+
+    @GetMapping("link.html")
+    public String link(Model model) {
+        preLoad(model);
+        return "link";
+    }
+
+    @GetMapping("about.html")
+    public String about(Model model) {
+        preLoad(model);
+        return "about";
+    }
+
+    @GetMapping("*")
+    public String to404(Model model) {
+        preLoad(model);
+        return "error/404";
     }
 
 }

@@ -95,6 +95,11 @@ public class Article implements Serializable {
     private Integer commentCount;
 
     /**
+     * 文章内容编写类型
+     */
+    private Integer type;
+
+    /**
      * 文章内容，内容为html文件
      */
     private String content;

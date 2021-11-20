@@ -11,9 +11,9 @@
         NProgress.done();
     });
 </script>
-<script src="/js/events.js" ></script>
-<script src="/js/plugins.js" ></script>
-<script src="/js/boot.js"></script>
+<script src="${config.href}/js/events.js" ></script>
+<script src="${config.href}/js/plugins.js" ></script>
+<script src="${config.href}/js/boot.js"></script>
 <script>
     function search_tag(tag) {
         $('#search-btn > a').click();

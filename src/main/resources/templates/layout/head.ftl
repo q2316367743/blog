@@ -1,12 +1,14 @@
 <meta charset="UTF-8">
-<link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
-<link rel="icon" href="/img/favicon.png">
+<link rel="apple-touch-icon" sizes="76x76" href="${config.href}/${config.favicon}">
+<link rel="icon" href="${config.href}/${config.favicon}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
 <!-- 主题依赖的图标库，不要自行修改 -->
 <link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
 <link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
-<link rel="stylesheet" href="/css/main.css"/>
+<link rel="stylesheet" href="${config.href}/css/main.css"/>
+<link rel="stylesheet" href="${config.href}/css/hint.css"/>
 <meta name="generator" content="Hexo 5.4.0">
 <!-- 自定义样式保持在最底部 -->
 <script id="fluid-configs">
@@ -45,6 +47,6 @@
         }
     };
 </script>
-<script src="/js/util.js"></script>
-<script src="/js/color-schema.js"></script>
+<script src="${config.href}/js/util.js"></script>
+<script src="${config.href}/js/color-schema.js"></script>
 <meta name="generator" content="Hexo 5.4.0">

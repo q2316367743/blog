@@ -5,7 +5,7 @@ window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequ
 Fluid.utils = {
 
     listenScroll: function (callback) {
-        var dbc = new Debouncer(callback);
+        let dbc = new Debouncer(callback);
         window.addEventListener('scroll', dbc, false);
         dbc.handleEvent();
         return dbc;
@@ -16,7 +16,7 @@ Fluid.utils = {
     },
 
     scrollToElement: function (target, offset) {
-        var of = jQuery(target).offset();
+        let of = jQuery(target).offset();
         if ( of ) {
             jQuery('html,body').animate({
                 scrollTop: of .top + (offset || 0),
@@ -27,16 +27,16 @@ Fluid.utils = {
 
     elementVisible: function (element, offsetFactor) {
         offsetFactor = (offsetFactor && offsetFactor >= 0) ? offsetFactor : 0;
-        var rect = element.getBoundingClientRect();
-        var height = window.innerHeight || document.documentElement.clientHeight;
-        var top = rect.top;
+        let rect = element.getBoundingClientRect();
+        let height = window.innerHeight || document.documentElement.clientHeight;
+        let top = rect.top;
         return (top >= 0 && top <= height * (offsetFactor + 1)) ||
             (top <= 0 && top >= -(height * offsetFactor) - rect.height);
     },
 
     waitElementVisible: function (selectorOrElement, callback, offsetFactor) {
-        var runningOnBrowser = typeof window !== 'undefined';
-        var isBot = (runningOnBrowser && !('onscroll' in window)) ||
+        let runningOnBrowser = typeof window !== 'undefined';
+        let isBot = (runningOnBrowser && !('onscroll' in window)) ||
             (typeof navigator !== 'undefined' && /(gle|ing|ro|msn)bot|crawl|spider|yand|duckgo/i.test(navigator
                 .userAgent));
         if (!runningOnBrowser || isBot) {
@@ -51,7 +51,7 @@ Fluid.utils = {
                 return;
             }
             if ('IntersectionObserver' in window) {
-                var io = new IntersectionObserver(function (entries, ob) {
+                let io = new IntersectionObserver(function (entries, ob) {
                     if (entries[0].isIntersecting) {
                         callback();
                         ob.disconnect();
@@ -63,7 +63,7 @@ Fluid.utils = {
                 });
                 io.observe(element);
             } else {
-                var wrapper = Fluid.utils.listenScroll(function () {
+                let wrapper = Fluid.utils.listenScroll(function () {
                     if (Fluid.utils.elementVisible(element, offsetFactor)) {
                         Fluid.utils.unlistenScroll(wrapper);
                         callback();
@@ -82,8 +82,8 @@ Fluid.utils = {
     },
 
     waitElementLoaded: function (selector, callback) {
-        var runningOnBrowser = typeof window !== 'undefined';
-        var isBot = (runningOnBrowser && !('onscroll' in window)) ||
+        let runningOnBrowser = typeof window !== 'undefined';
+        let isBot = (runningOnBrowser && !('onscroll' in window)) ||
             (typeof navigator !== 'undefined' && /(gle|ing|ro|msn)bot|crawl|spider|yand|duckgo/i.test(navigator
                 .userAgent));
         if (!runningOnBrowser || isBot) {
@@ -91,8 +91,8 @@ Fluid.utils = {
         }
 
         if ('MutationObserver' in window) {
-            var mo = new MutationObserver(function (records, ob) {
-                var ele = document.querySelector(selector);
+            let mo = new MutationObserver(function (records, ob) {
+                let ele = document.querySelector(selector);
                 if (ele) {
                     callback(ele);
                     ob.disconnect();
@@ -104,8 +104,8 @@ Fluid.utils = {
             });
         } else {
             document.addEventListener('DOMContentLoaded', function () {
-                var waitLoop = function () {
-                    var ele = document.querySelector(selector);
+                let waitLoop = function () {
+                    let ele = document.querySelector(selector);
                     if (ele) {
                         callback(ele);
                     } else {
@@ -118,7 +118,7 @@ Fluid.utils = {
     },
 
     createScript: function (url, onload) {
-        var s = document.createElement('script');
+        let s = document.createElement('script');
         s.setAttribute('src', url);
         s.setAttribute('type', 'text/javascript');
         s.setAttribute('charset', 'UTF-8');
@@ -126,7 +126,7 @@ Fluid.utils = {
         if (typeof onload === 'function') {
             if (window.attachEvent) {
                 s.onreadystatechange = function () {
-                    var e = s.readyState;
+                    let e = s.readyState;
                     if (e === 'loaded' || e === 'complete') {
                         s.onreadystatechange = null;
                         onload();
@@ -136,27 +136,27 @@ Fluid.utils = {
                 s.onload = onload;
             }
         }
-        var e = document.getElementsByTagName('script')[0] ||
+        let e = document.getElementsByTagName('script')[0] ||
             document.getElementsByTagName('head')[0] ||
             document.head || document.documentElement;
         e.parentNode.insertBefore(s, e);
     },
 
     createCssLink: function (url) {
-        var l = document.createElement('link');
+        let l = document.createElement('link');
         l.setAttribute('rel', 'stylesheet');
         l.setAttribute('type', 'text/css');
         l.setAttribute('href', url);
-        var e = document.getElementsByTagName('link')[0] ||
+        let e = document.getElementsByTagName('link')[0] ||
             document.getElementsByTagName('head')[0] ||
             document.head || document.documentElement;
         e.parentNode.insertBefore(l, e);
     },
 
     loadComments: function (selectors, loadFunc) {
-        var ele = document.querySelector('#comments[lazyload]');
+        let ele = document.querySelector('#comments[lazyload]');
         if (ele) {
-            var callback = function () {
+            let callback = function () {
                 loadFunc();
                 ele.removeAttribute('lazyload');
             };

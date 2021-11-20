@@ -20,6 +20,7 @@
         <result property="readTime" column="read_time" jdbcType="INTEGER"/>
         <result property="viewCount" column="view_count" jdbcType="INTEGER"/>
         <result property="commentCount" column="comment_count" jdbcType="INTEGER"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
         <result property="content" column="content" jdbcType="VARCHAR"/>
         <result property="originalContent" column="original_content" jdbcType="VARCHAR"/>
     </resultMap>
@@ -29,8 +30,8 @@
         category_id,tags,sequence,
         description,create_time,update_time,
         is_delete,word_count,read_time,
-        view_count,comment_count,content,
-        original_content
+        view_count,comment_count,type,
+        content,original_content
     </sql>
     <select id="countByCategory" resultType="xyz.esion.blog.global.KeyValue">
         select category_id as `key`, count(1) as `value`

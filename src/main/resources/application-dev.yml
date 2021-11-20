@@ -43,17 +43,3 @@ mybatis-plus:
 
 logging:
   level.xyz.esion.blog: debug
-
-config:
-  href: http://localhost:8990
-  name: 云落天都的博客
-  keywords:
-    - 云落天都
-    - 博客
-    - 网络日志
-  favicon: /favicon.ico
-  background: https://static.zkqiang.cn/images/20191231163321.jpg-slim
-  page-background: https://img-blog.csdnimg.cn/img_convert/cce6857f9276c2ba78d3f4b9af3b036f.png
-  article-background: https://img-blog.csdnimg.cn/img_convert/cce6857f9276c2ba78d3f4b9af3b036f.png
-  keep-on-record: 鄂ICP备2021003611号-1
-

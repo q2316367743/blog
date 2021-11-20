@@ -1,7 +1,8 @@
-package xyz.esion.blog.global;
+package xyz.esion.blog.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
@@ -15,7 +16,6 @@ import java.util.List;
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = "config")
 public class Config implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -56,9 +56,31 @@ public class Config implements Serializable {
     private String articleBackground;
 
     /**
+     * 分类默认背景图片
+     */
+    private String categoryBackground;
+
+    /**
+     * 归档默认背景图片
+     */
+    private String archiveBackground;
+
+    /**
+     * 友链默认背景图片
+     */
+    private String linkBackground;
+
+    /**
+     * 关于默认背景图片
+     */
+    private String aboutBackground;
+
+    /**
      * 备案
      */
     private String keepOnRecord;
+
+    private Index index;
 
     public List<Music> music;
 
@@ -74,6 +96,24 @@ public class Config implements Serializable {
         private String name;
 
         private String artist;
+
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Index implements Serializable {
+
+        private static final long serialVersionUID = 1L;
+
+        /**
+         * 首页轮播文字
+         */
+        private List<String> texts;
+
+        private Integer speed;
+
+        private Boolean loop;
 
     }
 

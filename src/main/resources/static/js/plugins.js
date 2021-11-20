@@ -60,11 +60,9 @@ Fluid.plugins = {
     },
 
     initFancyBox: function (selector) {
-        console.log(!('fancybox' in jQuery))
         if (!('fancybox' in jQuery)) {
             return;
         }
-
         jQuery(selector || '.markdown-body :not(a) > img, .markdown-body > img').each(function () {
             let $image = jQuery(this);
             let imageUrl = $image.attr('data-src') || $image.attr('src') || '';
