@@ -15,9 +15,4 @@ public interface WebsiteService {
      */
     Website info();
 
-    /**
-     * 更新网站信息
-     */
-    void update();
-
 }

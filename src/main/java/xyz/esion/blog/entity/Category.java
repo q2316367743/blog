@@ -44,11 +44,6 @@ public class Category implements Serializable {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
 
-    /**
-     * 逻辑删除
-     */
-    private Boolean isDelete;
-
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

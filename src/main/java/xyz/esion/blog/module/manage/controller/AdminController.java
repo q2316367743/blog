@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import xyz.esion.blog.enumeration.LoginStatusEnum;
 import xyz.esion.blog.global.Result;
-import xyz.esion.blog.module.manage.LoginView;
+import xyz.esion.blog.view.LoginView;
 import xyz.esion.blog.service.AdminService;
 
 /**
@@ -33,6 +33,12 @@ public class AdminController {
         }else {
             return Result.fail();
         }
+    }
+
+    @GetMapping("logout")
+    public Result<Boolean> logout() {
+        StpUtil.logout();
+        return Result.success(true);
     }
 
 }

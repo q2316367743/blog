@@ -1,4 +1,4 @@
-package xyz.esion.blog.module.portal.service.impl;
+package xyz.esion.blog.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -11,8 +11,8 @@ import xyz.esion.blog.entity.Category;
 import xyz.esion.blog.global.KeyValue;
 import xyz.esion.blog.mapper.ArticleMapper;
 import xyz.esion.blog.mapper.CategoryMapper;
-import xyz.esion.blog.module.portal.service.ArticleService;
-import xyz.esion.blog.module.portal.view.ArticleListView;
+import xyz.esion.blog.service.ArticleService;
+import xyz.esion.blog.view.ArticleListView;
 import xyz.esion.blog.param.PageParam;
 import xyz.esion.blog.view.PageView;
 
@@ -34,10 +34,10 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     private final CategoryMapper categoryMapper;
 
     @Override
-    public PageView<ArticleListView> page(PageParam pageParam) {
+    public PageView<ArticleListView> page(PageParam pageParam, QueryWrapper<Article> queryWrapper) {
         Page<Article> page = articleMapper.selectPage(
                 new Page<>(pageParam.getPageNum(), pageParam.getPageSize()),
-                new QueryWrapper<>());
+                queryWrapper.orderByDesc("sequence"));
         List<Article> records = page.getRecords();
         // 获取全部分类
         List<Integer> categoryIds = records.stream().map(Article::getCategoryId).collect(Collectors.toList());

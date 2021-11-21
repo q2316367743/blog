@@ -1,4 +1,4 @@
-package xyz.esion.blog.module.portal.view;
+package xyz.esion.blog.view;
 
 import lombok.Data;
 

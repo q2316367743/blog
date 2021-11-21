@@ -4,11 +4,10 @@
 create table category
 (
     id          int unsigned primary key comment '分类ID',
-    name        varchar(32)         default ''                    not null comment '分类标题',
-    p_id        int unsigned        default 0                     not null comment '父级分类',
-    create_time datetime            default '1998-08-06 00:00:00' not null comment '创建时间',
-    update_time datetime            default '1998-08-06 00:00:00' not null comment '更新时间',
-    is_delete   tinyint(1) unsigned default 0                     not null comment '逻辑删除'
+    name        varchar(32)  default ''                    not null comment '分类标题',
+    p_id        int unsigned default 0                     not null comment '父级分类',
+    create_time datetime     default '1998-08-06 00:00:00' not null comment '创建时间',
+    update_time datetime     default '1998-08-06 00:00:00' not null comment '更新时间'
 ) comment '文章分类表';
 
 create table article
@@ -16,6 +15,7 @@ create table article
     id               int unsigned primary key comment '文章ID',
     identification   varchar(32)                                       not null comment '文章标识',
     title            varchar(32)         default ''                    not null comment '文章标题',
+    status           tinyint(1)          default 1                     not null comment '状态，具体查看枚举',
     image            varchar(255)        default ''                    not null comment '文章展示图片',
     category_id      int unsigned        default 0                     not null comment '分类ID',
     tags             varchar(64)         default ''                    not null comment '标签，使用英文逗号隔开',
@@ -41,6 +41,7 @@ create table page
     identification   varchar(32)                                       not null comment '页面标识',
     title            varchar(32)         default ''                    not null comment '页面标题',
     image            varchar(255)        default ''                    not null comment '页面展示图片',
+    status           tinyint(1)          default 0                     not null comment '状态，具体查看枚举',
     description      varchar(128)        default ''                    not null comment '描述',
     create_time      datetime            default '1998-08-06 00:00:00' not null comment '创建时间',
     update_time      datetime            default '1998-08-06 00:00:00' not null comment '更新时间',
@@ -113,21 +114,21 @@ create table menu
 # 测试数据
 
 insert into menu
-    value (1, 'icon-home-fill', '首页', 0, '/', 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
+    value (1, 'iconfont icon-home-fill', '首页', 0, '/', 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
 insert into menu
-    value (2, 'icon-archive-fill', '归档', 0, '/archive', 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
+    value (2, 'iconfont icon-archive-fill', '归档', 0, '/archive', 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
 insert into menu
-    value (3, 'icon-category-fill', '分类', 0, '/category', 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
+    value (3, 'iconfont icon-category-fill', '分类', 0, '/category', 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
 insert into menu
-    value (4, 'icon-user-fill', '关于', 0, '/about.html', 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
+    value (4, 'iconfont icon-user-fill', '关于', 0, '/about.html', 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
 insert into menu
-    value (5, 'icon-link-fill', '连接', 0, '/', 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
+    value (5, 'iconfont icon-link-fill', '连接', 0, '/', 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
 insert into menu
     value (6, '', '友链', 0, '/page/link.html', 5, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
 insert into menu
     value (7, '', '我的页面', 0, '/page/ce_shi_ye_mian.html', 5, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
 insert into menu
-    value (8, 'icon-books', '文档', 0, '/', 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
+    value (8, 'iconfont icon-books', '文档', 0, '/', 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
 insert into menu
     value (9, '', '安装主题', 1, 'https://hexo.fluid-dev.com/docs/start/', 8, '2021-11-17 00:00:00', '2021-11-17 00:00:00',
            0);
@@ -149,7 +150,7 @@ values (1, 'ce_shi_wen_zhang', '测试文章标题', 'https://img-blog.csdnimg.c
         '测试内容', '测试内容');
 
 insert into page (id, identification, title, image, description, create_time,
-                     update_time, is_delete, view_count, comment_count, content, original_content)
+                  update_time, is_delete, view_count, comment_count, content, original_content)
 values (1, 'ce_shi_ye_mian', '测试页面标题', 'https://img-blog.csdnimg.cn/img_convert/cce6857f9276c2ba78d3f4b9af3b036f.png',
         '测试文章', '2021-06-21 00:00:00', '2021-06-21 00:00:00', 0, 1315, 120,
         '测试内容<a href="https://esion.xyz" target="_blank">我的页面</a>', '测试内容[我的页面](https://esion.xyz)');

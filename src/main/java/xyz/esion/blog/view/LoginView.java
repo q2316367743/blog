@@ -1,4 +1,4 @@
-package xyz.esion.blog.module.manage;
+package xyz.esion.blog.view;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

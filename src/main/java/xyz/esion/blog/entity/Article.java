@@ -33,6 +33,11 @@ public class Article implements Serializable {
     private String title;
 
     /**
+     * 是否发布
+     */
+    private Integer status;
+
+    /**
      * 文章展示图片
      */
     private String image;
@@ -48,7 +53,7 @@ public class Article implements Serializable {
     private String tags;
 
     /**
-     * 排序，默认更新时间截，正序，1：指定，时间戳：更新时间
+     * 排序，默认更新时间截，倒序，1：置顶，时间戳：更新时间
      */
     private Long sequence;
 
@@ -72,6 +77,7 @@ public class Article implements Serializable {
     /**
      * 逻辑删除
      */
+    @TableLogic
     private Boolean isDelete;
 
     /**

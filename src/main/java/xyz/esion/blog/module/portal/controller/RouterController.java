@@ -10,15 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import xyz.esion.blog.entity.Article;
 import xyz.esion.blog.entity.*;
 import xyz.esion.blog.global.*;
-import xyz.esion.blog.module.portal.service.*;
-import xyz.esion.blog.module.portal.view.ArticleInfoView;
-import xyz.esion.blog.module.portal.view.ArticleListView;
-import xyz.esion.blog.module.portal.view.CategoryView;
-import xyz.esion.blog.module.portal.view.PageInfoView;
+import xyz.esion.blog.view.ArticleInfoView;
+import xyz.esion.blog.view.ArticleListView;
+import xyz.esion.blog.view.CategoryView;
+import xyz.esion.blog.view.PageInfoView;
 import xyz.esion.blog.param.PageParam;
-import xyz.esion.blog.service.AuthorService;
-import xyz.esion.blog.service.ConfigService;
-import xyz.esion.blog.service.WebsiteService;
+import xyz.esion.blog.service.*;
 import xyz.esion.blog.view.PageView;
 
 import java.util.Arrays;
@@ -58,7 +55,8 @@ public class RouterController {
     @GetMapping
     public String index(@NameConvertModel PageParam pageParam, Model model) {
         preLoad(model);
-        PageView<ArticleListView> page = articleService.page(pageParam);
+        PageView<ArticleListView> page = articleService.page(pageParam, new QueryWrapper<Article>()
+                .eq("status", 1));
         model.addAttribute("page", page);
         return "index";
     }
@@ -82,7 +80,9 @@ public class RouterController {
         view.setTitle(article.getTitle());
         view.setImage(article.getImage());
         view.setCategoryId(article.getCategoryId());
-        view.setCategoryName(category.getName());
+        if (category != null) {
+            view.setCategoryName(category.getName());
+        }
         view.setTags(Arrays.asList(article.getTags().split(",")));
         view.setDescription(article.getDescription());
         view.setCreateTime(article.getCreateTime());

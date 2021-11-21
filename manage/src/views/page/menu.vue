@@ -1,10 +1,10 @@
 <template>
-<div>编辑文章{{this.$route.query.id}}</div>
+    <div class="app-container">菜单管理</div>
 </template>
 
 <script>
 export default {
-    name: "update"
+    name: "menu"
 }
 </script>
 

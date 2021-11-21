@@ -35,7 +35,6 @@ public class BackupTask {
         FileUtil.mkdir(PathConstant.BACKUP_PATH);
         authorTask();
         configTask();
-        websiteTask();
     }
 
     /**
@@ -54,15 +53,6 @@ public class BackupTask {
     public void configTask() {
         String configJson = JSONUtil.toJsonStr(configService.info());
         FileUtil.writeString(configJson, new File(BackupConstant.CONFIG_PATH), StandardCharsets.UTF_8);
-    }
-
-    /**
-     * 网站缓存，每小时备份一次
-     */
-    @Scheduled(cron = "0 0 */1 * * *")
-    public void websiteTask() {
-        String websiteJson = JSONUtil.toJsonStr(websiteService.info());
-        FileUtil.writeString(websiteJson, new File(BackupConstant.WEBSITE_PATH), StandardCharsets.UTF_8);
     }
 
 }

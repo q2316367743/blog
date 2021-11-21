@@ -2,11 +2,10 @@ package xyz.esion.blog.service.impl;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;
-import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import xyz.esion.blog.constant.BackupConstant;
+import xyz.esion.blog.constant.FileConstant;
 import xyz.esion.blog.domain.Website;
 import xyz.esion.blog.entity.Article;
 import xyz.esion.blog.mapper.ArticleMapper;
@@ -28,39 +27,42 @@ public class WebsiteServiceImpl implements WebsiteService {
 
     private final ArticleMapper articleListMapper;
     private final CategoryMapper categoryListMapper;
-    /**
-     * 建站时间
-     */
-    private final Date now = new Date();
 
-    private Website website;
+    /**
+     * 博客首次运行时间
+     */
+    private Date initDateTime;
 
     @PostConstruct
     public void init() {
-        File file = new File(BackupConstant.WEBSITE_PATH);
+        File file = new File(FileConstant.INIT_DATE_TIME);
         if (file.exists()) {
-            this.website = JSONUtil.toBean(FileUtil.readString(file, StandardCharsets.UTF_8), Website.class);
+            try {
+                this.initDateTime = DateUtil.parseDateTime(FileUtil.readString(file, StandardCharsets.UTF_8));
+            }catch (Exception e) {
+                // 时间格式错误
+                this.initDateTime = new Date();
+                FileUtil.writeString(DateUtil.format(this.initDateTime, "yyyy-MM-dd HH:mm:ss"), file, StandardCharsets.UTF_8);
+            }
         }else {
-            website = new Website();
-            update();
+            this.initDateTime = new Date();
+            FileUtil.writeString(DateUtil.format(this.initDateTime, "yyyy-MM-dd HH:mm:ss"), file, StandardCharsets.UTF_8);
         }
     }
 
     @Override
     public Website info() {
-        return website;
-    }
-
-    @Override
-    public void update() {
+        Website website = new Website();
         website.setArticleCount(articleListMapper.selectCount(new QueryWrapper<>()));
         website.setCategoryCount(categoryListMapper.selectCount(new QueryWrapper<>()));
-        website.setRunTime(Math.toIntExact(DateUtil.betweenDay(now, new Date(), false)));
+        website.setRunTime(Math.toIntExact(DateUtil.betweenDay(this.initDateTime, new Date(), false)));
         website.setWordCount(0L);
         website.setAccessCount(0);
         Article article = articleListMapper.selectOne(new QueryWrapper<Article>().last("limit 1"));
         if (article != null) {
             website.setLastUpdate(article.getUpdateTime());
         }
+        return website;
     }
+
 }

@@ -56,11 +56,11 @@ export const constantRoutes = [
     },
 
     {
-        path: '/base',
+        path: '/article',
         component: Layout,
-        redirect: '/base/list',
-        name: 'base',
-        meta: {title: '基础设置', icon: 'el-icon-s-help'},
+        redirect: '/article/list',
+        name: 'article',
+        meta: {title: '文章管理', icon: 'el-icon-s-help'},
         children: [
             {
                 path: 'save',
@@ -87,6 +87,42 @@ export const constantRoutes = [
                 name: 'category',
                 component: () => import('@/views/article/category'),
                 meta: {title: '分类管理', icon: 'tree'}
+            }
+        ]
+    },
+
+    {
+        path: '/page',
+        component: Layout,
+        redirect: '/page/list',
+        name: 'page',
+        meta: {title: '页面管理', icon: 'el-icon-s-help'},
+        children: [
+            {
+                path: 'save',
+                name: 'save',
+                component: () => import('@/views/page/save'),
+                meta: {title: '新增页面', icon: 'table'},
+                hidden: true
+            },
+            {
+                path: 'update',
+                name: 'update',
+                component: () => import('@/views/page/update'),
+                meta: {title: '修改页面', icon: 'table'},
+                hidden: true
+            },
+            {
+                path: 'list',
+                name: 'list',
+                component: () => import('@/views/page/list'),
+                meta: {title: '页面列表', icon: 'table'}
+            },
+            {
+                path: 'category',
+                name: 'category',
+                component: () => import('@/views/page/menu'),
+                meta: {title: '菜单管理', icon: 'tree'}
             }
         ]
     },

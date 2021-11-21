@@ -2,7 +2,7 @@ package xyz.esion.blog.mapper;
 
 import xyz.esion.blog.entity.Page;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import xyz.esion.blog.module.portal.view.PageInfoView;
+import xyz.esion.blog.view.PageInfoView;
 
 /**
  * @Entity xyz.esion.blog.entity.Page

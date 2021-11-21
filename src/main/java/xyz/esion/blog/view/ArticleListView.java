@@ -1,6 +1,7 @@
-package xyz.esion.blog.module.portal.view;
+package xyz.esion.blog.view;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -8,10 +9,10 @@ import java.util.List;
 
 /**
  * @author Esion
- * @since 2021/11/17
+ * @since 2021/11/16
  */
 @Data
-public class ArticleInfoView implements Serializable {
+public class ArticleListView implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -36,19 +37,29 @@ public class ArticleInfoView implements Serializable {
     private String image;
 
     /**
+     * 是否发布
+     */
+    private Integer status;
+
+    /**
      * 分类ID
      */
     private Integer categoryId;
 
     /**
-     * 分类ID
+     * 分类名称
      */
-    private String categoryName;
+    private String  categoryName;
 
     /**
      * 标签，使用英文逗号隔开
      */
     private List<String> tags;
+
+    /**
+     * 排序，默认更新时间截，倒序，1：置顶，时间戳：更新时间
+     */
+    private Long sequence;
 
     /**
      * 描述
@@ -58,12 +69,19 @@ public class ArticleInfoView implements Serializable {
     /**
      * 创建时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     /**
      * 更新时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
+
+    /**
+     * 逻辑删除
+     */
+    private Boolean isDelete;
 
     /**
      * 字数统计
@@ -84,10 +102,5 @@ public class ArticleInfoView implements Serializable {
      * 评论数量
      */
     private Integer commentCount;
-
-    /**
-     * 文章内容，内容为html文件
-     */
-    private String content;
 
 }

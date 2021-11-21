@@ -10,7 +10,7 @@ export function login(data) {
 
 export function logout() {
   return request({
-    url: '/vue-admin-template/user/logout',
-    method: 'post'
+    url: '/admin/logout',
+    method: 'GET'
   })
 }

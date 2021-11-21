@@ -20,9 +20,4 @@ public class BackupConstant {
      */
     public static final String CONFIG_PATH = PathConstant.BACKUP_PATH + File.separator + "config.json";
 
-    /**
-     * 网站信息缓存路径
-     */
-    public static final String WEBSITE_PATH = PathConstant.BACKUP_PATH + File.separator + "website.json";
-
 }

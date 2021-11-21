@@ -1,4 +1,4 @@
-package xyz.esion.blog.module.portal.service;
+package xyz.esion.blog.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import xyz.esion.blog.entity.Notice;

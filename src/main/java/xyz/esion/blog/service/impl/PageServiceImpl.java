@@ -1,11 +1,11 @@
-package xyz.esion.blog.module.portal.service.impl;
+package xyz.esion.blog.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import xyz.esion.blog.entity.Page;
-import xyz.esion.blog.module.portal.service.PageService;
+import xyz.esion.blog.service.PageService;
 import xyz.esion.blog.mapper.PageMapper;
 import org.springframework.stereotype.Service;
-import xyz.esion.blog.module.portal.view.PageInfoView;
+import xyz.esion.blog.view.PageInfoView;
 
 /**
  * @author Esion

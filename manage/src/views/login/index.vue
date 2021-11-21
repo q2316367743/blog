@@ -4,7 +4,7 @@
                  label-position="left">
 
             <div class="title-container">
-                <h3 class="title">Login Form</h3>
+                <h3 class="title">博客管理</h3>
             </div>
 
             <el-form-item prop="username">
@@ -46,11 +46,6 @@
                        @click.native.prevent="handleLogin">Login
             </el-button>
 
-            <div class="tips">
-                <span style="margin-right:20px;">username: admin</span>
-                <span> password: any</span>
-            </div>
-
         </el-form>
     </div>
 </template>
@@ -61,8 +56,8 @@ export default {
     data() {
         return {
             loginForm: {
-                username: 'admin',
-                password: '111111'
+                username: '',
+                password: ''
             },
             loginRules: {
                 username: [{required: true, trigger: 'blur'}],

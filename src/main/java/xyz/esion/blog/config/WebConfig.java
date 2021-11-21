@@ -77,7 +77,7 @@ public class WebConfig implements WebMvcConfigurer {
                         return true;
                     }
                 })
-                .addPathPatterns("/manage/api")
+                .addPathPatterns("/manage/api/*")
                 .excludePathPatterns("/manage/api/admin/login");
     }
 

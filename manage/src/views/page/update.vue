@@ -1,5 +1,5 @@
 <template>
-<div>编辑文章{{this.$route.query.id}}</div>
+    <div class="app-container">修改页面</div>
 </template>
 
 <script>

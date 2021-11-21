@@ -1,10 +1,8 @@
-package xyz.esion.blog.module.portal.service;
+package xyz.esion.blog.service;
 
 import xyz.esion.blog.entity.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import xyz.esion.blog.module.portal.view.PageInfoView;
-
-import java.util.List;
+import xyz.esion.blog.view.PageInfoView;
 
 /**
  * @author Esion

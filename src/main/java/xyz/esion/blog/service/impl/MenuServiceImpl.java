@@ -1,13 +1,13 @@
-package xyz.esion.blog.module.portal.service.impl;
+package xyz.esion.blog.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import xyz.esion.blog.entity.Menu;
-import xyz.esion.blog.module.portal.service.MenuService;
+import xyz.esion.blog.service.MenuService;
 import xyz.esion.blog.mapper.MenuMapper;
 import org.springframework.stereotype.Service;
-import xyz.esion.blog.module.portal.view.MenuView;
+import xyz.esion.blog.view.MenuView;
 
 import javax.annotation.PostConstruct;
 import java.util.Iterator;

@@ -1,8 +1,8 @@
-package xyz.esion.blog.module.portal.service;
+package xyz.esion.blog.service;
 
 import xyz.esion.blog.entity.Menu;
 import com.baomidou.mybatisplus.extension.service.IService;
-import xyz.esion.blog.module.portal.view.MenuView;
+import xyz.esion.blog.view.MenuView;
 
 import java.util.LinkedList;
 import java.util.List;
