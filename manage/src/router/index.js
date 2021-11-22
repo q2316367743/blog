@@ -65,14 +65,14 @@ export const constantRoutes = [
             {
                 path: 'save',
                 name: 'save',
-                component: () => import('@/views/article/save'),
+                component: () => import('@/views/article/info'),
                 meta: {title: '新增文章', icon: 'table'},
                 hidden: true
             },
             {
                 path: 'update',
                 name: 'update',
-                component: () => import('@/views/article/update'),
+                component: () => import('@/views/article/info'),
                 meta: {title: '修改文章', icon: 'table'},
                 hidden: true
             },

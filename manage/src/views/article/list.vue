@@ -1,6 +1,6 @@
 <template>
     <div class="app-container">
-        <div class="el-card">
+        <div class="el-card is-always-shadow">
             <div class="el-card__body article-list-condition">
                 <div>文章标题：</div>
                 <el-input style="width: 180px" v-model="condition.title"></el-input>
@@ -8,7 +8,7 @@
                 <el-button @click="clear" style="margin-left: 10px">重置</el-button>
             </div>
         </div>
-        <el-card style="margin-top: 20px">
+        <el-card style="margin-top: 20px" shadow="always">
             <div>
                 <el-button style="float: right" type="primary" @click="save">新增</el-button>
             </div>
