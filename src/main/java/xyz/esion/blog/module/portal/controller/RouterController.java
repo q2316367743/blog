@@ -1,6 +1,7 @@
 package xyz.esion.blog.module.portal.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import xyz.esion.blog.entity.Article;
 import xyz.esion.blog.entity.*;
+import xyz.esion.blog.enumeration.MessageTypeEnum;
 import xyz.esion.blog.global.*;
 import xyz.esion.blog.view.ArticleInfoView;
 import xyz.esion.blog.view.ArticleListView;
@@ -37,6 +39,7 @@ public class RouterController {
     private final CategoryService categoryService;
     private final MenuService menuService;
     private final PageService pageService;
+    private final MessageService messageService;
 
     private final AuthorService authorService;
     private final ConfigService configService;
@@ -135,6 +138,20 @@ public class RouterController {
     public String link(Model model) {
         preLoad(model);
         return "link";
+    }
+
+    @GetMapping("message.html")
+    public String message(
+            Model model,
+            @NameConvertModel PageParam pageParam
+    ) {
+        preLoad(model);
+        Page<Message> page = messageService.page(
+                new Page<>(pageParam.getPageNum(), pageParam.getPageNum()),
+                new QueryWrapper<Message>().eq("type", MessageTypeEnum.BLOG.getValue())
+        );
+        model.addAttribute("page", page);
+        return "message";
     }
 
     @GetMapping("about.html")

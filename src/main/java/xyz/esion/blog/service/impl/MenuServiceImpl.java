@@ -19,7 +19,7 @@ import java.util.List;
  * @author Esion
  * @since 2021/11/17
  */
-@Service("portalMenu")
+@Service
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu>
     implements MenuService{
 

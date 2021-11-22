@@ -10,6 +10,6 @@ import xyz.esion.blog.service.CategoryService;
  * @author Esion
  * @since 2021/11/16
  */
-@Service("portalCategory")
+@Service
 public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> implements CategoryService {
 }

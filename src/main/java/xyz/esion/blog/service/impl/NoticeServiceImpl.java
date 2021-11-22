@@ -10,6 +10,6 @@ import xyz.esion.blog.service.NoticeService;
  * @author Esion
  * @since 2021/11/16
  */
-@Service("portalNotice")
+@Service
 public class NoticeServiceImpl extends ServiceImpl<NoticeMapper, Notice> implements NoticeService {
 }

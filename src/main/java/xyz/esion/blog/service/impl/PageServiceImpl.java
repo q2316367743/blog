@@ -11,7 +11,7 @@ import xyz.esion.blog.view.PageInfoView;
  * @author Esion
  * @since 2021/11/17
  */
-@Service("portalPage")
+@Service
 public class PageServiceImpl extends ServiceImpl<PageMapper, Page>
         implements PageService {
 

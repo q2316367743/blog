@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
  * @author Esion
  * @since 2021/11/16
  */
-@Service("portalArticle")
+@Service
 @RequiredArgsConstructor
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
 
