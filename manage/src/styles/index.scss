@@ -59,6 +59,17 @@ div:focus {
     }
 }
 
+.el-select-dropdown {
+    z-index: 999999 !important;
+}
+.vue-codemirror {
+    height: 100%;
+}
+
+.CodeMirror {
+    height: 100% !important;
+}
+
 // main-container global css
 .app-container {
     padding: 20px;

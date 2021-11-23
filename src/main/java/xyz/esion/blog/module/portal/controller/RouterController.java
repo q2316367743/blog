@@ -1,5 +1,6 @@
 package xyz.esion.blog.module.portal.controller;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -69,17 +70,16 @@ public class RouterController {
         return index(pageParam, model);
     }
 
-    @GetMapping("article/{identification}.html")
-    public String article(@PathVariable String identification, Model model) {
+    @GetMapping("article/{id}.html")
+    public String article(@PathVariable String id, Model model) {
         preLoad(model);
-        Article article = articleService.info(identification);
+        Article article = articleService.getById(id);
         if (article == null) {
             return "error/404";
         }
         Category category = categoryService.getById(article.getCategoryId());
         ArticleInfoView view = new ArticleInfoView();
         view.setId(article.getId());
-        view.setIdentification(article.getIdentification());
         view.setTitle(article.getTitle());
         view.setImage(article.getImage());
         view.setCategoryId(article.getCategoryId());
@@ -99,14 +99,15 @@ public class RouterController {
         return "article";
     }
 
-    @GetMapping("/page/{identification}.html")
-    public String page(@PathVariable String identification, Model model) {
+    @GetMapping("/page/{id}.html")
+    public String page(@PathVariable String id, Model model) {
         preLoad(model);
-        PageInfoView page = pageService.selectByIdentification(identification);
+        xyz.esion.blog.entity.Page page = pageService.getById(id);
         if (page == null) {
             return "error/404";
         }
-        model.addAttribute("page", page);
+        PageInfoView view = BeanUtil.copyProperties(page, PageInfoView.class);
+        model.addAttribute("page", view);
         return "page";
     }
 
@@ -126,6 +127,20 @@ public class RouterController {
             return view;
         }).collect(Collectors.toList()));
         return "category";
+    }
+
+    @GetMapping("category/{id}.html")
+    public String categoryItem(@PathVariable String id, @NameConvertModel PageParam pageParam, Model model) {
+        preLoad(model);
+        Category category = categoryService.getById(id);
+        if (category == null) {
+            return "error/404";
+        }
+        Page<Article> articles = articleService.page(new Page<Article>(pageParam.getPageNum(), pageParam.getPageSize()),
+                new QueryWrapper<Article>().eq("category_id", category.getId()));
+        model.addAttribute("category", category);
+        model.addAttribute("articles", articles);
+        return "category_item";
     }
 
     @GetMapping("archive.html")

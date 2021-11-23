@@ -13,7 +13,6 @@ create table category
 create table article
 (
     id               int unsigned primary key comment '文章ID',
-    identification   varchar(32)                                       not null comment '文章标识',
     title            varchar(32)         default ''                    not null comment '文章标题',
     status           tinyint(1)          default 1                     not null comment '状态，具体查看枚举',
     image            varchar(255)        default ''                    not null comment '文章展示图片',
@@ -31,14 +30,12 @@ create table article
     type             tinyint unsigned    default 1                     not null comment '文章内容编写类型',
     content          text comment '文章内容，内容为html文件',
     original_content text comment '文章原始内容，内容为Markdown文档',
-    constraint fk_article_category foreign key (category_id) references category (id),
-    constraint uk_article_identification unique (identification)
+    constraint fk_article_category foreign key (category_id) references category (id)
 ) comment '文章';
 
 create table page
 (
     id               int unsigned primary key comment '页面ID',
-    identification   varchar(32)                                       not null comment '页面标识',
     title            varchar(32)         default ''                    not null comment '页面标题',
     image            varchar(255)        default ''                    not null comment '页面展示图片',
     status           tinyint(1)          default 0                     not null comment '状态，具体查看枚举',
@@ -49,12 +46,8 @@ create table page
     view_count       int unsigned        default 0                     not null comment '阅读人数',
     comment_count    int unsigned        default 0                     not null comment '评论数量',
     content          text comment '文章内容，内容为html文件',
-    original_content text comment '文章原始内容，内容为Markdown文档',
-    constraint uk_page_identification unique (identification)
+    original_content text comment '文章原始内容，内容为Markdown文档'
 ) comment '页面';
-
-create index idx_page_identification
-    on page (identification);
 
 create table notice
 (
@@ -116,9 +109,9 @@ create table menu
 insert into menu
     value (1, 'iconfont icon-home-fill', '首页', 0, '/', 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
 insert into menu
-    value (2, 'iconfont icon-archive-fill', '归档', 0, '/archive', 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
+    value (2, 'iconfont icon-archive-fill', '归档', 0, '/archive.html', 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
 insert into menu
-    value (3, 'iconfont icon-category-fill', '分类', 0, '/category', 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
+    value (3, 'iconfont icon-category-fill', '分类', 0, '/category.html', 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
 insert into menu
     value (4, 'iconfont icon-user-fill', '关于', 0, '/about.html', 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
 insert into menu
@@ -126,7 +119,7 @@ insert into menu
 insert into menu
     value (6, '', '友链', 0, '/page/link.html', 5, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
 insert into menu
-    value (7, '', '我的页面', 0, '/page/ce_shi_ye_mian.html', 5, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
+    value (7, '', '我的页面', 0, '/page/1.html', 5, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
 insert into menu
     value (8, 'iconfont icon-books', '文档', 0, '/', 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
 insert into menu
@@ -141,16 +134,16 @@ insert into menu
 
 insert into category(id, name) value (1, '个人杂谈');
 
-insert into article (id, identification, title, image, category_id, tags, sequence, description, create_time,
+insert into article (id, title, image, category_id, tags, sequence, description, create_time,
                      update_time, is_delete,
                      word_count, read_time, view_count, comment_count, content, original_content)
-values (1, 'ce_shi_wen_zhang', '测试文章标题', 'https://img-blog.csdnimg.cn/img_convert/cce6857f9276c2ba78d3f4b9af3b036f.png',
+values (1, '测试文章标题', 'https://img-blog.csdnimg.cn/img_convert/cce6857f9276c2ba78d3f4b9af3b036f.png',
         1, '杂谈,随笔', 1,
         '测试文章', '2021-06-21 00:00:00', '2021-06-21 00:00:00', 0, 1315, 120, 0, 0,
         '测试内容', '测试内容');
 
-insert into page (id, identification, title, image, description, create_time,
+insert into page (id, title, image, description, create_time,
                   update_time, is_delete, view_count, comment_count, content, original_content)
-values (1, 'ce_shi_ye_mian', '测试页面标题', 'https://img-blog.csdnimg.cn/img_convert/cce6857f9276c2ba78d3f4b9af3b036f.png',
+values (1, '测试页面标题', 'https://img-blog.csdnimg.cn/img_convert/cce6857f9276c2ba78d3f4b9af3b036f.png',
         '测试文章', '2021-06-21 00:00:00', '2021-06-21 00:00:00', 0, 1315, 120,
         '测试内容<a href="https://esion.xyz" target="_blank">我的页面</a>', '测试内容[我的页面](https://esion.xyz)');

@@ -17,24 +17,87 @@
                         :value="3">
                     </el-option>
                 </el-select>
-                <el-button type="danger">保存草稿</el-button>
+                <el-button type="danger" @click="article.status = 0;publish_dialog = true">保存草稿</el-button>
                 <el-button>预览</el-button>
-                <el-button type="primary">发布</el-button>
+                <el-button type="primary" @click="article.status = 1;publish_dialog = true">发布</el-button>
                 <el-button @click="is_full = !is_full">全屏编辑</el-button>
             </div>
         </div>
         <div class="article-info-body">
-            <div id="vditor" style="height: 100%"></div>
+            <div v-show="article.type === 1" id="vditor" style="height: 100%"></div>
+            <div v-show="article.type === 2" id="editor" style="height: 100%"></div>
+            <codemirror ref="codemirror" v-show="article.type === 3" v-model="content" :options="options"></codemirror>
         </div>
+        <el-drawer
+            :title="article.status === 1 ? '发布' : '保存草稿'"
+            :visible.sync="publish_dialog"
+        >
+            <el-form ref="form" :model="article" label-width="80px" style="padding: 15px">
+                <div style="margin-left: 80px">
+                    <el-upload
+                        action="https://jsonplaceholder.typicode.com/posts/"
+                        :show-file-list="false">
+                        <el-image
+                            :src="article.image">
+                            <div slot="error" class="image-slot">
+                                <el-image src="https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg"></el-image>
+                            </div>
+                        </el-image>
+                    </el-upload>
+                </div>
+                <el-form-item label="图片">
+                    <el-input v-model="article.image"></el-input>
+                </el-form-item>
+                <el-form-item label="文章标签">
+                    <el-select
+                        v-model="article.tags"
+                        multiple
+                        filterable
+                        allow-create
+                        default-first-option
+                        placeholder="请选择文章标签">
+                        <el-option
+                            v-for="(tag, index) in tags"
+                            :key="index"
+                            :label="tag"
+                            :value="tag">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="是否置顶">
+                    <el-switch v-model="article.isTop"></el-switch>
+                </el-form-item>
+                <el-form-item label="文章描述">
+                    <el-input type="textarea" v-model="article.description" :rows="5"
+                              placeholder="如果不输入，自动取文章前30字"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="publish_dialog = false">立即创建</el-button>
+                    <el-button>取消</el-button>
+                </el-form-item>
+            </el-form>
+        </el-drawer>
     </div>
 </template>
 
 <script>
 import Vditor from 'vditor'
 import "vditor/src/assets/scss/index.scss"
+import Editor from 'wangeditor'
+import codemirror from 'vue-codemirror/src/codemirror'// 引入CodeMirror
+import "codemirror/lib/codemirror.css";
+// 引入主题后还需要在 options 中指定主题才会生效
+import "codemirror/theme/idea.css";
+// 语法高亮
+import "codemirror/mode/xml/xml.js";
+import "codemirror/addon/hint/show-hint";
+import "codemirror/addon/hint/html-hint";
 
 export default {
     name: "info",
+    components: {
+        codemirror
+    },
     data: () => {
         return {
             id: '',
@@ -42,9 +105,33 @@ export default {
             is_full: false,
             article: {
                 title: '',
-                type: 1
+                image: 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg',
+                status: 1,
+                categoryId: '',
+                tags: [],
+                isTop: false,
+                description: '',
+                type: 1,
+                originalContent: ''
             },
-            vditor: null
+            vditor: null,
+            editor: null,
+            options: {
+                tabSize: 4, // 缩进格式
+                theme: "idea", // 主题，对应主题库 JS 需要提前引入
+                lineNumbers: true, // 显示行号
+                line: true,
+                mode: "xml",
+                smartIndent: true,
+                styleActiveLine: true, // 高亮选中行
+                showCursorWhenSelecting: true,
+                hintOptions: {
+                    completeSingle: true, // 当匹配只有一项的时候是否自动补全
+                },
+            },
+            content: '',
+            publish_dialog: false,
+            tags: ['java', '前端', '随笔']
         }
     },
     created() {
@@ -57,6 +144,13 @@ export default {
         this.vditor = new Vditor('vditor', {
             height: '100%'
         })
+        this.editor = new Editor('#editor')
+        this.editor.create();
+        //显示提示
+        console.log(this.$refs.codemirror.cminstance)
+        this.$refs.codemirror.cminstance.on("cursorActivity", () => {
+            this.$refs.codemirror.cminstance.showHint();
+        });
     }
 }
 </script>
@@ -67,7 +161,8 @@ export default {
     grid-template-rows: 1fr;
     grid-template-columns: 1fr 250px 108px 80px 80px 108px;
 }
-.article-info-fixed{
+
+.article-info-fixed {
     position: fixed;
     top: 0;
     left: 0;
@@ -75,6 +170,7 @@ export default {
     right: 0;
     z-index: 1002;
 }
+
 .article-info-abs {
     position: absolute;
     top: 20px;
@@ -82,7 +178,8 @@ export default {
     bottom: 20px;
     right: 20px;
 }
-.article-info-body{
+
+.article-info-body {
     position: absolute;
     top: 77px;
     left: 20px;

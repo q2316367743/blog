@@ -70,9 +70,4 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return articleMapper.countByCategory(categoryIds);
     }
 
-    @Override
-    public Article info(String identification) {
-        return articleMapper.selectPortalByIdentification(identification);
-    }
-
 }

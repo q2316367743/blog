@@ -23,11 +23,6 @@ public class Page implements Serializable {
     private Integer id;
 
     /**
-     * 页面标识
-     */
-    private String identification;
-
-    /**
      * 页面标题
      */
     private String title;

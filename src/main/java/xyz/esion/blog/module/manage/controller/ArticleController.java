@@ -93,11 +93,6 @@ public class ArticleController {
 
     private Article convert(ArticleParam param) {
         Article article = new Article();
-        if (StrUtil.isBlank(param.getIdentification())) {
-            article.setIdentification(param.getIdentification());
-        }else {
-            article.setIdentification(param.getTitle());
-        }
         article.setTitle(param.getTitle());
         article.setImage(param.getImage());
         article.setStatus(param.getStatus());

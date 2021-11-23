@@ -13,7 +13,7 @@
     <meta name="keywords" content="<#list config.keywords as keyword>${keyword}<#sep>,</#sep></#list>">
     <meta property="og:type" content="website">
     <meta property="og:title" content="${page.title}">
-    <meta property="og:url" content="${config.href}/page/${page.identification}.html">
+    <meta property="og:url" content="${config.href}/page/${page.id}.html">
     <meta property="og:site_name" content="${config.name}">
     <meta property="og:description" content="${author.description}">
     <meta property="og:locale" content="zh_CN">

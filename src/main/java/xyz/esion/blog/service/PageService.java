@@ -10,12 +10,4 @@ import xyz.esion.blog.view.PageInfoView;
  */
 public interface PageService extends IService<Page> {
 
-    /**
-     * 根据identification查询页面
-     *
-     * @param identification 唯一标识
-     * @return 页面内容
-     */
-    PageInfoView selectByIdentification(String identification);
-
 }

@@ -19,7 +19,7 @@
     <meta name="description" content="${article.description}">
     <meta property="og:type" content="article">
     <meta property="og:title" content="${article.title}">
-    <meta property="og:url" content="${config.href}/article/${article.identification}.html">
+    <meta property="og:url" content="${config.href}/article/${article.id}.html">
     <meta property="og:description" content="${article.description}">
     <meta property="og:locale" content="zh_CN">
     <meta property="article:published_time" content="${article.createTime?string('yyyy-MM-dd HH:mm:ss')}">

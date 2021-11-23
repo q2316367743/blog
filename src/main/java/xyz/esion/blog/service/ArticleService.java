@@ -33,12 +33,4 @@ public interface ArticleService extends IService<Article> {
      */
     List<KeyValue<Integer, Long>> countByCategory(List<Integer> categoryIds);
 
-    /**
-     * 根据identification查询信息
-     *
-     * @param identification 唯一标识
-     * @return 文章信息
-     */
-    Article info(String identification);
-
 }

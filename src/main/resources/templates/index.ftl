@@ -52,7 +52,7 @@
                         <#list page.records as article>
                             <div class="row mx-auto index-card">
                                 <div class="col-12 col-md-4 m-auto index-img">
-                                    <a href="/article/${article.identification}.html" target="_self">
+                                    <a href="/article/${article.id}.html" target="_self">
                                         <img src="${article.image}" class="article-img" lazyload alt="${article.title}">
                                     </a>
                                 </div>
@@ -61,12 +61,12 @@
                                         <#if article.sequence == 1>
                                             <i class="index-pin iconfont icon-top" title="Pin on top"></i>
                                         </#if>
-                                        <a href="/article/${article.identification}.html" target="_self">
+                                        <a href="/article/${article.id}.html" target="_self">
                                             ${article.title}
                                         </a>
                                     </h1>
                                     <p class="index-excerpt">
-                                        <a href="/article/${article.identification}.html" target="_self">
+                                        <a href="/article/${article.id}.html" target="_self">
                                             ${article.description}
                                         </a>
                                     </p>

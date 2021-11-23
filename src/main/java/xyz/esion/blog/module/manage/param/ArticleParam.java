@@ -15,11 +15,6 @@ public class ArticleParam implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 文章标识
-     */
-    private String identification;
-
-    /**
      * 文章标题
      */
     private String title;
