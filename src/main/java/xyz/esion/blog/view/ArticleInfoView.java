@@ -27,11 +27,6 @@ public class ArticleInfoView implements Serializable {
     private String title;
 
     /**
-     * 是否发布
-     */
-    private Boolean isRelease;
-
-    /**
      * 文章展示图片
      */
     private String image;
@@ -50,6 +45,11 @@ public class ArticleInfoView implements Serializable {
      * 标签，使用英文逗号隔开
      */
     private List<String> tags;
+
+    /**
+     * 排序，默认更新时间截，倒序，1：置顶，0：更新时间
+     */
+    private Boolean isTop;
 
     /**
      * 描述

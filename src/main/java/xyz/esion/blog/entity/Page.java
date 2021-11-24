@@ -19,7 +19,7 @@ public class Page implements Serializable {
     /**
      * 页面ID
      */
-    @TableId(type = IdType.ASSIGN_ID)
+    @TableId(type = IdType.AUTO)
     private Integer id;
 
     /**

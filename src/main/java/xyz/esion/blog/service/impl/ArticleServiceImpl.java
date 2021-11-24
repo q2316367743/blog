@@ -59,6 +59,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
                                 view.setCategoryName(categoryMap.get(item.getCategoryId()).getName());
                             }
                             view.setTags(Arrays.asList(item.getTags().split(",")));
+                            view.setIsTop(item.getSequence().equals(Long.MAX_VALUE));
                             return view;
                         })
                         .collect(Collectors.toList())

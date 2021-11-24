@@ -52,9 +52,9 @@ public class ArticleListView implements Serializable {
     private List<String> tags;
 
     /**
-     * 排序，默认更新时间截，倒序，1：置顶，时间戳：更新时间
+     * 排序，默认更新时间截，倒序，1：置顶，0：更新时间
      */
-    private Long sequence;
+    private Boolean isTop;
 
     /**
      * 描述

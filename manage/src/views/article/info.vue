@@ -65,14 +65,14 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="是否置顶">
-                    <el-switch v-model="article.isTop"></el-switch>
+                    <el-switch v-model="article.is_top"></el-switch>
                 </el-form-item>
                 <el-form-item label="文章描述">
                     <el-input type="textarea" v-model="article.description" :rows="5"
-                              placeholder="如果不输入，自动取文章前30字"></el-input>
+                              placeholder=""></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="publish_dialog = false">立即创建</el-button>
+                    <el-button type="primary" @click="submit">立即{{is_save ? '创建' : '修改'}}</el-button>
                     <el-button>取消</el-button>
                 </el-form-item>
             </el-form>
@@ -93,6 +93,9 @@ import "codemirror/mode/xml/xml.js";
 import "codemirror/addon/hint/show-hint";
 import "codemirror/addon/hint/html-hint";
 
+// 引入api
+import article_api from '@/api/article';
+
 export default {
     name: "info",
     components: {
@@ -105,14 +108,15 @@ export default {
             is_full: false,
             article: {
                 title: '',
-                image: 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg',
+                image: '',
                 status: 1,
-                categoryId: '',
+                category_id: 1,
                 tags: [],
-                isTop: false,
+                is_top: false,
                 description: '',
                 type: 1,
-                originalContent: ''
+                original_content: '',
+                content: ''
             },
             vditor: null,
             editor: null,
@@ -138,6 +142,38 @@ export default {
         if (this.$route.query.id) {
             this.id = this.$route.query.id;
             this.is_save = false;
+            article_api.info(this.id, (res) => {
+                this.article = res.data;
+                // 根据类型初始化
+                if (this.article.type === 1) {
+                    this.vditor.setValue(this.article.original_content);
+                }else if (this.article.type === 2) {
+                    this.editor.txt.html(this.article.content);
+                }else if (this.article.type === 3) {
+                    this.content = this.article.content
+                }
+            }, (e) => {
+                this.$message({
+                    message: '文章ID错误',
+                    type: 'error',
+                    onClose: () => {
+                        this.$router.push('/article/list');
+                    }
+                })
+            })
+        }else {
+            this.article = {
+                title: '',
+                image: '',
+                status: 1,
+                category_id: 1,
+                tags: [],
+                is_top: false,
+                description: '',
+                type: 1,
+                original_content: '',
+                content: ''
+            };
         }
     },
     mounted() {
@@ -151,6 +187,42 @@ export default {
         this.$refs.codemirror.cminstance.on("cursorActivity", () => {
             this.$refs.codemirror.cminstance.showHint();
         });
+    },
+    methods: {
+        submit() {
+            // 根据类型赋值
+            if (this.article.type === 1) {
+                this.article.original_content = this.vditor.getValue();
+                this.article.content = this.vditor.getHTML();
+            }else if (this.article.type === 2) {
+                this.article.original_content = this.editor.txt.text();
+                this.article.content = this.editor.txt.html();
+            }else if (this.article.type === 3) {
+                this.article.original_content = this.content;
+                this.article.content = this.content;
+            }
+            if (this.is_save) {
+                article_api.save(this.article, (res) => {
+                    this.$message.success('新建文章成功');
+                    this.publish_dialog = false;
+                    this.$router.push("/article/list");
+                }, (e) => {
+                    console.error(e);
+                    this.$message.error('新建文章失败');
+                    this.publish_dialog = false;
+                })
+            }else {
+                article_api.update(this.id, this.article, (res) => {
+                    this.$message.success('修改文章成功');
+                    this.publish_dialog = false;
+                    this.$router.push("/article/list");
+                }, (e) => {
+                    console.error(e);
+                    this.$message.error('修改文章失败');
+                    this.publish_dialog = false;
+                })
+            }
+        }
     }
 }
 </script>

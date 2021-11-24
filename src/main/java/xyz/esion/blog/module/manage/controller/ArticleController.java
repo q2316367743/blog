@@ -70,6 +70,7 @@ public class ArticleController {
             info.setCategoryName(category.getName());
         }
         info.setTags(Arrays.asList(article.getTags().split(",")));
+        info.setIsTop(article.getSequence().equals(Long.MAX_VALUE));
         return Result.success(info);
     }
 
@@ -113,7 +114,7 @@ public class ArticleController {
         article.setOriginalContent(param.getOriginalContent());
         if (param.getType() != null) {
             if (param.getType().equals(EditorTypeEnum.MARKDOWN.getValue())) {
-                article.setContent(new Markdown(param.getOriginalContent()).html());
+                article.setContent(param.getContent());
             }else if (param.getType().equals(EditorTypeEnum.RICH_TEXT.getValue())) {
                 article.setContent(param.getOriginalContent());
             }else if (param.getType().equals(EditorTypeEnum.HTML.getValue())){

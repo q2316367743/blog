@@ -40,7 +40,7 @@ public class ArticleParam implements Serializable {
     private List<String> tags;
 
     /**
-     * 排序，默认更新时间截，倒序，1：置顶，时间戳：更新时间
+     * 排序，默认更新时间截，倒序，1：置顶，0：更新时间
      */
     private Boolean isTop;
 
@@ -53,6 +53,11 @@ public class ArticleParam implements Serializable {
      * 文章内容编写类型
      */
     private Integer type;
+
+    /**
+     * HTML文件
+     */
+    private String content;
 
     /**
      * 文章原始内容，内容为Markdown文档

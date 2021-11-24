@@ -12,7 +12,7 @@ create table category
 
 create table article
 (
-    id               int unsigned primary key comment '文章ID',
+    id               int unsigned auto_increment primary key comment '文章ID',
     title            varchar(32)         default ''                    not null comment '文章标题',
     status           tinyint(1)          default 1                     not null comment '状态，具体查看枚举',
     image            varchar(255)        default ''                    not null comment '文章展示图片',
@@ -35,7 +35,7 @@ create table article
 
 create table page
 (
-    id               int unsigned primary key comment '页面ID',
+    id               int unsigned auto_increment primary key comment '页面ID',
     title            varchar(32)         default ''                    not null comment '页面标题',
     image            varchar(255)        default ''                    not null comment '页面展示图片',
     status           tinyint(1)          default 0                     not null comment '状态，具体查看枚举',
@@ -109,9 +109,11 @@ create table menu
 insert into menu
     value (1, 'iconfont icon-home-fill', '首页', 0, '/', 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
 insert into menu
-    value (2, 'iconfont icon-archive-fill', '归档', 0, '/archive.html', 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
+    value (2, 'iconfont icon-archive-fill', '归档', 0, '/archive.html', 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00',
+           0);
 insert into menu
-    value (3, 'iconfont icon-category-fill', '分类', 0, '/category.html', 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
+    value (3, 'iconfont icon-category-fill', '分类', 0, '/category.html', 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00',
+           0);
 insert into menu
     value (4, 'iconfont icon-user-fill', '关于', 0, '/about.html', 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
 insert into menu

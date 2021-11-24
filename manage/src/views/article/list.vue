@@ -4,6 +4,12 @@
             <div class="el-card__body article-list-condition">
                 <div>文章标题：</div>
                 <el-input style="width: 180px" v-model="condition.title"></el-input>
+                <div style="margin-left: 10px">状态：</div>
+                <el-select style="width: 180px" v-model="condition.status" clearable @change="search" placeholder="状态">
+                    <el-option label="发布" :value="1"></el-option>
+                    <el-option label="草稿" :value="0"></el-option>
+                    <el-option label="回收站" :value="-1"></el-option>
+                </el-select>
                 <el-button @click="search" type="primary" style="margin-left: 10px">搜索</el-button>
                 <el-button @click="clear" style="margin-left: 10px">重置</el-button>
             </div>
@@ -14,7 +20,12 @@
             </div>
             <el-table :data="articles">
                 <el-table-column type="index" label="序号"></el-table-column>
-                <el-table-column prop="title" label="博客标题"></el-table-column>
+                <el-table-column label="博客标题">
+                    <template slot-scope="scope">
+                        <i class="el-icon-top" v-if="scope.row.is_top"></i>
+                        <span>{{ scope.row.title }}</span>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="category_name" label="分类"></el-table-column>
                 <el-table-column label="状态">
                     <template slot-scope="scope">
@@ -28,7 +39,9 @@
                 <el-table-column label="操作">
                     <template slot-scope="scope">
                         <el-button type="text" @click="update(scope.row.id)">编辑</el-button>
-                        <el-button type="text">回收站</el-button>
+                        <el-button type="text" @click="recovery(scope.row.id)" v-if="scope.row.status === 1 || scope.row.status === 0">回收站</el-button>
+                        <el-button type="text" @click="draft(scope.row.id)" v-if="scope.row.status === 1 || scope.row.status === -1">草稿</el-button>
+                        <el-button type="text" @click="publish(scope.row.id)" v-if="scope.row.status === -1 || scope.row.status === 0">发布</el-button>
                         <el-button type="text">设置</el-button>
                     </template>
                 </el-table-column>
@@ -49,6 +62,7 @@ export default {
             total: 1,
             condition: {
                 title: '',
+                status: '',
                 is_delete: false,
                 is_release: true
             },
@@ -63,7 +77,8 @@ export default {
             article_api.list({
                 page_num: this.page_num,
                 page_size: this.page_size,
-                title: this.condition.title
+                title: this.condition.title,
+                status: this.condition.status
             }, res => {
                 console.log(res)
                 if (res.code === 200) {
@@ -91,6 +106,39 @@ export default {
                     id: id
                 }
             });
+        },
+        recovery(id) {
+            article_api.update(id, {
+                status: -1
+            }, (res) => {
+                this.$message.success('已移入回收站');
+                this.search();
+            }, (e) => {
+                console.error(e);
+                this.$message.error("移入回收站失败");
+            })
+        },
+        publish(id) {
+            article_api.update(id, {
+                status: 1
+            }, (res) => {
+                this.$message.success('已重新发布');
+                this.search();
+            }, (e) => {
+                console.error(e);
+                this.$message.error("发布失败");
+            })
+        },
+        draft(id) {
+            article_api.update(id, {
+                status: 0
+            }, (res) => {
+                this.$message.success('已变为草稿');
+                this.search();
+            }, (e) => {
+                console.error(e);
+                this.$message.error("变为草稿失败");
+            })
         }
     }
 }
