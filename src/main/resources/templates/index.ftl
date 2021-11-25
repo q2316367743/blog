@@ -58,7 +58,7 @@
                                 </div>
                                 <article class="col-12 col-md-8 mx-auto index-info">
                                     <h1 class="index-header">
-                                        <#if article.sequence == 1>
+                                        <#if article.isTop>
                                             <i class="index-pin iconfont icon-top" title="Pin on top"></i>
                                         </#if>
                                         <a href="/article/${article.id}.html" target="_self">
