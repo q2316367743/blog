@@ -1,5 +1,6 @@
 package xyz.esion.blog.constant;
 
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.system.SystemUtil;
 
 import java.io.File;
@@ -36,5 +37,12 @@ public class PathConstant {
      * 资源路径
      */
     public static final String RESOURCE_PATH = HOME_PATH + File.separator + "resource";
+
+    static {
+        FileUtil.mkdir(PathConstant.BACKUP_PATH);
+        FileUtil.mkdir(PathConstant.IMAGE_PATH);
+        FileUtil.mkdir(PathConstant.MUSIC_PATH);
+        FileUtil.mkdir(PathConstant.RESOURCE_PATH);
+    }
 
 }

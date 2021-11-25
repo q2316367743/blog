@@ -29,7 +29,7 @@ import java.util.Arrays;
  * @author Esion
  * @since 2021/11/21
  */
-@RestController("manageArticle")
+@RestController
 @RequestMapping("manage/api/article")
 @RequiredArgsConstructor
 public class ArticleController {

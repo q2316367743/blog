@@ -51,7 +51,7 @@ export const constantRoutes = [
             path: 'dashboard',
             name: 'Dashboard',
             component: () => import('@/views/dashboard/index'),
-            meta: {title: '仪表盘', icon: 'dashboard'}
+            meta: {title: '仪表盘', icon: 'el-icon-odometer'}
         }]
     },
 
@@ -60,7 +60,7 @@ export const constantRoutes = [
         component: Layout,
         redirect: '/article/list',
         name: 'article',
-        meta: {title: '文章管理', icon: 'el-icon-s-help'},
+        meta: {title: '文章管理', icon: 'el-icon-document-copy'},
         children: [
             {
                 path: 'save',
@@ -80,7 +80,7 @@ export const constantRoutes = [
                 path: 'list',
                 name: 'list',
                 component: () => import('@/views/article/list'),
-                meta: {title: '文章列表', icon: 'table'}
+                meta: {title: '文章列表', icon: 'el-icon-document'}
             },
             {
                 path: 'category',
@@ -96,7 +96,7 @@ export const constantRoutes = [
         component: Layout,
         redirect: '/page/list',
         name: 'page',
-        meta: {title: '页面管理', icon: 'el-icon-s-help'},
+        meta: {title: '页面管理', icon: 'el-icon-reading'},
         children: [
             {
                 path: 'save',
@@ -116,13 +116,13 @@ export const constantRoutes = [
                 path: 'list',
                 name: 'list',
                 component: () => import('@/views/page/list'),
-                meta: {title: '页面列表', icon: 'table'}
+                meta: {title: '页面列表', icon: 'el-icon-takeaway-box'}
             },
             {
                 path: 'category',
                 name: 'category',
                 component: () => import('@/views/page/menu'),
-                meta: {title: '菜单管理', icon: 'tree'}
+                meta: {title: '菜单管理', icon: 'el-icon-menu'}
             }
         ]
     },
@@ -135,7 +135,7 @@ export const constantRoutes = [
                 path: 'index',
                 name: 'attachment',
                 component: () => import('@/views/attachment/index'),
-                meta: {title: '附件管理', icon: 'form'}
+                meta: {title: '附件管理', icon: 'el-icon-folder-opened'}
             }
         ]
     },
@@ -148,7 +148,7 @@ export const constantRoutes = [
                 path: 'index',
                 name: 'comment',
                 component: () => import('@/views/comment/index'),
-                meta: {title: '评论管理', icon: 'form'}
+                meta: {title: '评论管理', icon: 'el-icon-chat-line-square'}
             }
         ]
     },
@@ -164,25 +164,25 @@ export const constantRoutes = [
                 path: 'author',
                 name: 'author',
                 component: () => import('@/views/setting/author'),
-                meta: {title: '作者管理', icon: 'table'},
+                meta: {title: '作者管理', icon: 'el-icon-user'},
             },
             {
                 path: 'config',
                 name: 'config',
                 component: () => import('@/views/setting/config'),
-                meta: {title: '博客设置', icon: 'table'},
+                meta: {title: '博客设置', icon: 'el-icon-setting'},
             },
             {
                 path: 'transfer',
                 name: 'transfer',
                 component: () => import('@/views/setting/transfer'),
-                meta: {title: '迁移', icon: 'table'},
+                meta: {title: '迁移', icon: 'el-icon-connection\n'},
             },
             {
                 path: 'about',
                 name: 'about',
                 component: () => import('@/views/setting/about'),
-                meta: {title: '关于', icon: 'table'},
+                meta: {title: '关于', icon: 'el-icon-info'},
             }
         ]
     },

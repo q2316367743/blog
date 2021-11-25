@@ -1,0 +1,36 @@
+### 查询作者信息
+GET {{api}}/author
+token: {{token}}
+
+### 更新作者信息
+PUT {{api}}/author
+token: {{token}}
+Content-Type: application/json
+
+{
+    "description": "我的个人博客",
+    "avatar": "https://portrait.gitee.com/uploads/avatars/user/1786/5358547_qiaoshengda_1578985319.png",
+    "type": 1,
+    "content": "<p>无</p>",
+    "tags": [
+        "后端开发",
+        "前端开发",
+        "游戏爱好者"
+    ],
+    "name": "云落天都",
+    "accounts": [
+        {
+            "icon": "iconfont icon-github-fill",
+            "mode": 1,
+            "name": "github",
+            "href": "https://github.com/q2316367743"
+        },
+        {
+            "icon": "iconfont icon-gitee-fill",
+            "mode": 1,
+            "name": "gitee",
+            "href": "https://gitee.com/qiaoshengda"
+        }
+    ],
+    "originalContent": "无"
+}

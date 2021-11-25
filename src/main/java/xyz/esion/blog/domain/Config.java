@@ -89,12 +89,24 @@ public class Config implements Serializable {
 
         private static final long serialVersionUID = 1L;
 
+        /**
+         * 链接
+         */
         private String url;
 
+        /**
+         * 封面
+         */
         private String cover;
 
+        /**
+         * 名称
+         */
         private String name;
 
+        /**
+         * 歌手
+         */
         private String artist;
 
     }

@@ -15,4 +15,11 @@ public interface ConfigService {
      */
     Config info();
 
+    /**
+     * 更新配置信息
+     *
+     * @param config 配置信息
+     */
+    void update(Config config);
+
 }

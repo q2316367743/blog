@@ -44,12 +44,21 @@ public class AuthorServiceImpl implements AuthorService {
             accounts.add(new Author.Account("gitee", "iconfont icon-gitee-fill", "https://gitee.com/qiaoshengda", 1));
             author.setAccounts(accounts);
             this.author = author;
+            // 如果不存在，则默认值写入
+            FileUtil.writeString(JSONUtil.toJsonStr(this.author), new File(BackupConstant.AUTHOR_PATH), StandardCharsets.UTF_8);
         }
     }
 
     @Override
     public Author info() {
         return this.author;
+    }
+
+    @Override
+    public void update(Author author) {
+        this.author = author;
+        // 更新重新写入
+        FileUtil.writeString(JSONUtil.toJsonStr(this.author), new File(BackupConstant.AUTHOR_PATH), StandardCharsets.UTF_8);
     }
 
 }

@@ -15,4 +15,10 @@ public interface AuthorService {
      */
     Author info();
 
+    /**
+     * 更新作者详情
+     * @param author 作者详情
+     */
+    void update(Author author);
+
 }

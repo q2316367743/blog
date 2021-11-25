@@ -51,12 +51,19 @@ public class ConfigServiceImpl implements ConfigService {
             ));
             config.setMusic(new LinkedList<>());
             this.config = config;
+            FileUtil.writeString(JSONUtil.toJsonStr(this.config), new File(BackupConstant.CONFIG_PATH), StandardCharsets.UTF_8);
         }
     }
 
     @Override
     public Config info() {
         return this.config;
+    }
+
+    @Override
+    public void update(Config config) {
+        this.config = config;
+        FileUtil.writeString(JSONUtil.toJsonStr(this.config), new File(BackupConstant.CONFIG_PATH), StandardCharsets.UTF_8);
     }
 
 }

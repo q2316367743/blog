@@ -1,0 +1,38 @@
+### 查询配置信息
+GET {{api}}/config
+token: {{token}}
+
+### 更新配置信息
+PUT {{api}}/config
+token: {{token}}
+Content-Type: application/json
+
+{
+    "keywords": [
+        "云落天都",
+        "博客",
+        "网络日志"
+    ],
+    "favicon": "/favicon.ico",
+    "index": {
+        "speed": 150,
+        "texts": [
+            "真正的大师永远怀着一颗学徒的心。",
+            "任何时候都不要被骄傲蒙蔽了双眼！",
+            "绝对不要坐等胜利的到来。",
+            "愤怒，带来冲动。"
+        ],
+        "loop": true
+    },
+    "linkBackground": "https://img-blog.csdnimg.cn/img_convert/cce6857f9276c2ba78d3f4b9af3b036f.png",
+    "aboutBackground": "https://img-blog.csdnimg.cn/img_convert/cce6857f9276c2ba78d3f4b9af3b036f.png",
+    "keepOnRecord": "鄂ICP备2021003611号-1",
+    "articleBackground": "https://img-blog.csdnimg.cn/img_convert/cce6857f9276c2ba78d3f4b9af3b036f.png",
+    "music": [],
+    "background": "https://static.zkqiang.cn/images/20191231163321.jpg-slim",
+    "pageBackground": "https://img-blog.csdnimg.cn/img_convert/cce6857f9276c2ba78d3f4b9af3b036f.png",
+    "categoryBackground": "https://img-blog.csdnimg.cn/img_convert/cce6857f9276c2ba78d3f4b9af3b036f.png",
+    "name": "云落天都的博客",
+    "archiveBackground": "https://img-blog.csdnimg.cn/img_convert/cce6857f9276c2ba78d3f4b9af3b036f.png",
+    "href": "http://localhost:8990"
+}
