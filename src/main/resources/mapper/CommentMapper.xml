@@ -5,25 +5,26 @@
 <mapper namespace="xyz.esion.blog.mapper.CommentMapper">
 
     <resultMap id="BaseResultMap" type="xyz.esion.blog.entity.Comment">
-            <id property="id" column="id" jdbcType="INTEGER"/>
-            <result property="email" column="email" jdbcType="VARCHAR"/>
-            <result property="website" column="website" jdbcType="VARCHAR"/>
-            <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
-            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="isShow" column="is_show" jdbcType="BOOLEAN"/>
-            <result property="browser" column="browser" jdbcType="VARCHAR"/>
-            <result property="systemVersion" column="system_version" jdbcType="VARCHAR"/>
-            <result property="type" column="type" jdbcType="TINYINT"/>
-            <result property="articleId" column="article_id" jdbcType="INTEGER"/>
-            <result property="pId" column="p_id" jdbcType="INTEGER"/>
-            <result property="targetId" column="target_id" jdbcType="INTEGER"/>
-            <result property="targetNickname" column="target_nickname" jdbcType="VARCHAR"/>
-            <result property="targetWebsite" column="target_website" jdbcType="VARCHAR"/>
-            <result property="content" column="content" jdbcType="VARCHAR"/>
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="website" column="website" jdbcType="VARCHAR"/>
+        <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="isShow" column="is_show" jdbcType="BOOLEAN"/>
+        <result property="browser" column="browser" jdbcType="VARCHAR"/>
+        <result property="systemVersion" column="system_version" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="TINYINT"/>
+        <result property="articleId" column="article_id" jdbcType="INTEGER"/>
+        <result property="pId" column="p_id" jdbcType="INTEGER"/>
+        <result property="targetId" column="target_id" jdbcType="INTEGER"/>
+        <result property="targetNickname" column="target_nickname" jdbcType="VARCHAR"/>
+        <result property="targetWebsite" column="target_website" jdbcType="VARCHAR"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,email,website,
+        id
+        ,email,website,
         nickname,create_time,is_show,
         browser,system_version,type,
         article_id,p_id,target_id,

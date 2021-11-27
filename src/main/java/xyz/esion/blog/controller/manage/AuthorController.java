@@ -1,4 +1,4 @@
-package xyz.esion.blog.module.manage.controller;
+package xyz.esion.blog.controller.manage;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

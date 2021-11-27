@@ -1,8 +1,11 @@
 package xyz.esion.blog.view;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author Esion
@@ -27,5 +30,24 @@ public class CategoryView implements Serializable {
      * 数量
      */
     private Long count;
+
+    /**
+     * 前十篇文章
+     */
+    private List<Article> articles;
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Article implements Serializable {
+
+        private static final long serialVersionUID = 1L;
+
+        private Integer id;
+
+        private String title;
+
+    }
+
 
 }

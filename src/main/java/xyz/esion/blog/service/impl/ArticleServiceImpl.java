@@ -67,7 +67,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    public List<KeyValue<Integer, Long>> countByCategory(List<Integer> categoryIds) {
+    public List<KeyValue<Long, Long>> countByCategory(List<Integer> categoryIds) {
         return articleMapper.countByCategory(categoryIds);
     }
 

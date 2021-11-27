@@ -5,7 +5,7 @@
             <el-button style="float: right; padding: 3px 0" type="text" @click="update">修改</el-button>
         </div>
         <div class="el-card__body">
-            <h1>基础设置</h1>
+            <h1 class="h1">基础设置</h1>
             <el-form label-width="120px">
                 <el-form-item label="标题">
                     <el-input v-model="config.name" style="width: 360px"></el-input>
@@ -20,7 +20,7 @@
                         closable
                         :disable-transitions="false"
                         @close="tag_close(keyword)"
-                        style="margin-left: 15px"
+                        style="margin-right: 15px"
                     >
                         {{ keyword }}
                     </el-tag>
@@ -34,9 +34,7 @@
                         @blur="tag_add"
                     >
                     </el-input>
-                    <el-button
-                        style="margin-left: 15px" v-else class="button-new-tag" size="small" @click="show_tag">+ 新关键字
-                    </el-button>
+                    <el-button v-else class="button-new-tag" size="small" @click="show_tag">+ 新关键字</el-button>
                 </el-form-item>
                 <el-form-item label="图标">
                     <el-input v-model="config.favicon" style="width: 360px"></el-input>
@@ -45,7 +43,7 @@
                     <el-input v-model="config.keep_on_record" style="width: 360px" placeholder="为空则不显示"></el-input>
                 </el-form-item>
             </el-form>
-            <h1>首页设置</h1>
+            <h1 class="h1">首页设置</h1>
             <el-form label-width="120px">
                 <el-form-item label="打字机速度">
                     <el-input-number v-model="config.index.speed" controls-position="right"></el-input-number>
@@ -81,7 +79,7 @@
                     <el-switch v-model="config.index.loop"></el-switch>
                 </el-form-item>
             </el-form>
-            <h1>图片设置</h1>
+            <h1 class="h1">图片设置</h1>
             <el-form label-width="120px">
                 <el-form-item label="首页背景图片">
                     <el-input v-model="config.background"></el-input>
@@ -106,7 +104,7 @@
                 </el-form-item>
             </el-form>
             <div style="position: relative">
-                <h1>音乐设置</h1>
+                <h1 class="h1">音乐设置</h1>
                 <el-button type="primary" style="position: absolute;right: 0;top: 0" @click="music_dialog_open">新增歌曲</el-button>
             </div>
             <el-table :data="config.music">
@@ -274,12 +272,8 @@ export default {
     overflow-y: auto;
 }
 
-.el-tag + .el-tag {
-    margin-left: 15px;
-}
-
 .button-new-tag {
-    margin-left: 15px;
+    margin-right: 15px;
     height: 32px;
     line-height: 30px;
     padding-top: 0;
@@ -295,7 +289,7 @@ export default {
 
 .input-new-tag {
     width: 90px;
-    margin-left: 15px;
+    margin-right: 15px;
     vertical-align: bottom;
 }
 
@@ -304,7 +298,7 @@ export default {
     vertical-align: bottom;
 }
 
-h1 {
+.el-card__body .h1 {
     margin-left: 10px;
 }
 </style>

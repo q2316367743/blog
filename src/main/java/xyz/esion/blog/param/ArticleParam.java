@@ -1,4 +1,4 @@
-package xyz.esion.blog.module.manage.param;
+package xyz.esion.blog.param;
 
 import lombok.Data;
 

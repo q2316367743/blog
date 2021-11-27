@@ -1,4 +1,4 @@
-package xyz.esion.blog.module.manage.controller;
+package xyz.esion.blog.controller.manage;
 
 import cn.dev33.satoken.stp.StpUtil;
 import lombok.RequiredArgsConstructor;

@@ -31,6 +31,6 @@ public interface ArticleService extends IService<Article> {
      * @param categoryIds 分类IDs
      * @return 分类数量
      */
-    List<KeyValue<Integer, Long>> countByCategory(List<Integer> categoryIds);
+    List<KeyValue<Long, Long>> countByCategory(List<Integer> categoryIds);
 
 }

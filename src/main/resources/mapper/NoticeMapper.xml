@@ -5,16 +5,17 @@
 <mapper namespace="xyz.esion.blog.mapper.NoticeMapper">
 
     <resultMap id="BaseResultMap" type="xyz.esion.blog.entity.Notice">
-            <id property="id" column="id" jdbcType="INTEGER"/>
-            <result property="title" column="title" jdbcType="VARCHAR"/>
-            <result property="content" column="content" jdbcType="VARCHAR"/>
-            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
-            <result property="isDelete" column="is_delete" jdbcType="BOOLEAN"/>
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="isDelete" column="is_delete" jdbcType="BOOLEAN"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,title,content,
+        id
+        ,title,content,
         create_time,update_time,is_delete
     </sql>
 </mapper>

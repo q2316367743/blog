@@ -19,7 +19,8 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,title,
+        id
+        ,title,
         image,description,create_time,
         update_time,is_delete,view_count,
         comment_count,content,original_content

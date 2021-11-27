@@ -7,15 +7,14 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- * 留言板
- * @TableName message
+ * 友情链接
+ * @TableName link
  * @author Esion
- * @since 2021/11/16
+ * @since 2021/11/27
  */
-@TableName(value ="message")
+@TableName(value ="link")
 @Data
-public class Message implements Serializable {
-
+public class Link implements Serializable {
     /**
      * ID
      */
@@ -35,9 +34,9 @@ public class Message implements Serializable {
     private Boolean isDelete;
 
     /**
-     * 类型
+     * 图标
      */
-    private Integer type;
+    private String icon;
 
     /**
      * 名称
@@ -55,11 +54,15 @@ public class Message implements Serializable {
     private String url;
 
     /**
-     * 内容
+     * 描述
      */
-    private String content;
+    private String description;
+
+    /**
+     * 状态
+     */
+    private Integer status;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
-
 }

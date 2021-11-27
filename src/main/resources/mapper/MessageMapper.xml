@@ -5,18 +5,20 @@
 <mapper namespace="xyz.esion.blog.mapper.MessageMapper">
 
     <resultMap id="BaseResultMap" type="xyz.esion.blog.entity.Message">
-            <id property="id" column="id" jdbcType="INTEGER"/>
-            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="isDelete" column="is_delete" jdbcType="BOOLEAN"/>
-            <result property="type" column="type" jdbcType="TINYINT"/>
-            <result property="name" column="name" jdbcType="VARCHAR"/>
-            <result property="email" column="email" jdbcType="VARCHAR"/>
-            <result property="content" column="content" jdbcType="VARCHAR"/>
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="isDelete" column="is_delete" jdbcType="BOOLEAN"/>
+        <result property="type" column="type" jdbcType="TINYINT"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="url" column="url" jdbcType="VARCHAR"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,create_time,is_delete,
-        type,name,email,
+        id
+        ,create_time,is_delete,
+        type,name,email,url,
         content
     </sql>
 </mapper>

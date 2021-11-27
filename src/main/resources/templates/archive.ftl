@@ -20,7 +20,7 @@
     <meta property="article:author" content="${author.name}">
     <meta property="article:tag" content="<#list config.keywords as keyword>${keyword}<#sep>,</#sep></#list>">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="generator" content="Hexo 5.4.0">
+    <meta name="generator" content="blog 1.0">
     <title>归档 - ${config.name}</title>
     <#include "./layout/head.ftl" />
 
@@ -51,59 +51,51 @@
                 <div class="row">
                     <div class="col-12 col-md-10 m-auto">
                         <div class="list-group">
-                            <p class="h4">共计 31 篇文章</p>
+                            <p class="h4">共计 ${page.total} 篇文章</p>
                             <hr>
-                            <p class="h5">2020</p>
-                            <a href="/posts/753ba7a9/" class="list-group-item list-group-item-action">
-                                <span class="archive-post-title">Crawlab Lite 正式发布，更轻量的爬虫管理平台</span>
-                                <time style="float: right;">07-15</time>
-                            </a>
-                            <a href="/posts/dc4bf29f/" class="list-group-item list-group-item-action">
-                                <span class="archive-post-title">源码解读 Golang 中 sync.Map 的实现原理</span>
-                                <time style="float: right;">03-23</time>
-                            </a>
-                            <a href="/posts/14690cf1/" class="list-group-item list-group-item-action">
-                                <span class="archive-post-title">经典面试题：青蛙跳台阶</span>
-                                <time style="float: right;">03-09</time>
-                            </a>
-                            <a href="/posts/f94fb1be/" class="list-group-item list-group-item-action">
-                                <span class="archive-post-title">探究 Go 语言 defer 语句的三种机制</span>
-                                <time style="float: right;">03-01</time>
-                            </a>
-                            <a href="/posts/1273f6f1/" class="list-group-item list-group-item-action">
-                                <span class="archive-post-title">一道快速考察 Python 基础的面试题</span>
-                                <time style="float: right;">02-08</time>
-                            </a>
-                            <a href="/posts/e8ed6836/" class="list-group-item list-group-item-action">
-                                <span class="archive-post-title">编写自己的 GitHub Action，体验自动化部署</span>
-                                <time style="float: right;">01-20</time>
-                            </a>
-                            <p class="h5">2019</p>
-                            <a href="/posts/19c1cb9d/" class="list-group-item list-group-item-action">
-                                <span class="archive-post-title">Python 2 与 3 共存了 11 年，新年就要和它道别</span>
-                                <time style="float: right;">12-31</time>
-                            </a>
-                            <a href="/posts/1c05b194/" class="list-group-item list-group-item-action">
-                                <span class="archive-post-title">30 年前的圣诞节，Python 序章被谱写</span>
-                                <time style="float: right;">12-24</time>
-                            </a>
-                            <a href="/posts/95ac9d73/" class="list-group-item list-group-item-action">
-                                <span class="archive-post-title">文言文编程火了，可我完全学不懂</span>
-                                <time style="float: right;">12-21</time>
-                            </a>
-                            <a href="/posts/d2d106a5/" class="list-group-item list-group-item-action">
-                                <span class="archive-post-title">通过 Python 理解 Mixin 概念</span>
-                                <time style="float: right;">12-07</time>
-                            </a>
+                            <#list page.records as view>
+                                <p class="h5">${view.year}</p>
+                                <#list view.items as article>
+                                    <a href="${config.href}/article/${article.id}.html"
+                                       class="list-group-item list-group-item-action">
+                                        <span class="archive-post-title">${article.title}</span>
+                                        <time style="float: right;">${article.month}-${article.day}</time>
+                                    </a>
+                                </#list>
+                            </#list>
                         </div>
                         <nav aria-label="navigation">
-    <span class="pagination" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/#board">2</a><a
-                class="page-number" href="/archives/page/3/#board">3</a><a class="page-number"
-                                                                           href="/archives/page/4/#board">4</a><a
-                class="extend next" rel="next" href="/archives/page/2/#board"><i
-                    class="iconfont icon-arrowright"></i></a>
-    </span>
+                            <span class="pagination" id="pagination">
+                                <#if page.pageNum - 1 &gt; 0>
+                                    <a class="extend prev" rel="prev"
+                                       href="${config.href}/category/${category.id}.html?pageNum=${page.pageNum - 1}&pageSize=${page.pageSize}">
+                                        <i class="iconfont icon-arrowleft"></i>
+                                    </a>
+                                </#if>
+                                <#if page.pageNum - 2 &gt; 0>
+                                    <a class="page-number"
+                                       href="${config.href}/category/${category.id}.html?pageNum=${page.pageNum - 2}&pageSize=${page.pageSize}">${page.pageNum - 2}</a>
+                                </#if>
+                                <#if page.pageNum - 1 &gt; 0>
+                                    <a class="page-number"
+                                       href="${config.href}/category/${category.id}.html?pageNum=${page.pageNum - 1}&pageSize=${page.pageSize}">${page.pageNum - 1}</a>
+                                </#if>
+                                <span class="page-number current">${page.pageNum}</span>
+                                <#if page.pageNum + 1 &lt; page.count>
+                                    <a class="page-number"
+                                       href="${config.href}/category/${category.id}.html?pageNum=${page.pageNum + 1}&pageSize=${page.pageSize}">${page.pageNum + 1}</a>
+                                </#if>
+                                <#if page.pageNum + 2 &lt; page.count>
+                                    <a class="page-number"
+                                       href="${config.href}/category/${category.id}.html?pageNum=${page.pageNum + 2}&pageSize=${page.pageSize}">${page.pageNum + 2}</a>
+                                </#if>
+                                <#if page.pageNum + 1 &lt; page.count>
+                                    <a class="extend next" rel="next"
+                                       href="${config.href}/category/${category.id}.html?pageNum=${page.pageNum + 1}&pageSize=${page.pageSize}">
+                                        <i class="iconfont icon-arrowright"></i>
+                                    </a>
+                                </#if>
+                            </span>
                         </nav>
                     </div>
                 </div>

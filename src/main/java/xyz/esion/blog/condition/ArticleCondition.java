@@ -1,4 +1,4 @@
-package xyz.esion.blog.module.manage.condition;
+package xyz.esion.blog.condition;
 
 import lombok.Data;
 

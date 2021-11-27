@@ -1,0 +1,11 @@
+### 新增一个意见反馈
+POST {{url}}/api/message
+Content-Type: application/json
+
+{
+    "type": 1,
+    "content": "你好",
+    "name": "你猜猜",
+    "url": "https://esion.xyz",
+    "email": "m17762618644@163.com"
+}

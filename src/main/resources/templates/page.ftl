@@ -20,7 +20,7 @@
     <meta property="article:author" content="${author.name}">
     <meta property="article:tag" content="<#list config.keywords as keyword>${keyword}<#sep>,</#sep></#list>">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="generator" content="Hexo 5.4.0">
+    <meta name="generator" content="blog 1.0">
     <title>${page.title} - ${config.name}</title>
     <#include "./layout/head.ftl" />
 

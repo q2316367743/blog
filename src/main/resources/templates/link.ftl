@@ -20,7 +20,7 @@
     <meta property="article:author" content="${author.name}">
     <meta property="article:tag" content="<#list config.keywords as keyword>${keyword}<#sep>,</#sep></#list>">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="generator" content="Hexo 5.4.0">
+    <meta name="generator" content="blog 1.0">
     <title>友链 - ${config.name}</title>
     <#include "./layout/head.ftl" />
 
@@ -51,85 +51,24 @@
                 <div class="row">
                     <div class="col-12 col-md-10 m-auto">
                         <div class="row links">
-                            <div class="card col-lg-4 col-md-6 col-sm-12">
-                                <a href="https://hexo.fluid-dev.com/" class="card-body hover-with-bg" target="_blank"
-                                   rel="noopener external nofollow noreferrer">
-                                    <div class="card-content">
-                                        <div class="link-avatar my-auto">
-                                            <img src="/img/favicon.png" srcset="/img/loading.gif" lazyload
-                                                 alt="Fluid Blog"
-                                                 onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
+                            <#list links as link>
+                                <div class="card col-lg-4 col-md-6 col-sm-12">
+                                    <a href="${link.url}" class="card-body hover-with-bg" target="_blank"
+                                       rel="noopener external nofollow noreferrer">
+                                        <div class="card-content">
+                                            <div class="link-avatar my-auto">
+                                                <img src="${link.icon}" alt="${link.name}"/>
+                                            </div>
+                                            <div class="link-text">
+                                                <div class="link-title">${link.name}</div>
+                                                <div class="link-intro">${link.description}</div>
+                                            </div>
                                         </div>
-                                        <div class="link-text">
-                                            <div class="link-title">Fluid Blog</div>
-                                            <div class="link-intro">主题博客</div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="card col-lg-4 col-md-6 col-sm-12">
-                                <a href="https://hexo.fluid-dev.com/docs/" class="card-body hover-with-bg"
-                                   target="_blank" rel="noopener external nofollow noreferrer">
-                                    <div class="card-content">
-                                        <div class="link-avatar my-auto">
-                                            <img src="/img/favicon.png" srcset="/img/loading.gif" lazyload
-                                                 alt="Fluid Docs"
-                                                 onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
-                                        </div>
-                                        <div class="link-text">
-                                            <div class="link-title">Fluid Docs</div>
-                                            <div class="link-intro">主题使用指南</div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="card col-lg-4 col-md-6 col-sm-12">
-                                <a href="https://github.com/fluid-dev/hexo-theme-fluid" class="card-body hover-with-bg"
-                                   target="_blank" rel="noopener external nofollow noreferrer">
-                                    <div class="card-content">
-                                        <div class="link-avatar my-auto">
-                                            <img src="/img/favicon.png" srcset="/img/loading.gif" lazyload
-                                                 alt="Fluid Repo"
-                                                 onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
-                                        </div>
-                                        <div class="link-text">
-                                            <div class="link-title">Fluid Repo</div>
-                                            <div class="link-intro">主题 GitHub 仓库</div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="card col-lg-4 col-md-6 col-sm-12">
-                                <a href="https://rook1e.com/" class="card-body hover-with-bg" target="_blank"
-                                   rel="noopener external nofollow noreferrer">
-                                    <div class="card-content">
-                                        <div class="link-avatar my-auto">
-                                            <img src="/img/avatar.png" srcset="/img/loading.gif" lazyload alt="Rook1e"
-                                                 onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
-                                        </div>
-                                        <div class="link-text">
-                                            <div class="link-title">Rook1e</div>
-                                            <div class="link-intro">Fluid 主题开发成员</div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="card col-lg-4 col-md-6 col-sm-12">
-                                <a href="https://eatrice.top/" class="card-body hover-with-bg" target="_blank"
-                                   rel="noopener external nofollow noreferrer">
-                                    <div class="card-content">
-                                        <div class="link-avatar my-auto">
-                                            <img src="/img/avatar.png" srcset="/img/loading.gif" lazyload alt="EatRice"
-                                                 onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
-                                        </div>
-
-                                        <div class="link-text">
-                                            <div class="link-title">EatRice</div>
-                                            <div class="link-intro">一个努力的考研狗</div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
+                                    </a>
+                                </div>
+                            <#else>
+                                <div style="text-align: center;width: 100%;">竟然什么都没有</div>
+                            </#list>
                         </div>
                     </div>
                 </div>

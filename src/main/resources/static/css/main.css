@@ -353,7 +353,7 @@ img[lazyload] {
     --post-heading-color: #1a202c;
     --post-link-color: #0366d6;
     --link-hover-color: #30a9de;
-    --link-hover-bg-color: #f8f9fa;
+    --link-hover-bg-color: #f2f2f2;
     --navbar-bg-color: #2f4154;
     --navbar-text-color: #fff;
 }
@@ -1984,7 +1984,7 @@ note-default {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    color: #ffffff;
+    color: var(--post-heading-color);
     font-weight: bold;
 }
 .link-intro {

@@ -20,7 +20,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
      * @param categoryIds 分类IDs
      * @return 分类数量
      */
-    List<KeyValue<Integer, Long>> countByCategory(@Param("categoryIds") List<Integer> categoryIds);
+    List<KeyValue<Long, Long>> countByCategory(@Param("categoryIds") List<Integer> categoryIds);
 
 }
 

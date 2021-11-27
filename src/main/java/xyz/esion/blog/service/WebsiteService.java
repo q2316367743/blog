@@ -15,4 +15,9 @@ public interface WebsiteService {
      */
     Website info();
 
+    /**
+     * 同步任务，每10分钟同步一次到内存中
+     */
+    void sync();
+
 }

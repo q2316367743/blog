@@ -32,6 +32,7 @@ public class WebsiteServiceImpl implements WebsiteService {
      * 博客首次运行时间
      */
     private Date initDateTime;
+    private Website website;
 
     @PostConstruct
     public void init() {
@@ -52,6 +53,11 @@ public class WebsiteServiceImpl implements WebsiteService {
 
     @Override
     public Website info() {
+        return this.website;
+    }
+
+    @Override
+    public void sync() {
         Website website = new Website();
         website.setArticleCount(articleListMapper.selectCount(new QueryWrapper<>()));
         website.setCategoryCount(categoryListMapper.selectCount(new QueryWrapper<>()));
@@ -62,7 +68,7 @@ public class WebsiteServiceImpl implements WebsiteService {
         if (article != null) {
             website.setLastUpdate(article.getUpdateTime());
         }
-        return website;
+        this.website = website;
     }
 
 }

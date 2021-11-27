@@ -26,7 +26,8 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,title,image,status
+        id
+        ,title,image,status
         category_id,tags,sequence,
         description,create_time,update_time,
         is_delete,word_count,read_time,

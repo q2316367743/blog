@@ -28,10 +28,26 @@ public class Result<T> implements Serializable {
         return result;
     }
 
+    public static Result<Boolean> success() {
+        Result<Boolean> result = new Result<>();
+        result.setCode(200);
+        result.setMsg("成功");
+        result.setData(true);
+        return result;
+    }
+
     public static <T> Result<T> fail() {
         Result<T> result = new Result<>();
         result.setCode(500);
         result.setMsg("失败");
+        result.setData(null);
+        return result;
+    }
+
+    public static <T> Result<T> fail(String msg) {
+        Result<T> result = new Result<>();
+        result.setCode(500);
+        result.setMsg(msg);
         result.setData(null);
         return result;
     }

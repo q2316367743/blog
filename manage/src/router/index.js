@@ -119,6 +119,12 @@ export const constantRoutes = [
                 meta: {title: '页面列表', icon: 'el-icon-takeaway-box'}
             },
             {
+                path: 'static',
+                name: 'static',
+                component: () => import('@/views/page/static'),
+                meta: {title: '原生页面', icon: 'el-icon-edit-outline'}
+            },
+            {
                 path: 'category',
                 name: 'category',
                 component: () => import('@/views/page/menu'),
@@ -141,14 +147,35 @@ export const constantRoutes = [
     },
 
     {
-        path: '/comment',
+        path: '/news',
         component: Layout,
+        redirect: '/news/comment',
+        name: 'news',
+        meta: {title: '消息管理', icon: 'el-icon-reading'},
         children: [
             {
-                path: 'index',
+                path: 'comment',
                 name: 'comment',
-                component: () => import('@/views/comment/index'),
-                meta: {title: '评论管理', icon: 'el-icon-chat-line-square'}
+                component: () => import('@/views/news/comment'),
+                meta: {title: '评论管理', icon: 'el-icon-chat-line-square'},
+            },
+            {
+                path: 'link',
+                name: 'link',
+                component: () => import('@/views/news/link'),
+                meta: {title: '友链管理', icon: 'el-icon-chat-line-square'},
+            },
+            {
+                path: 'message',
+                name: 'message',
+                component: () => import('@/views/news/message'),
+                meta: {title: '意见反馈', icon: 'el-icon-chat-line-square'},
+            },
+            {
+                path: 'notice',
+                name: 'notice',
+                component: () => import('@/views/news/notice'),
+                meta: {title: '通知管理', icon: 'el-icon-chat-line-square'},
             }
         ]
     },

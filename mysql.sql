@@ -51,7 +51,7 @@ create table page
 
 create table notice
 (
-    id          int unsigned primary key comment 'ID',
+    id          int unsigned auto_increment primary key comment 'ID',
     title       varchar(64)         default ''                    not null comment '通知标题',
     content     varchar(255)        default ''                    not null comment '通知内容，html字符串',
     create_time datetime            default '1998-08-06 00:00:00' not null comment '创建时间',
@@ -61,7 +61,7 @@ create table notice
 
 create table comment
 (
-    id              int unsigned primary key comment 'ID',
+    id              int unsigned auto_increment primary key comment 'ID',
     email           varchar(64)         default ''                    not null comment '电子邮箱',
     website         varchar(64)         default ''                    not null comment '个人网站',
     nickname        varchar(32)         default ''                    not null comment '昵称',
@@ -81,18 +81,32 @@ create table comment
 
 create table message
 (
-    id          int unsigned primary key comment 'ID',
+    id          int unsigned auto_increment primary key comment 'ID',
     create_time datetime            default '1998-08-06 00:00:00' not null comment '创建时间',
     is_delete   tinyint(1) unsigned default 0                     not null comment '逻辑删除',
     type        tinyint unsigned    default 0                     not null comment '类型',
     name        varchar(32)         default ''                    not null comment '名称',
     email       varchar(48)         default ''                    not null comment '电子邮箱',
+    url         varchar(128)        default ''                    not null comment '个人网站',
     content     text comment '内容'
 ) comment '留言板';
 
+create table link
+(
+    id          int unsigned auto_increment primary key comment 'ID',
+    create_time datetime            default '1998-08-06 00:00:00' not null comment '创建时间',
+    is_delete   tinyint(1) unsigned default 0                     not null comment '逻辑删除',
+    icon        varchar(128)        default ''                    not null comment '图标',
+    name        varchar(32)         default ''                    not null comment '名称',
+    email       varchar(48)         default ''                    not null comment '电子邮箱',
+    url         varchar(128)        default ''                    not null comment '个人网站',
+    description varchar(255)        default ''                    not null comment '描述',
+    status      tinyint(1) unsigned default 1                     not null comment '状态'
+) comment '友情链接';
+
 create table menu
 (
-    id          int unsigned primary key comment 'ID',
+    id          int unsigned auto_increment primary key comment 'ID',
     icon        varchar(64)         default ''                    not null comment '图标',
     name        varchar(16)         default ''                    not null comment '名称',
     target      tinyint unsigned    default 0                     not null comment '打开方式：0：当前页面，1：新页面',

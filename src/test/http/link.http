@@ -1,0 +1,10 @@
+### 新增友情链接
+POST {{url}}/api/link
+Content-Type: application/json
+
+{
+    "name": "云落天都",
+    "url": "https://esion.xyz",
+    "email": "m17762618644@163.com",
+    "icon": "https://esion.xyz/favicon.ico"
+}
