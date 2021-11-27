@@ -46,6 +46,7 @@ public class Notice implements Serializable {
     /**
      * 逻辑删除
      */
+    @TableLogic
     private Boolean isDelete;
 
     @TableField(exist = false)

@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 /**
@@ -32,6 +34,7 @@ public class Message implements Serializable {
      * 逻辑删除
      */
     @TableLogic
+    @JsonIgnore
     private Boolean isDelete;
 
     /**

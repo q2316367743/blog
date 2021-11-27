@@ -12,6 +12,11 @@ import java.io.Serializable;
 public class MessageParam implements Serializable {
 
     /**
+     * ID
+     */
+    private Integer id;
+
+    /**
      * 类型
      */
     private Integer type;

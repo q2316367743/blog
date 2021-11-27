@@ -55,6 +55,7 @@ public class ApiController {
 
     @PostMapping("link")
     public Result<Boolean> linkSave(@RequestBody LinkParam param) {
+        param.setId(null);
         if (StrUtil.isBlank(param.getName())) {
             throw new IllegalArgumentException("昵称不能为空");
         }
