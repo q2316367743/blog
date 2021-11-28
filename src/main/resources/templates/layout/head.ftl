@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
 <link rel="stylesheet" href="${config.href}/css/main.css"/>
 <link rel="stylesheet" href="${config.href}/css/hint.css"/>
+<link rel="stylesheet" href="${config.href}/css/comment.css"/>
 <meta name="generator" content="blog 1.0">
 <!-- 自定义样式保持在最底部 -->
 <script id="fluid-configs">
@@ -50,3 +51,4 @@
 <script src="${config.href}/js/util.js"></script>
 <script src="${config.href}/js/color-schema.js"></script>
 <meta name="generator" content="blog 1.0">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css"/>

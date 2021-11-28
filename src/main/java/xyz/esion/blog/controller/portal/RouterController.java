@@ -1,7 +1,7 @@
 package xyz.esion.blog.controller.portal;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.date.DateField;
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import xyz.esion.blog.entity.Article;
 import xyz.esion.blog.entity.*;
 import xyz.esion.blog.enumeration.ArticleStatusEnum;
+import xyz.esion.blog.enumeration.CommentStatusEnum;
 import xyz.esion.blog.enumeration.LinkStatusEnum;
 import xyz.esion.blog.enumeration.MessageTypeEnum;
 import xyz.esion.blog.global.*;
@@ -42,6 +43,7 @@ public class RouterController {
     private final PageService pageService;
     private final MessageService messageService;
     private final LinkService linkService;
+    private final CommentService commentService;
 
     private final AuthorService authorService;
     private final ConfigService configService;
@@ -73,11 +75,14 @@ public class RouterController {
 
     @GetMapping("article/{id}.html")
     public String article(@PathVariable String id, Model model) {
+        // 文章本身
         Article article = articleService.getById(id);
         if (article == null) {
             return "error/404";
         }
+        // 分类
         Category category = categoryService.getById(article.getCategoryId());
+        // 渲染视图
         ArticleInfoView view = new ArticleInfoView();
         view.setId(article.getId());
         view.setTitle(article.getTitle());
@@ -86,7 +91,7 @@ public class RouterController {
         if (category != null) {
             view.setCategoryName(category.getName());
         }
-        view.setTags(Arrays.asList(article.getTags().split(",")));
+        view.setTags(CollUtil.removeAny(CollUtil.newLinkedList(article.getTags().split(",")), ""));
         view.setDescription(article.getDescription());
         view.setCreateTime(article.getCreateTime());
         view.setUpdateTime(article.getUpdateTime());
@@ -96,6 +101,49 @@ public class RouterController {
         view.setCommentCount(article.getCommentCount());
         view.setContent(article.getContent());
         model.addAttribute("article", view);
+        // 上一篇
+        Article before = articleService.getOne(new QueryWrapper<Article>()
+                .eq("status", ArticleStatusEnum.RELEASE.getValue())
+                .orderByDesc("sequence")
+                .gt("sequence", article.getSequence())
+                .last("limit 1")
+        );
+        model.addAttribute("before", before);
+        // 下一篇
+        Article after = articleService.getOne(new QueryWrapper<Article>()
+                .eq("status", ArticleStatusEnum.RELEASE.getValue())
+                .orderByDesc("sequence")
+                .lt("sequence", article.getSequence())
+                .last("limit 1")
+        );
+        model.addAttribute("after", after);
+        // 获取评论
+        // 1. 获取全部评论，坚信每篇博客评论不会太多，就全部查出来
+        List<Comment> comments = commentService.list(new QueryWrapper<Comment>()
+                .eq("status", CommentStatusEnum.PASS.getValue())
+                .eq("article_id", id)
+                .orderByDesc("create_time")
+        );
+        Map<Integer, CommentView> viewMap = new HashMap<>();
+        List<Comment> commentTwos = new LinkedList<>();
+        // 构建一级评论
+        for (Comment comment : comments) {
+            if (comment.getRootId().equals(0)) {
+                CommentView commentView = BeanUtil.copyProperties(comment, CommentView.class);
+                commentView.setChildren(new LinkedList<>());
+                viewMap.put(comment.getId(), commentView);
+            }else {
+                commentTwos.add(comment);
+            }
+        }
+        // 构建二级评论
+        for (Comment comment : commentTwos) {
+            if (viewMap.containsKey(comment.getRootId())) {
+                viewMap.get(comment.getRootId()).getChildren().add(BeanUtil.copyProperties(comment, CommentView.class));
+            }
+        }
+        model.addAttribute("comments", viewMap.values());
+        model.addAttribute("comment_total", comments.size());
         return "article";
     }
 

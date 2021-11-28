@@ -29,14 +29,13 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="${article.image}">
     <#include "./layout/head.ftl" />
-    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
 </head>
 <body>
 <header style="height: 70vh;">
     <#include "./layout/menu.ftl" />
     <div class="banner" id="banner" parallax=true
          style="background: url('<#if article.image?length == 0>${config.pageBackground}<#else>${article.image}</#if>') no-repeat center center;
-           background-size: cover;">
+                 background-size: cover;">
         <div class="full-bg-img">
             <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.5)">
                 <div class="page-header text-center fade-in-up">
@@ -79,7 +78,7 @@
                         <article class="post-content mx-auto">
                             <!-- SEO header -->
                             <h1 style="display: none">${article.title}</h1>
-                            <div class="markdown-body">${article.content}</div>
+                            <div class="markdown-body" id="markdown-body">${article.content!'这篇文章没有内容'}</div>
                             <hr>
                             <div>
                                 <div class="post-metas mb-3">
@@ -88,12 +87,15 @@
                                         <a class="hover-with-bg"
                                            href="/category/${article.categoryId}.html">${article.categoryName}</a>
                                     </div>
-                                    <div class="post-meta">
-                                        <i class="iconfont icon-tags"></i>
-                                        <#list article.tags as tag>
-                                            <a class="hover-with-bg" href="javascript:search_tag('${tag}')">${tag}</a>
-                                        </#list>
-                                    </div>
+                                    <#if article.tags?size &gt; 0>
+                                        <div class="post-meta">
+                                            <i class="iconfont icon-tags"></i>
+                                            <#list article.tags as tag>
+                                                <a class="hover-with-bg"
+                                                   href="javascript:search_tag('${tag}')">${tag}</a>
+                                            </#list>
+                                        </div>
+                                    </#if>
                                 </div>
                                 <p class="note note-warning">
                                     本博客所有文章除特别声明外，均采用 <a target="_blank"
@@ -102,44 +104,37 @@
                                 </p>
                                 <div class="post-prevnext">
                                     <article class="post-prev col-6">
-                                        <a href="/article/2a0e96d6.html">
-                                            <i class="iconfont icon-arrowleft"></i>
-                                            <span class="hidden-mobile">又一家数据公司被查，爬虫到底做错了什么？</span>
-                                            <span class="visible-mobile">上一篇</span>
-                                        </a>
+                                        <#if before??>
+                                            <a href="${config.href}/article/${before.id}.html">
+                                                <i class="iconfont icon-arrowleft"></i>
+                                                <span class="hidden-mobile">${before.title}</span>
+                                                <span class="visible-mobile">上一篇</span>
+                                            </a>
+                                        </#if>
                                     </article>
                                     <article class="post-next col-6">
-                                        <a href="/article/a46b4fd7.html">
-                                            <span class="hidden-mobile">爬虫工程师常用的 Chrome 插件</span>
-                                            <span class="visible-mobile">下一篇</span>
-                                            <i class="iconfont icon-arrowright"></i>
-                                        </a>
+                                        <#if after??>
+                                            <a href="${config.href}/article/${after.id}.html">
+                                                <span class="hidden-mobile">${after.title}</span>
+                                                <span class="visible-mobile">下一篇</span>
+                                                <i class="iconfont icon-arrowright"></i>
+                                            </a>
+                                        </#if>
                                     </article>
                                 </div>
                             </div>
-                        </article>
+                            <#assign id=article.id />
+                            <#include "./layout/comment.ftl" />
+                            </article>
                     </div>
                 </div>
             </div>
             <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn" style="padding-top: 60px;">
-                <div id="toc" style="visibility: visible;">
+                <div id="toc" style="visibility: visible;display: none">
                     <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
                     <div class="toc-body" id="toc-body">
-                        <ol class="tocbot-list ">
-                            <li class="toc-list-item is-active-li"><a href="#关于逆向"
-                                                                      class="tocbot-link node-name--H2  tocbot-active-link">关于逆向</a>
-                            </li>
-                            <li class="toc-list-item"><a href="#逆向的准备" class="tocbot-link node-name--H2 ">逆向的准备</a></li>
-                            <li class="toc-list-item"><a href="#逆向步骤" class="tocbot-link node-name--H2 ">逆向步骤</a></li>
-                            <li class="toc-list-item"><a href="#定位目标" class="tocbot-link node-name--H2 ">定位目标</a></li>
-                            <li class="toc-list-item"><a href="#反编译-APK" class="tocbot-link node-name--H2 ">反编译 APK</a>
-                            </li>
-                            <li class="toc-list-item"><a href="#分析代码" class="tocbot-link node-name--H2 ">分析代码</a></li>
-                            <li class="toc-list-item"><a href="#逆向之后" class="tocbot-link node-name--H2 ">逆向之后</a></li>
-                        </ol>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

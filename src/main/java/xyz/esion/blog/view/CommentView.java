@@ -1,24 +1,23 @@
-package xyz.esion.blog.entity;
+package xyz.esion.blog.view;
 
-import com.baomidou.mybatisplus.annotation.*;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
+import java.util.List;
 
 /**
- * 评论表
- * @TableName comment
  * @author Esion
- * @since 2021/11/16
+ * @since 2021/11/28
  */
-@TableName(value ="comment")
 @Data
-public class Comment implements Serializable {
+public class CommentView implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     /**
      * ID
      */
-    @TableId(type = IdType.AUTO)
     private Integer id;
 
     /**
@@ -39,13 +38,7 @@ public class Comment implements Serializable {
     /**
      * 创建时间
      */
-    @TableField(fill = FieldFill.INSERT)
     private Date createTime;
-
-    /**
-     * 是否展示，0：未审查，1：通过，2：不通过
-     */
-    private Integer status;
 
     /**
      * 浏览器版本
@@ -61,11 +54,6 @@ public class Comment implements Serializable {
      * 评论类型；1：访客
      */
     private Integer type;
-
-    /**
-     * 文章ID
-     */
-    private Integer articleId;
 
     /**
      * 所属跟评论，顶级为0
@@ -92,6 +80,9 @@ public class Comment implements Serializable {
      */
     private String content;
 
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
+    /**
+     * 子评论
+     */
+    private List<CommentView> children;
+
 }

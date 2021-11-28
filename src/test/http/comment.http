@@ -1,0 +1,41 @@
+### 回复文章
+POST {{url}}/api/comment
+Content-Type: application/json
+
+{
+    "email": "2316367743@qq.com",
+    "website": "https://esion.xyz",
+    "nickname": "Esion",
+    "article_id": 4,
+    "root_id": 0,
+    "target_id": 0,
+    "content": "API一级评论"
+}
+
+### 回复评论，不@
+POST {{url}}/api/comment
+Content-Type: application/json
+
+{
+    "email": "2316367743@qq.com",
+    "website": "https://esion.xyz",
+    "nickname": "Esion",
+    "article_id": 4,
+    "root_id": 6,
+    "target_id": 0,
+    "content": "AP回复评论"
+}
+
+### 回复评论，@
+POST {{url}}/api/comment
+Content-Type: application/json
+
+{
+    "email": "2316367743@qq.com",
+    "website": "https://esion.xyz",
+    "nickname": "Esion",
+    "article_id": 4,
+    "root_id": 6,
+    "target_id": 7,
+    "content": "API回复评论，并且@"
+}

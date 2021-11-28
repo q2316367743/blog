@@ -4,23 +4,32 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.http.useragent.UserAgent;
+import cn.hutool.http.useragent.UserAgentUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import xyz.esion.blog.condition.ArticleCondition;
 import xyz.esion.blog.entity.Article;
+import xyz.esion.blog.entity.Comment;
 import xyz.esion.blog.entity.Link;
 import xyz.esion.blog.entity.Message;
+import xyz.esion.blog.enumeration.CommentStatusEnum;
+import xyz.esion.blog.enumeration.CommentTypeEnum;
 import xyz.esion.blog.global.NameConvertModel;
 import xyz.esion.blog.global.Result;
+import xyz.esion.blog.param.CommentParam;
 import xyz.esion.blog.param.LinkParam;
 import xyz.esion.blog.param.MessageParam;
 import xyz.esion.blog.param.PageParam;
 import xyz.esion.blog.service.ArticleService;
+import xyz.esion.blog.service.CommentService;
 import xyz.esion.blog.service.LinkService;
 import xyz.esion.blog.service.MessageService;
 import xyz.esion.blog.view.ArticleListView;
 import xyz.esion.blog.view.PageView;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Esion
@@ -31,9 +40,12 @@ import xyz.esion.blog.view.PageView;
 @RequiredArgsConstructor
 public class ApiController {
 
+    private static final String PRIMARY_KEY = "id";
+
     private final MessageService messageService;
     private final LinkService linkService;
     private final ArticleService articleService;
+    private final CommentService commentService;
 
     @PostMapping("message")
     public Result<Boolean> messageSave(@RequestBody MessageParam param){
@@ -85,6 +97,55 @@ public class ApiController {
         }
         queryWrapper.eq("status", 1);
         return Result.success(articleService.page(pageParam,queryWrapper));
+    }
+
+    @PostMapping("comment")
+    public Result<Boolean> commentSave(
+            @RequestBody CommentParam param,
+            HttpServletRequest request
+    ){
+        UserAgent userAgent = UserAgentUtil.parse(request.getHeader("user-agent"));
+        if (userAgent == null) {
+            return Result.fail("请求头缺少user-agent");
+        }
+        if (StrUtil.isBlank(param.getEmail())) {
+            throw new IllegalArgumentException("邮箱不能为空");
+        }
+        if (StrUtil.isBlank(param.getNickname())) {
+            throw new IllegalArgumentException("昵称不能为空");
+        }
+        if (param.getArticleId() == null) {
+            throw new IllegalArgumentException("文章ID不能为空");
+        }
+        if (articleService.count(new QueryWrapper<Article>().eq(PRIMARY_KEY, param.getArticleId())) == 0) {
+            throw new IllegalArgumentException("文章错误");
+        }
+        Comment comment = new Comment();
+        comment.setEmail(param.getEmail());
+        comment.setWebsite(param.getWebsite());
+        comment.setNickname(param.getNickname());
+        comment.setStatus(CommentStatusEnum.APPLY.getValue());
+        comment.setBrowser(userAgent.getBrowser().getName());
+        comment.setSystemVersion(userAgent.getOs().getName());
+        // 通过友链判断类型
+        Link link = linkService.getOne(new QueryWrapper<Link>()
+                .eq("url", comment.getWebsite())
+                .last("limit 1"));
+        if (link != null) {
+            comment.setType(CommentTypeEnum.FRIEND.getValue());
+        }else {
+            comment.setType(CommentTypeEnum.VISITOR.getValue());
+        }
+        comment.setArticleId(param.getArticleId());
+        comment.setRootId(param.getRootId());
+        Comment target = commentService.getById(param.getTargetId());
+        if (target != null) {
+            comment.setTargetId(target.getId());
+            comment.setTargetNickname(target.getNickname());
+            comment.setTargetWebsite(target.getWebsite());
+        }
+        comment.setContent(param.getContent());
+        return Result.success(commentService.save(comment));
     }
 
 }
