@@ -24,9 +24,7 @@
             </div>
         </div>
         <div class="article-info-body">
-            <div v-show="article.type === 1" id="vditor" style="height: 100%"></div>
-            <div v-show="article.type === 2" id="editor" style="height: 100%"></div>
-            <codemirror ref="codemirror" v-show="article.type === 3" v-model="content" :options="options"></codemirror>
+            <editor ref="editor" :type="article.type" :original_content="article.original_content"></editor>
         </div>
         <el-drawer
             :title="article.status === 1 ? '发布' : '保存草稿'"
@@ -40,7 +38,8 @@
                         <el-image
                             :src="article.image">
                             <div slot="error" class="image-slot">
-                                <el-image src="https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg"></el-image>
+                                <el-image
+                                    src="https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg"></el-image>
                             </div>
                         </el-image>
                     </el-upload>
@@ -72,7 +71,7 @@
                               placeholder=""></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="submit">立即{{is_save ? '创建' : '修改'}}</el-button>
+                    <el-button type="primary" @click="submit">立即{{ is_save ? '创建' : '修改' }}</el-button>
                     <el-button>取消</el-button>
                 </el-form-item>
             </el-form>
@@ -81,17 +80,7 @@
 </template>
 
 <script>
-import Vditor from 'vditor'
-import "vditor/src/assets/scss/index.scss"
-import Editor from 'wangeditor'
-import codemirror from 'vue-codemirror/src/codemirror'// 引入CodeMirror
-import "codemirror/lib/codemirror.css";
-// 引入主题后还需要在 options 中指定主题才会生效
-import "codemirror/theme/idea.css";
-// 语法高亮
-import "codemirror/mode/xml/xml.js";
-import "codemirror/addon/hint/show-hint";
-import "codemirror/addon/hint/html-hint";
+import editor from '@/components/editor'
 
 // 引入api
 import article_api from '@/api/article';
@@ -99,7 +88,7 @@ import article_api from '@/api/article';
 export default {
     name: "info",
     components: {
-        codemirror
+        editor
     },
     data: () => {
         return {
@@ -118,22 +107,6 @@ export default {
                 original_content: '',
                 content: ''
             },
-            vditor: null,
-            editor: null,
-            options: {
-                tabSize: 4, // 缩进格式
-                theme: "idea", // 主题，对应主题库 JS 需要提前引入
-                lineNumbers: true, // 显示行号
-                line: true,
-                mode: "xml",
-                smartIndent: true,
-                styleActiveLine: true, // 高亮选中行
-                showCursorWhenSelecting: true,
-                hintOptions: {
-                    completeSingle: true, // 当匹配只有一项的时候是否自动补全
-                },
-            },
-            content: '',
             publish_dialog: false,
             tags: ['java', '前端', '随笔']
         }
@@ -144,15 +117,7 @@ export default {
             this.is_save = false;
             article_api.info(this.id, (res) => {
                 this.article = res.data;
-                // 根据类型初始化
-                if (this.article.type === 1) {
-                    this.vditor.setValue(this.article.original_content);
-                }else if (this.article.type === 2) {
-                    this.editor.txt.html(this.article.content);
-                }else if (this.article.type === 3) {
-                    this.content = this.article.content
-                }
-            }, (e) => {
+            }, () => {
                 this.$message({
                     message: '文章ID错误',
                     type: 'error',
@@ -161,7 +126,7 @@ export default {
                     }
                 })
             })
-        }else {
+        } else {
             this.article = {
                 title: '',
                 image: '',
@@ -176,31 +141,12 @@ export default {
             };
         }
     },
-    mounted() {
-        this.vditor = new Vditor('vditor', {
-            height: '100%'
-        })
-        this.editor = new Editor('#editor')
-        this.editor.create();
-        //显示提示
-        console.log(this.$refs.codemirror.cminstance)
-        this.$refs.codemirror.cminstance.on("cursorActivity", () => {
-            this.$refs.codemirror.cminstance.showHint();
-        });
-    },
     methods: {
         submit() {
             // 根据类型赋值
-            if (this.article.type === 1) {
-                this.article.original_content = this.vditor.getValue();
-                this.article.content = this.vditor.getHTML();
-            }else if (this.article.type === 2) {
-                this.article.original_content = this.editor.txt.text();
-                this.article.content = this.editor.txt.html();
-            }else if (this.article.type === 3) {
-                this.article.original_content = this.content;
-                this.article.content = this.content;
-            }
+            this.article.content = this.$refs.editor.get_content();
+            this.article.original_content = this.$refs.editor.get_original_content();
+            console.log(this.article)
             if (this.is_save) {
                 article_api.save(this.article, (res) => {
                     this.$message.success('新建文章成功');
@@ -211,7 +157,7 @@ export default {
                     this.$message.error('新建文章失败');
                     this.publish_dialog = false;
                 })
-            }else {
+            } else {
                 article_api.update(this.id, this.article, (res) => {
                     this.$message.success('修改文章成功');
                     this.publish_dialog = false;

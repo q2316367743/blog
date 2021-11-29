@@ -47,7 +47,16 @@ export default {
         codemirror
     },
     mounted() {
-        let height = document.querySelector('.el-card__body').offsetHeight - 40;
+        let el_card_body = document.querySelector('.el-card__body');
+        let height = 600;
+        if (el_card_body) {
+            height = el_card_body.offsetHeight - 40;
+        }
+        let article_info_body = document.querySelector(".article-info-body");
+        if (article_info_body) {
+            height = article_info_body.offsetHeight - 20;
+            this.$refs.editor.style.marginTop = '20px';
+        }
         this.$refs.editor.style.height = height + 'px';
         let vditor_option = {
             height: height + 'px'
@@ -59,7 +68,7 @@ export default {
         }else if (this.type === 2) {
             editor_content = this.original_content
         }
-        this.content = this.original_content
+        this.content = this.original_content;
         this.vditor = new Vditor('vditor', vditor_option)
         this.editor = new Editor('#editor')
         this.editor.config.height = height
@@ -68,6 +77,13 @@ export default {
         this.$refs.codemirror.cminstance.on("cursorActivity", () => {
             this.$refs.codemirror.cminstance.showHint();
         });
+    },
+    watch: {
+        original_content(new_value, old_value) {
+            this.content = new_value;
+            this.editor.txt.html(new_value);
+            this.vditor.setValue(new_value);
+        }
     },
     methods: {
         get_content() {
@@ -83,7 +99,7 @@ export default {
             if (this.type === 1) {
                 return this.vditor.getValue();
             } else if (this.type === 2) {
-                return this.editor.txt.text();
+                return this.editor.txt.html();
             } else if (this.type === 3) {
                 return this.content;
             }
