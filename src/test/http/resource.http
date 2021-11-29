@@ -1,0 +1,16 @@
+### 上传文件
+POST {{api}}/resource
+token: {{token}}
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="path"
+Content-Type: text/plain
+
+/article
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="%E6%BC%82%E4%BA%AE%E7%9A%84%E5%A4%9C%E6%99%AF%20%E6%9C%88%E4%BA%AE%20%E5%A4%A9%E7%A9%BA%20%E5%B1%B1%E4%B8%8A%E7%9A%84%E6%88%BF%E5%AD%90%20%E5%B1%B1%E4%B8%8B%E7%9A%84%E5%9F%8E%E5%B8%82%20%E5%A5%BD%E7%9C%8B%E9%A3%8E%E6%99%AF%E5%A3%81%E7%BA%B8.jpg"
+Content-Type: image/jpeg
+
+< D:\Pictures\漂亮的夜景 月亮 天空 山上的房子 山下的城市 好看风景壁纸.jpg
+--WebAppBoundary--
