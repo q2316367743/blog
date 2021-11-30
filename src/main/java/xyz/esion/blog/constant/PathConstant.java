@@ -48,13 +48,9 @@ public class PathConstant {
      */
     public static final String RESOURCE_PATH = HOME_PATH + File.separator + "resource";
 
-    static {
-        FileUtil.mkdir(PathConstant.BACKUP_PATH);
-        FileUtil.mkdir(PathConstant.IMAGE_PATH);
-        FileUtil.mkdir(PathConstant.MUSIC_PATH);
-        FileUtil.mkdir(PathConstant.RESOURCE_PATH);
-        FileUtil.mkdir(PathConstant.TEMPLATES_PATH);
-        FileUtil.mkdir(PathConstant.STATIC_PATH);
-    }
+    /**
+     * 主题路径
+     */
+    public static final String THEME_PATH = HOME_PATH + File.separator + "themes";
 
 }

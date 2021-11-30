@@ -32,13 +32,14 @@ spring:
     property-naming-strategy: CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES
   freemarker:
     template-loader-path:
-      - ${user.home}/.blog/templates/
+      - file:///${user.home}/.blog/templates/
       - classpath:/templates/
     suffix: .ftl
     cache: false
+    content-type: text/html; charset=UTF-8
   resources:
     static-locations:
-      - ${user.home}/.blog/static/
+      - file:///${user.home}/.blog/static/
       - classpath:/static/
 
 mybatis-plus:

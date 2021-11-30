@@ -13,6 +13,7 @@ import xyz.esion.blog.global.Result;
 import xyz.esion.blog.param.MessageParam;
 import xyz.esion.blog.param.PageParam;
 import xyz.esion.blog.service.MessageService;
+import xyz.esion.blog.view.PageView;
 
 /**
  * @author Esion
@@ -26,15 +27,21 @@ public class MessageController {
     private final MessageService messageService;
 
     @GetMapping
-    public Result<Page<Message>> page(
+    public Result<PageView<Message>> page(
             @NameConvertModel PageParam pageParam,
             @NameConvertModel MessageCondition condition
     ) {
-        return Result.success(messageService.page(
+        Page<Message> messagePage = messageService.page(
                 new Page<>(pageParam.getPageNum(), pageParam.getPageSize()),
                 new QueryWrapper<Message>()
-                        .eq("type", condition.getType())
-                        .like("name", condition.getName())
+                        .eq(condition.getType() != null, "type", condition.getType())
+                        .like(StrUtil.isNotBlank(condition.getName()), "name", condition.getName()));
+        return Result.success(new PageView<>(
+                messagePage.getCurrent(),
+                messagePage.getSize(),
+                messagePage.getPages(),
+                messagePage.getTotal(),
+                messagePage.getRecords()
         ));
     }
 
