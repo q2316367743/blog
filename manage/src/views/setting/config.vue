@@ -45,6 +45,12 @@
             </el-form>
             <h1 class="h1">首页设置</h1>
             <el-form label-width="120px">
+                <el-form-item label="标题">
+                    <el-input v-model="config.index.title" style="width: 360px"></el-input>
+                </el-form-item>
+                <el-form-item label="描述">
+                    <el-input v-model="config.index.description" style="width: 360px" type="textarea" :rows="5"></el-input>
+                </el-form-item>
                 <el-form-item label="打字机速度">
                     <el-input-number v-model="config.index.speed" controls-position="right"></el-input-number>
                 </el-form-item>
@@ -109,10 +115,11 @@
             </div>
             <el-table :data="config.music">
                 <el-table-column label="序号" type="index"></el-table-column>
-                <el-table-column label="链接" prop="url"></el-table-column>
+                <el-table-column label="音乐链接" prop="url"></el-table-column>
                 <el-table-column label="封面" prop="cover"></el-table-column>
                 <el-table-column label="名称" prop="name"></el-table-column>
                 <el-table-column label="歌手" prop="artist"></el-table-column>
+                <el-table-column label="歌词链接" prop="lyric"></el-table-column>
             </el-table>
         </div>
         <el-dialog :visible.sync="music_dialog" title="新增歌曲">
@@ -128,6 +135,9 @@
                 </el-form-item>
                 <el-form-item label="歌手">
                     <el-input v-model="music_value.artist"></el-input>
+                </el-form-item>
+                <el-form-item label="歌词链接">
+                    <el-input v-model="music_value.lyric"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="music_save">新增</el-button>
@@ -149,6 +159,8 @@ export default {
                 keywords: [],
                 favicon: "",
                 index: {
+                    title: '',
+                    description: '',
                     speed: 0,
                     texts: [],
                     loop: true
@@ -174,7 +186,8 @@ export default {
                 url: '',
                 cover: '',
                 name: '',
-                artist: ''
+                artist: '',
+                lyric: ''
             }
         }
     },

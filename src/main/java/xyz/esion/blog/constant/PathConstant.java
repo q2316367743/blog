@@ -19,6 +19,16 @@ public class PathConstant {
     public static final String HOME_PATH = SystemUtil.getUserInfo().getHomeDir() + File.separator + ".blog";
 
     /**
+     * 自定义主题路径
+     */
+    public static final String TEMPLATES_PATH = HOME_PATH + File.separator + "templates";
+
+    /**
+     * 静态文件路径
+     */
+    public static final String STATIC_PATH = HOME_PATH + File.separator + "static";
+
+    /**
      * 备份目录
      */
     public static final String BACKUP_PATH = HOME_PATH + File.separator + "backup";
@@ -43,6 +53,8 @@ public class PathConstant {
         FileUtil.mkdir(PathConstant.IMAGE_PATH);
         FileUtil.mkdir(PathConstant.MUSIC_PATH);
         FileUtil.mkdir(PathConstant.RESOURCE_PATH);
+        FileUtil.mkdir(PathConstant.TEMPLATES_PATH);
+        FileUtil.mkdir(PathConstant.STATIC_PATH);
     }
 
 }

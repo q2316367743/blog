@@ -93,7 +93,7 @@ public class Config implements Serializable {
         private static final long serialVersionUID = 1L;
 
         /**
-         * 链接
+         * 歌曲链接
          */
         private String url;
 
@@ -113,7 +113,7 @@ public class Config implements Serializable {
         private String artist;
 
         /**
-         * 歌词
+         * 歌词链接
          */
         private String lyric;
 
@@ -141,8 +141,14 @@ public class Config implements Serializable {
          */
         private List<String> texts;
 
+        /**
+         * 轮播文字速度
+         */
         private Integer speed;
 
+        /**
+         * 是否循环轮播
+         */
         private Boolean loop;
 
     }

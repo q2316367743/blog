@@ -42,6 +42,8 @@ public class ConfigServiceImpl implements ConfigService {
             config.setAboutBackground("https://img-blog.csdnimg.cn/img_convert/cce6857f9276c2ba78d3f4b9af3b036f.png");
             config.setKeepOnRecord("鄂ICP备2021003611号-1");
             config.setIndex(new Config.Index(
+                    "云落天都的博客",
+                    "云落天都的博客描述",
                     Arrays.asList("真正的大师永远怀着一颗学徒的心。",
                             "任何时候都不要被骄傲蒙蔽了双眼！",
                             "绝对不要坐等胜利的到来。",
