@@ -26,7 +26,7 @@ public class Config implements Serializable {
     private String href;
 
     /**
-     * 博客名称
+     * 博客名称/标题
      */
     private String name;
 
@@ -80,6 +80,9 @@ public class Config implements Serializable {
      */
     private String keepOnRecord;
 
+    /**
+     * 文章首页
+     */
     private Index index;
 
     public List<Music> music;
@@ -109,6 +112,11 @@ public class Config implements Serializable {
          */
         private String artist;
 
+        /**
+         * 歌词
+         */
+        private String lyric;
+
     }
 
     @Data
@@ -117,6 +125,16 @@ public class Config implements Serializable {
     public static class Index implements Serializable {
 
         private static final long serialVersionUID = 1L;
+
+        /**
+         * 标题
+         */
+        private String title;
+
+        /**
+         * 描述
+         */
+        private String description;
 
         /**
          * 首页轮播文字
