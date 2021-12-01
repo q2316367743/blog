@@ -38,6 +38,11 @@ public class Message implements Serializable {
     private Boolean isDelete;
 
     /**
+     * 是否阅读
+     */
+    private Boolean isRead;
+
+    /**
      * 类型
      */
     private Integer type;

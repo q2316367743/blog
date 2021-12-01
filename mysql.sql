@@ -83,6 +83,7 @@ create table message
     id          int unsigned auto_increment primary key comment 'ID',
     create_time datetime            default '1998-08-06 00:00:00' not null comment '创建时间',
     is_delete   tinyint(1) unsigned default 0                     not null comment '逻辑删除',
+    is_read     tinyint(1) unsigned default 0                     not null comment '是否阅读',
     type        tinyint unsigned    default 0                     not null comment '类型',
     name        varchar(32)         default ''                    not null comment '名称',
     email       varchar(48)         default ''                    not null comment '电子邮箱',

@@ -8,6 +8,7 @@
         <id property="id" column="id" jdbcType="INTEGER"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="isDelete" column="is_delete" jdbcType="BOOLEAN"/>
+        <result property="isRead" column="is_read" jdbcType="BOOLEAN"/>
         <result property="type" column="type" jdbcType="TINYINT"/>
         <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="email" column="email" jdbcType="VARCHAR"/>
@@ -17,7 +18,7 @@
 
     <sql id="Base_Column_List">
         id
-        ,create_time,is_delete,
+        ,create_time,is_delete,is_read
         type,name,email,url,
         content
     </sql>

@@ -23,4 +23,9 @@ public class MessageCondition implements Serializable {
      */
     private String name;
 
+    /**
+     * 类型
+     */
+    private Boolean isRead;
+
 }

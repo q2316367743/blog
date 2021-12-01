@@ -35,7 +35,9 @@ public class MessageController {
                 new Page<>(pageParam.getPageNum(), pageParam.getPageSize()),
                 new QueryWrapper<Message>()
                         .eq(condition.getType() != null, "type", condition.getType())
-                        .like(StrUtil.isNotBlank(condition.getName()), "name", condition.getName()));
+                        .eq(condition.getIsRead() != null, "is_read", condition.getIsRead())
+                        .like(StrUtil.isNotBlank(condition.getName()), "name", condition.getName())
+                        .orderByDesc("create_time"));
         return Result.success(new PageView<>(
                 messagePage.getCurrent(),
                 messagePage.getSize(),
@@ -45,50 +47,15 @@ public class MessageController {
         ));
     }
 
-    @PostMapping
-    public Result<Boolean> save(@RequestBody MessageParam param) {
-        if (param.getType() == null) {
-            throw new IllegalArgumentException("类型不能为空");
-        }
-        if (StrUtil.isBlank(param.getEmail())) {
-            throw new IllegalArgumentException("邮箱不能为空");
-        }
-        param.setId(null);
-        if (StrUtil.isBlank(param.getName())) {
-            throw new IllegalArgumentException("昵称不能为空");
-        }
-        if (StrUtil.isBlank(param.getContent())) {
-            throw new IllegalArgumentException("内容不能为空");
-        }
-        Message message = BeanUtil.copyProperties(param, Message.class);
-        return Result.success(messageService.save(message));
-    }
-
     @PutMapping("{id}")
     public Result<Boolean> update(
             @PathVariable Integer id,
-            @RequestBody MessageParam param
+            @RequestBody Message param
     ) {
-        if (param.getType() == null) {
-            throw new IllegalArgumentException("类型不能为空");
-        }
-        if (StrUtil.isBlank(param.getEmail())) {
-            throw new IllegalArgumentException("邮箱不能为空");
-        }
-        param.setId(id);
-        if (StrUtil.isBlank(param.getName())) {
-            throw new IllegalArgumentException("昵称不能为空");
-        }
-        if (StrUtil.isBlank(param.getContent())) {
-            throw new IllegalArgumentException("内容不能为空");
-        }
-        Message message = BeanUtil.copyProperties(param, Message.class);
+        Message message = new Message();
+        message.setId(id);
+        message.setIsRead(param.getIsRead());
         return Result.success(messageService.updateById(message));
-    }
-
-    @DeleteMapping("{id}")
-    public Result<Boolean> remove(@PathVariable Integer id) {
-        return Result.success(messageService.removeById(id));
     }
 
 }

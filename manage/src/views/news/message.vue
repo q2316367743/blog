@@ -7,6 +7,10 @@
                     <el-option :value="1" label="博客"></el-option>
                     <el-option :value="2" label="es-client"></el-option>
                 </el-select>
+                <el-select v-model="condition.is_read" clearable @change="search" style="margin-left: 20px;" placeholder="类型">
+                    <el-option :value="false" label="未读"></el-option>
+                    <el-option :value="true" label="已读"></el-option>
+                </el-select>
             </div>
             <div>
                 <el-button type="primary" @click="search">搜索</el-button>
@@ -32,7 +36,8 @@
                 <el-table-column label="操作">
                     <template slot-scope="scope">
                         <el-button type="text" @click="open_info(scope.row)">详情</el-button>
-                        <el-button type="text">删除</el-button>
+                        <el-button type="text" style="color: #F56C6C" @click="read(scope.row.id, false)" v-if="scope.row.is_read">未读</el-button>
+                        <el-button type="text" style="color: #67C23A" @click="read(scope.row.id, true)" v-else>已读</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -80,6 +85,7 @@ export default {
             condition: {
                 name: '',
                 type: 1,
+                is_read: false,
                 page_num: 1,
                 page_size: 10,
             },
@@ -110,6 +116,11 @@ export default {
         open_info(info) {
             this.info_data = info;
             this.info_dialog = true
+        },
+        read(id, is_read) {
+            message_api.read(id, is_read, () => {
+                this.search();
+            })
         }
     }
 }

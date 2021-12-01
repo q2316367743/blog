@@ -16,4 +16,21 @@ export default {
             }
         })
     },
+    read(id, is_read, success, error) {
+        request({
+            url: `message/${id}`,
+            method: 'PUT',
+            data: {
+                is_read: is_read
+            }
+        }).then((res) => {
+            success(res);
+        }).catch((e) => {
+            if (error) {
+                error(e);
+            }else {
+                console.error(e);
+            }
+        })
+    }
 }
