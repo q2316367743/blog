@@ -36,7 +36,7 @@ public class ResourceServiceImpl implements ResourceService {
             // 如果没有内容则为时间戳
             name = System.currentTimeMillis() + "";
         }
-        FileUtil.writeBytes(IoUtil.readBytes(multipartFile.getInputStream()), PathConstant.RESOURCE_PATH + path + File.separator + name);
+        FileUtil.writeBytes(IoUtil.readBytes(multipartFile.getInputStream()), PathConstant.RESOURCE_PATH + File.separator + path + File.separator + name);
         return name;
     }
 

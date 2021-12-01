@@ -34,14 +34,9 @@ public class PathConstant {
     public static final String BACKUP_PATH = HOME_PATH + File.separator + "backup";
 
     /**
-     * 图片目录
+     * 主题路径
      */
-    public static final String IMAGE_PATH = HOME_PATH + File.separator + "image";
-
-    /**
-     * 音乐目录
-     */
-    public static final String MUSIC_PATH = HOME_PATH + File.separator + "music";
+    public static final String THEME_PATH = HOME_PATH + File.separator + "themes";
 
     /**
      * 资源路径
@@ -49,8 +44,23 @@ public class PathConstant {
     public static final String RESOURCE_PATH = HOME_PATH + File.separator + "resource";
 
     /**
-     * 主题路径
+     * 图片资源目录
      */
-    public static final String THEME_PATH = HOME_PATH + File.separator + "themes";
+    public static final String IMAGE_PATH = RESOURCE_PATH + File.separator + "image";
+
+    /**
+     * 音乐资源目录
+     */
+    public static final String MUSIC_PATH = RESOURCE_PATH + File.separator + "music";
+
+    /**
+     * 文章资源目录
+     */
+    public static final String ARTICLE_PATH = RESOURCE_PATH + File.separator + "article";
+
+    /**
+     * 页面资源目录
+     */
+    public static final String PAGE_PATH = RESOURCE_PATH + File.separator + "page";
 
 }
