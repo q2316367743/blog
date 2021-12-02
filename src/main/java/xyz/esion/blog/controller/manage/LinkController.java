@@ -13,6 +13,7 @@ import xyz.esion.blog.global.Result;
 import xyz.esion.blog.param.LinkParam;
 import xyz.esion.blog.param.PageParam;
 import xyz.esion.blog.service.LinkService;
+import xyz.esion.blog.view.PageView;
 
 /**
  * @author Esion
@@ -25,16 +26,26 @@ public class LinkController {
 
     private final LinkService linkService;
 
+    private static final String QQ_EMAIL = "@qq.com";
+    private static final String FAVICON = "/favicon.ico";
+
     @GetMapping
-    public Result<Page<Link>> page(
+    public Result<PageView<Link>> page(
             @NameConvertModel PageParam pageParam,
             @NameConvertModel LinkCondition condition
     ) {
-        return Result.success(linkService.page(
+        Page<Link> linkPage = linkService.page(
                 new Page<>(pageParam.getPageNum(), pageParam.getPageSize()),
-                new QueryWrapper<Link>().eq("status", condition.getStatus())
-                        .like("name", condition.getName())
-        ));
+                new QueryWrapper<Link>().eq(condition.getStatus() != null, "status", condition.getStatus())
+                        .like(StrUtil.isNotBlank(condition.getName()), "name", condition.getName())
+                        .orderByDesc("create_time")
+        );
+        return Result.success(new PageView<>(
+                linkPage.getCurrent(),
+                linkPage.getSize(),
+                linkPage.getPages(),
+                linkPage.getTotal(),
+                linkPage.getRecords()));
     }
 
     @PostMapping
@@ -47,6 +58,17 @@ public class LinkController {
             throw new IllegalArgumentException("链接不能为空");
         }
         Link link = BeanUtil.copyProperties(param, Link.class);
+        // 如果是qq邮箱，则使用qq头像，否则取网站图标
+        if (StrUtil.isNotBlank(link.getEmail())) {
+            if (link.getEmail().contains(QQ_EMAIL)) {
+                String qq = link.getEmail().replace(QQ_EMAIL, "");
+                link.setIcon(StrUtil.format("http://q2.qlogo.cn/headimg_dl?dst_uin={}&spec=100", qq));
+            }else {
+                link.setIcon(link.getUrl() + FAVICON);
+            }
+        }else {
+            link.setIcon(link.getUrl() + FAVICON);
+        }
         return Result.success(linkService.save(link));
     }
 
@@ -55,14 +77,8 @@ public class LinkController {
             @PathVariable Integer id,
             @RequestBody LinkParam param
     ) {
-        if (StrUtil.isBlank(param.getName())) {
-            throw new IllegalArgumentException("昵称不能为空");
-        }
-        param.setId(id);
-        if (StrUtil.isBlank(param.getUrl())) {
-            throw new IllegalArgumentException("链接不能为空");
-        }
         Link link = BeanUtil.copyProperties(param, Link.class);
+        link.setId(id);
         return Result.success(linkService.updateById(link));
     }
 

@@ -33,7 +33,7 @@
                         <span>{{ scope.row.content.length > 14 ? scope.row.content.substr(0, 14) + "..." : scope.row.content }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="操作">
+                <el-table-column label="操作" width="150px">
                     <template slot-scope="scope">
                         <el-button type="text" @click="open_info(scope.row)">详情</el-button>
                         <el-button type="text" style="color: #F56C6C" @click="read(scope.row.id, false)" v-if="scope.row.is_read">未读</el-button>

@@ -66,6 +66,11 @@ public class Link implements Serializable {
      */
     private Integer status;
 
+    /**
+     * 不通过原因
+     */
+    private String reason;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

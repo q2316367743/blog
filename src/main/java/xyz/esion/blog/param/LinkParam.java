@@ -16,11 +16,6 @@ public class LinkParam implements Serializable {
     private Integer id;
 
     /**
-     * 图标
-     */
-    private String icon;
-
-    /**
      * 名称
      */
     private String name;
@@ -39,5 +34,16 @@ public class LinkParam implements Serializable {
      * 描述
      */
     private String description;
+
+    /**
+     * 后台 - 有效
+     */
+    private Integer status;
+
+    /**
+     * 拒绝的原因
+     * <p>后台 - 有效</p>
+     */
+    private String reason;
 
 }

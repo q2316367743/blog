@@ -101,7 +101,8 @@ create table link
     email       varchar(48)         default ''                    not null comment '电子邮箱',
     url         varchar(128)        default ''                    not null comment '个人网站',
     description varchar(255)        default ''                    not null comment '描述',
-    status      tinyint(1) unsigned default 1                     not null comment '状态'
+    status      tinyint(1) unsigned default 1                     not null comment '状态',
+    reason      varchar(255)        default ''                    not null comment '不通过原因'
 ) comment '友情链接';
 
 create table menu

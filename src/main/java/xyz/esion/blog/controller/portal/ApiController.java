@@ -41,6 +41,8 @@ import javax.servlet.http.HttpServletRequest;
 public class ApiController {
 
     private static final String PRIMARY_KEY = "id";
+    private static final String QQ_EMAIL = "@qq.com";
+    private static final String FAVICON = "/favicon.ico";
 
     private final MessageService messageService;
     private final LinkService linkService;
@@ -68,13 +70,26 @@ public class ApiController {
     @PostMapping("link")
     public Result<Boolean> linkSave(@RequestBody LinkParam param) {
         param.setId(null);
-        if (StrUtil.isBlank(param.getName())) {
-            throw new IllegalArgumentException("昵称不能为空");
-        }
+        param.setStatus(null);
+        param.setReason(null);
         if (StrUtil.isBlank(param.getUrl())) {
             throw new IllegalArgumentException("链接不能为空");
         }
+        if (StrUtil.isBlank(param.getName())) {
+            throw new IllegalArgumentException("昵称不能为空");
+        }
+        // 如果是qq邮箱，则使用qq头像，否则取网站图标
         Link link = BeanUtil.copyProperties(param, Link.class);
+        if (StrUtil.isNotBlank(link.getEmail())) {
+            if (link.getEmail().contains(QQ_EMAIL)) {
+                link.setIcon(StrUtil.format("http://q2.qlogo.cn/headimg_dl?dst_uin={}&spec=100",
+                        link.getEmail().replace(QQ_EMAIL, "")));
+            }else {
+                link.setIcon(link.getUrl() + FAVICON);
+            }
+        }else {
+            link.setIcon(link.getUrl() + FAVICON);
+        }
         return Result.success(linkService.save(link));
     }
 
