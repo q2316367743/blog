@@ -36,10 +36,11 @@ public class BlogApplication implements CommandLineRunner {
         FileUtil.mkdir(PathConstant.RESOURCE_PATH);
         FileUtil.mkdir(PathConstant.THEME_PATH);
         File templatesPath = FileUtil.mkdir(PathConstant.TEMPLATES_PATH);
-        FileUtil.mkdir(PathConstant.STATIC_PATH);
+        File staticPath = FileUtil.mkdir(PathConstant.STATIC_PATH);
         // 2. 判断是否存在对应的模板文件
         if (Objects.requireNonNull(templatesPath.list()).length == 0) {
             ZipUtil.unzip(ResourceUtil.getStream("templates.zip"), templatesPath, StandardCharsets.UTF_8);
+            ZipUtil.unzip(ResourceUtil.getStream("static.zip"), staticPath, StandardCharsets.UTF_8);
         }
     }
 }

@@ -25,9 +25,9 @@ spring:
   freemarker:
     template-loader-path:
       - ${user.home}/.blog/templates/
-      - classpath:/templates/
     suffix: .ftl
     cache: true
+    check-template-location: false
   resources:
     static-locations:
       - ${user.home}/.blog/static/
