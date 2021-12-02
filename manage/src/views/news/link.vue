@@ -42,6 +42,16 @@
                     </template>
                 </el-table-column>
             </el-table>
+            <div style="margin-top: 20px;width: 100%;text-align: center;">
+                <el-pagination
+                    background
+                    layout="prev, pager, next"
+                    :current-page="condition.page_num"
+                    :page-size="condition.page_size"
+                    :total="total"
+                    @current-change="to_page">
+                </el-pagination>
+            </div>
         </div>
         <el-dialog :visible.sync="info_dialog">
             <div slot="title">友情链接 · 详情</div>
@@ -218,6 +228,10 @@ export default {
                     this.$message.success('友情链接审批拒绝');
                 })
             })
+        },
+        to_page(page_num) {
+            this.condition.page_num = page_num;
+            this.search();
         }
     }
 }

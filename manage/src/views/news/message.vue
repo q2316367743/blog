@@ -3,11 +3,13 @@
         <div class="el-card" style="display: flex;justify-content: space-between;padding: 20px;">
             <div>
                 <el-input v-model="condition.name" style="width: 240px" placeholder="昵称"></el-input>
-                <el-select v-model="condition.type" clearable @change="search" style="margin-left: 20px;" placeholder="类型">
+                <el-select v-model="condition.type" clearable @change="search" style="margin-left: 20px;"
+                           placeholder="类型">
                     <el-option :value="1" label="博客"></el-option>
                     <el-option :value="2" label="es-client"></el-option>
                 </el-select>
-                <el-select v-model="condition.is_read" clearable @change="search" style="margin-left: 20px;" placeholder="类型">
+                <el-select v-model="condition.is_read" clearable @change="search" style="margin-left: 20px;"
+                           placeholder="类型">
                     <el-option :value="false" label="未读"></el-option>
                     <el-option :value="true" label="已读"></el-option>
                 </el-select>
@@ -30,17 +32,32 @@
                 <el-table-column label="创建时间" prop="create_time"></el-table-column>
                 <el-table-column label="内容">
                     <template slot-scope="scope">
-                        <span>{{ scope.row.content.length > 14 ? scope.row.content.substr(0, 14) + "..." : scope.row.content }}</span>
+                        <span>{{
+                                scope.row.content.length > 14 ? scope.row.content.substr(0, 14) + "..." : scope.row.content
+                            }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column label="操作" width="150px">
                     <template slot-scope="scope">
                         <el-button type="text" @click="open_info(scope.row)">详情</el-button>
-                        <el-button type="text" style="color: #F56C6C" @click="read(scope.row.id, false)" v-if="scope.row.is_read">未读</el-button>
-                        <el-button type="text" style="color: #67C23A" @click="read(scope.row.id, true)" v-else>已读</el-button>
+                        <el-button type="text" style="color: #F56C6C" @click="read(scope.row.id, false)"
+                                   v-if="scope.row.is_read">转为未读
+                        </el-button>
+                        <el-button type="text" style="color: #67C23A" @click="read(scope.row.id, true)" v-else>已读
+                        </el-button>
                     </template>
                 </el-table-column>
             </el-table>
+            <div style="margin-top: 20px;width: 100%;text-align: center;">
+                <el-pagination
+                    background
+                    layout="prev, pager, next"
+                    :current-page="condition.page_num"
+                    :page-size="condition.page_size"
+                    :total="total"
+                    @current-change="to_page">
+                </el-pagination>
+            </div>
         </div>
         <el-dialog :visible.sync="info_dialog">
             <div slot="title">意见反馈</div>
@@ -121,6 +138,10 @@ export default {
             message_api.read(id, is_read, () => {
                 this.search();
             })
+        },
+        to_page(page_num) {
+            this.condition.page_num = page_num;
+            this.search();
         }
     }
 }
