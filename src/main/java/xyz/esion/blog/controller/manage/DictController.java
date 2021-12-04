@@ -3,6 +3,7 @@ package xyz.esion.blog.controller.manage;
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.annotation.*;
 import xyz.esion.blog.entity.Dict;
 import xyz.esion.blog.global.KeyValue;
@@ -29,7 +30,7 @@ public class DictController {
     public Result<List<DictView>> list(@PathVariable Integer type) {
         return Result.success(dictService
                 .list(new QueryWrapper<Dict>().eq("type", type)
-                        .orderByDesc("update_time"))
+                        .orderByDesc("create_time"))
                 .stream()
                 .map(item -> {
                     DictView view = new DictView();
@@ -45,7 +46,7 @@ public class DictController {
     public Result<Map<String, String>> map(@PathVariable Integer type) {
         return Result.success(dictService
                 .list(new QueryWrapper<Dict>().eq("type", type)
-                        .orderByDesc("update_time"))
+                        .orderByDesc("create_time"))
                 .stream()
                 .collect(Collectors.toMap(Dict::getItemKey, Dict::getItemValue, (e1, e2) -> e2)));
     }
@@ -59,7 +60,11 @@ public class DictController {
         dict.setType(type);
         dict.setItemKey(keyValue.getKey());
         dict.setItemValue(keyValue.getValue());
-        return Result.success(dictService.save(dict));
+        try {
+            return Result.success(dictService.save(dict));
+        } catch (DuplicateKeyException e) {
+            return Result.fail("键值重复");
+        }
     }
 
     @PutMapping("{id}")
@@ -71,7 +76,11 @@ public class DictController {
         dict.setId(id);
         dict.setItemKey(keyValue.getKey());
         dict.setItemValue(keyValue.getValue());
-        return Result.success(dictService.save(dict));
+        try {
+            return Result.success(dictService.updateById(dict));
+        } catch (DuplicateKeyException e) {
+            return Result.fail("键值重复");
+        }
     }
 
     @DeleteMapping("{id}")

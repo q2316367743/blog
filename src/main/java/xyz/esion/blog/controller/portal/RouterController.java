@@ -255,7 +255,7 @@ public class RouterController {
                 .eq("status", CommentStatusEnum.PASS.getValue())
                 .eq("source_id", id)
                 .eq("source_type", sourceType.getValue())
-                .orderByDesc("create_time")
+                .orderByAsc("create_time")
         );
         Map<Integer, CommentView> viewMap = new HashMap<>();
         List<Comment> commentTwos = new LinkedList<>();

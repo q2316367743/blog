@@ -30,6 +30,11 @@ public class Author implements Serializable {
     private String name;
 
     /**
+     * 邮箱
+     */
+    private String email;
+
+    /**
      * 标签
      */
     private List<String> tags;

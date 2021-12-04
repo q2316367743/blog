@@ -29,4 +29,9 @@ public class LoginView implements Serializable {
      */
     private Boolean needMfa;
 
+    /**
+     * 前台页面地址
+     */
+    private String website;
+
 }

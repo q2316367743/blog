@@ -34,6 +34,7 @@ public class AuthorServiceImpl implements AuthorService {
             Author author = new Author();
             author.setAvatar("https://portrait.gitee.com/uploads/avatars/user/1786/5358547_qiaoshengda_1578985319.png");
             author.setName("云落天都");
+            author.setEmail("m17762618644@163.com");
             author.setTags(Arrays.asList("后端开发", "前端开发", "游戏爱好者"));
             author.setDescription("我的个人博客");
             author.setContent("<p>无</p>");

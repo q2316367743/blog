@@ -133,9 +133,11 @@ create table dict
 
 ) comment '字典项';
 
+create unique index idx_type_key on dict(type, item_key);
+
 # 默认字典数据
-insert into dict value (1, 1, '博客', '1', '2021-12-04', '2021-12-04', 0);
-insert into dict value (2, 1, 'es-client', '2', '2021-12-04', '2021-12-04', 0);
+insert into dict value (1, 1, '1', '博客', '2021-12-04', '2021-12-04', 0);
+insert into dict value (2, 1, '2', 'es-client', '2021-12-04', '2021-12-04', 0);
 
 # 测试数据
 

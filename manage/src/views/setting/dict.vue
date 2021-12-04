@@ -11,7 +11,7 @@
 			</el-menu>
 		</div>
 		<div class="el-card dict-content">
-			<el-table :data="dict_list" v-load="table_load">
+			<el-table :data="dict_list" v-loading="table_load">
 				<el-table-column
 					label="序号"
 					type="index"
@@ -43,18 +43,18 @@
 				@click="open_save"
 			></el-button>
 		</div>
-		<el-dialog :visible.sync="info_dialog">
+		<el-dialog :visible.sync="info_dialog" :close-on-click-modal="false" width="500px">
 			<div slot="title">{{ info_data.id ? "修改" : "新增" }}字典</div>
-			<el-form label-width="80px">
-				<el-form-item label="键">
+			<el-form label-width="40px">
+				<el-form-item label="键：">
 					<el-input v-model="info_data.key"></el-input>
 				</el-form-item>
-				<el-form-item label="值">
+				<el-form-item label="值：">
 					<el-input v-model="info_data.value"></el-input>
 				</el-form-item>
 			</el-form>
 			<div slot="footer">
-				<el-button v-if="!info_data.id">清空</el-button>
+				<el-button v-if="!info_data.id" @click="info_clear">清空</el-button>
 				<el-button type="primary" @click="info_submit">{{
 					info_data.id ? "修改" : "新增"
 				}}</el-button>
@@ -143,6 +143,12 @@ export default {
 				});
 			}
 		},
+		info_clear() {
+			this.info_data = {
+				key: "",
+				value: "",
+			};
+		}
 	},
 };
 </script>
