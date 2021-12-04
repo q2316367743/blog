@@ -15,10 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import xyz.esion.blog.entity.Article;
 import xyz.esion.blog.entity.*;
-import xyz.esion.blog.enumeration.ArticleStatusEnum;
-import xyz.esion.blog.enumeration.CommentStatusEnum;
-import xyz.esion.blog.enumeration.LinkStatusEnum;
-import xyz.esion.blog.enumeration.MessageTypeEnum;
+import xyz.esion.blog.enumeration.*;
 import xyz.esion.blog.global.*;
 import xyz.esion.blog.view.*;
 import xyz.esion.blog.param.PageParam;
@@ -74,7 +71,7 @@ public class RouterController {
     }
 
     @GetMapping("article/{id}.html")
-    public String article(@PathVariable String id, Model model) {
+    public String article(@PathVariable Integer id, Model model) {
         // 文章本身
         Article article = articleService.getById(id);
         if (article == null) {
@@ -117,44 +114,19 @@ public class RouterController {
                 .last("limit 1")
         );
         model.addAttribute("after", after);
-        // 获取评论
-        // 1. 获取全部评论，坚信每篇博客评论不会太多，就全部查出来
-        List<Comment> comments = commentService.list(new QueryWrapper<Comment>()
-                .eq("status", CommentStatusEnum.PASS.getValue())
-                .eq("article_id", id)
-                .orderByDesc("create_time")
-        );
-        Map<Integer, CommentView> viewMap = new HashMap<>();
-        List<Comment> commentTwos = new LinkedList<>();
-        // 构建一级评论
-        for (Comment comment : comments) {
-            if (comment.getRootId().equals(0)) {
-                CommentView commentView = BeanUtil.copyProperties(comment, CommentView.class);
-                commentView.setChildren(new LinkedList<>());
-                viewMap.put(comment.getId(), commentView);
-            }else {
-                commentTwos.add(comment);
-            }
-        }
-        // 构建二级评论
-        for (Comment comment : commentTwos) {
-            if (viewMap.containsKey(comment.getRootId())) {
-                viewMap.get(comment.getRootId()).getChildren().add(BeanUtil.copyProperties(comment, CommentView.class));
-            }
-        }
-        model.addAttribute("comments", viewMap.values());
-        model.addAttribute("comment_total", comments.size());
+        buildComment(id, CommentSourceTypeEnum.ARTICLE, model);
         return "article";
     }
 
     @GetMapping("/page/{id}.html")
-    public String page(@PathVariable String id, Model model) {
+    public String page(@PathVariable Integer id, Model model) {
         xyz.esion.blog.entity.Page page = pageService.getById(id);
         if (page == null) {
             return "error/404";
         }
         PageInfoView view = BeanUtil.copyProperties(page, PageInfoView.class);
         model.addAttribute("page", view);
+        buildComment(id, CommentSourceTypeEnum.PAGE, model);
         return "page";
     }
 
@@ -226,11 +198,6 @@ public class RouterController {
             Model model,
             @NameConvertModel PageParam pageParam
     ) {
-        Page<Message> page = messageService.page(
-                new Page<>(pageParam.getPageNum(), pageParam.getPageNum()),
-                new QueryWrapper<Message>().eq("type", MessageTypeEnum.BLOG.getValue())
-        );
-        model.addAttribute("page", page);
         return "message";
     }
 
@@ -279,6 +246,37 @@ public class RouterController {
                 articlePage.getPages(),
                 articlePage.getTotal(),
                 views);
+    }
+
+    private void buildComment(Integer id, CommentSourceTypeEnum sourceType, Model model) {
+        // 获取评论
+        // 1. 获取全部评论，坚信每篇博客评论不会太多，就全部查出来
+        List<Comment> comments = commentService.list(new QueryWrapper<Comment>()
+                .eq("status", CommentStatusEnum.PASS.getValue())
+                .eq("source_id", id)
+                .eq("source_type", sourceType.getValue())
+                .orderByDesc("create_time")
+        );
+        Map<Integer, CommentView> viewMap = new HashMap<>();
+        List<Comment> commentTwos = new LinkedList<>();
+        // 构建一级评论
+        for (Comment comment : comments) {
+            if (comment.getRootId().equals(0)) {
+                CommentView commentView = BeanUtil.copyProperties(comment, CommentView.class);
+                commentView.setChildren(new LinkedList<>());
+                viewMap.put(comment.getId(), commentView);
+            }else {
+                commentTwos.add(comment);
+            }
+        }
+        // 构建二级评论
+        for (Comment comment : commentTwos) {
+            if (viewMap.containsKey(comment.getRootId())) {
+                viewMap.get(comment.getRootId()).getChildren().add(BeanUtil.copyProperties(comment, CommentView.class));
+            }
+        }
+        model.addAttribute("comments", viewMap.values());
+        model.addAttribute("comment_total", comments.size());
     }
 
 }

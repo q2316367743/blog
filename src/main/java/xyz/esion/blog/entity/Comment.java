@@ -22,6 +22,11 @@ public class Comment implements Serializable {
     private Integer id;
 
     /**
+     * 图标
+     */
+    private String icon;
+
+    /**
      * 电子邮箱
      */
     private String email;
@@ -63,12 +68,17 @@ public class Comment implements Serializable {
     private Integer type;
 
     /**
-     * 文章ID
+     * 来源ID
      */
-    private Integer articleId;
+    private Integer sourceId;
 
     /**
-     * 所属跟评论，顶级为0
+     * 来源类型
+     */
+    private Integer sourceType;
+
+    /**
+     * 所属评论，顶级为0
      */
     private Integer rootId;
 

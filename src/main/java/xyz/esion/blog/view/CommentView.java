@@ -21,6 +21,11 @@ public class CommentView implements Serializable {
     private Integer id;
 
     /**
+     * 图标
+     */
+    private String icon;
+
+    /**
      * 电子邮箱
      */
     private String email;

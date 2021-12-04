@@ -62,6 +62,7 @@ create table notice
 create table comment
 (
     id              int unsigned auto_increment primary key comment 'ID',
+    icon            varchar(128)        default ''                    not null comment '图标',
     email           varchar(64)         default ''                    not null comment '电子邮箱',
     website         varchar(64)         default ''                    not null comment '个人网站',
     nickname        varchar(32)         default ''                    not null comment '昵称',
@@ -70,7 +71,8 @@ create table comment
     browser         varchar(64)         default ''                    not null comment '浏览器版本',
     system_version  varchar(64)         default ''                    not null comment '系统',
     type            tinyint unsigned    default 1                     not null comment '评论类型；1：访客',
-    article_id      int unsigned        default 0                     not null comment '文章ID',
+    source_id       int unsigned        default 0                     not null comment '来源ID',
+    source_type     tinyint(1) unsigned default 1                     not null comment '来源类型',
     root_id         int unsigned        default 0                     not null comment '所属评论，顶级为0',
     target_id       int unsigned        default 0                     not null comment '回复对象ID，冗余',
     target_nickname varchar(32)         default ''                    not null comment '回复对象昵称，冗余',
@@ -118,6 +120,22 @@ create table menu
     is_delete   tinyint(1) unsigned default 0                     not null comment '逻辑删除'
 
 ) comment '菜单';
+
+create table dict
+(
+    id          int unsigned auto_increment primary key comment 'ID',
+    type        tinyint unsigned    default 0                     not null comment '字典类型',
+    item_key    varchar(64)         default ''                    not null comment 'KEY',
+    item_value  varchar(64)         default ''                    not null comment 'VALUE',
+    create_time datetime            default '1998-08-06 00:00:00' not null comment '创建时间',
+    update_time datetime            default '1998-08-06 00:00:00' not null comment '更新时间',
+    is_delete   tinyint(1) unsigned default 0                     not null comment '逻辑删除'
+
+) comment '字典项';
+
+# 默认字典数据
+insert into dict value (1, 1, '博客', '1', '2021-12-04', '2021-12-04', 0);
+insert into dict value (2, 1, 'es-client', '2', '2021-12-04', '2021-12-04', 0);
 
 # 测试数据
 

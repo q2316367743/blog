@@ -29,9 +29,14 @@ public class CommentParam implements Serializable {
     private String nickname;
 
     /**
-     * 文章ID
+     * 来源ID
      */
-    private Integer articleId;
+    private Integer sourceId;
+
+    /**
+     * 来源类型
+     */
+    private Integer sourceType;
 
     /**
      * 所属跟评论，顶级为0，属于那条评论的二级评论

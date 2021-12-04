@@ -30,16 +30,17 @@ import Layout from '@/layout'
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
-export const constantRoutes = [
-    {
+export const constantRoutes = [{
         path: '/login',
-        component: () => import('@/views/login/index'),
+        component: () =>
+            import ('@/views/login/index'),
         hidden: true
     },
 
     {
         path: '/404',
-        component: () => import('@/views/404'),
+        component: () =>
+            import ('@/views/404'),
         hidden: true
     },
 
@@ -50,8 +51,9 @@ export const constantRoutes = [
         children: [{
             path: 'dashboard',
             name: 'Dashboard',
-            component: () => import('@/views/dashboard/index'),
-            meta: {title: '仪表盘', icon: 'el-icon-odometer'}
+            component: () =>
+                import ('@/views/dashboard/index'),
+            meta: { title: '仪表盘', icon: 'el-icon-odometer' }
         }]
     },
 
@@ -60,33 +62,36 @@ export const constantRoutes = [
         component: Layout,
         redirect: '/article/list',
         name: 'article',
-        meta: {title: '文章管理', icon: 'el-icon-document-copy'},
-        children: [
-            {
+        meta: { title: '文章管理', icon: 'el-icon-document-copy' },
+        children: [{
                 path: 'save',
                 name: 'save',
-                component: () => import('@/views/article/info'),
-                meta: {title: '新增文章', icon: 'table'},
+                component: () =>
+                    import ('@/views/article/info'),
+                meta: { title: '新增文章', icon: 'table' },
                 hidden: true
             },
             {
                 path: 'update',
                 name: 'update',
-                component: () => import('@/views/article/info'),
-                meta: {title: '修改文章', icon: 'table'},
+                component: () =>
+                    import ('@/views/article/info'),
+                meta: { title: '修改文章', icon: 'table' },
                 hidden: true
             },
             {
                 path: 'list',
                 name: 'list',
-                component: () => import('@/views/article/list'),
-                meta: {title: '文章列表', icon: 'el-icon-document'}
+                component: () =>
+                    import ('@/views/article/list'),
+                meta: { title: '文章列表', icon: 'el-icon-document' }
             },
             {
                 path: 'category',
                 name: 'category',
-                component: () => import('@/views/article/category'),
-                meta: {title: '分类管理', icon: 'tree'}
+                component: () =>
+                    import ('@/views/article/category'),
+                meta: { title: '分类管理', icon: 'tree' }
             }
         ]
     },
@@ -96,39 +101,43 @@ export const constantRoutes = [
         component: Layout,
         redirect: '/page/list',
         name: 'page',
-        meta: {title: '页面管理', icon: 'el-icon-reading'},
-        children: [
-            {
+        meta: { title: '页面管理', icon: 'el-icon-reading' },
+        children: [{
                 path: 'save',
                 name: 'save',
-                component: () => import('@/views/page/save'),
-                meta: {title: '新增页面', icon: 'table'},
+                component: () =>
+                    import ('@/views/page/save'),
+                meta: { title: '新增页面', icon: 'table' },
                 hidden: true
             },
             {
                 path: 'update',
                 name: 'update',
-                component: () => import('@/views/page/update'),
-                meta: {title: '修改页面', icon: 'table'},
+                component: () =>
+                    import ('@/views/page/update'),
+                meta: { title: '修改页面', icon: 'table' },
                 hidden: true
             },
             {
                 path: 'list',
                 name: 'list',
-                component: () => import('@/views/page/list'),
-                meta: {title: '页面列表', icon: 'el-icon-takeaway-box'}
+                component: () =>
+                    import ('@/views/page/list'),
+                meta: { title: '页面列表', icon: 'el-icon-takeaway-box' }
             },
             {
                 path: 'static',
                 name: 'static',
-                component: () => import('@/views/page/static'),
-                meta: {title: '原生页面', icon: 'el-icon-edit-outline'}
+                component: () =>
+                    import ('@/views/page/static'),
+                meta: { title: '原生页面', icon: 'el-icon-edit-outline' }
             },
             {
                 path: 'category',
                 name: 'category',
-                component: () => import('@/views/page/menu'),
-                meta: {title: '菜单管理', icon: 'el-icon-menu'}
+                component: () =>
+                    import ('@/views/page/menu'),
+                meta: { title: '菜单管理', icon: 'el-icon-menu' }
             }
         ]
     },
@@ -136,14 +145,13 @@ export const constantRoutes = [
     {
         path: '/attachment',
         component: Layout,
-        children: [
-            {
-                path: 'index',
-                name: 'attachment',
-                component: () => import('@/views/attachment/index'),
-                meta: {title: '附件管理', icon: 'el-icon-folder-opened'}
-            }
-        ]
+        children: [{
+            path: 'index',
+            name: 'attachment',
+            component: () =>
+                import ('@/views/attachment/index'),
+            meta: { title: '附件管理', icon: 'el-icon-folder-opened' }
+        }]
     },
 
     {
@@ -151,31 +159,34 @@ export const constantRoutes = [
         component: Layout,
         redirect: '/news/comment',
         name: 'news',
-        meta: {title: '消息管理', icon: 'el-icon-reading'},
-        children: [
-            {
+        meta: { title: '消息管理', icon: 'el-icon-reading' },
+        children: [{
                 path: 'comment',
                 name: 'comment',
-                component: () => import('@/views/news/comment'),
-                meta: {title: '评论管理', icon: 'el-icon-chat-line-square'},
+                component: () =>
+                    import ('@/views/news/comment'),
+                meta: { title: '评论管理', icon: 'el-icon-chat-line-square' },
             },
             {
                 path: 'link',
                 name: 'link',
-                component: () => import('@/views/news/link'),
-                meta: {title: '友链管理', icon: 'el-icon-chat-line-square'},
+                component: () =>
+                    import ('@/views/news/link'),
+                meta: { title: '友链管理', icon: 'el-icon-chat-line-square' },
             },
             {
                 path: 'message',
                 name: 'message',
-                component: () => import('@/views/news/message'),
-                meta: {title: '意见反馈', icon: 'el-icon-chat-line-square'},
+                component: () =>
+                    import ('@/views/news/message'),
+                meta: { title: '意见反馈', icon: 'el-icon-chat-line-square' },
             },
             {
                 path: 'notice',
                 name: 'notice',
-                component: () => import('@/views/news/notice'),
-                meta: {title: '通知管理', icon: 'el-icon-chat-line-square'},
+                component: () =>
+                    import ('@/views/news/notice'),
+                meta: { title: '通知管理', icon: 'el-icon-chat-line-square' },
             }
         ]
     },
@@ -185,42 +196,52 @@ export const constantRoutes = [
         component: Layout,
         redirect: '/setting/author',
         name: 'setting',
-        meta: {title: '设置', icon: 'nested'},
-        children: [
-            {
+        meta: { title: '设置', icon: 'nested' },
+        children: [{
                 path: 'author',
                 name: 'author',
-                component: () => import('@/views/setting/author'),
-                meta: {title: '作者管理', icon: 'el-icon-user'},
+                component: () =>
+                    import ('@/views/setting/author'),
+                meta: { title: '作者管理', icon: 'el-icon-user' },
             },
             {
                 path: 'config',
                 name: 'config',
-                component: () => import('@/views/setting/config'),
-                meta: {title: '博客设置', icon: 'el-icon-setting'},
+                component: () =>
+                    import ('@/views/setting/config'),
+                meta: { title: '博客设置', icon: 'el-icon-setting' },
+            },
+            {
+                path: 'dict',
+                name: 'dict',
+                component: () =>
+                    import ('@/views/setting/dict'),
+                meta: { title: '字典管理', icon: 'el-icon-notebook-2' },
             },
             {
                 path: 'transfer',
                 name: 'transfer',
-                component: () => import('@/views/setting/transfer'),
-                meta: {title: '迁移', icon: 'el-icon-connection\n'},
+                component: () =>
+                    import ('@/views/setting/transfer'),
+                meta: { title: '迁移', icon: 'el-icon-connection' },
             },
             {
                 path: 'about',
                 name: 'about',
-                component: () => import('@/views/setting/about'),
-                meta: {title: '关于', icon: 'el-icon-info'},
+                component: () =>
+                    import ('@/views/setting/about'),
+                meta: { title: '关于', icon: 'el-icon-info' },
             }
         ]
     },
 
     // 404 page must be placed at the end !!!
-    {path: '*', redirect: '/404', hidden: true}
+    { path: '*', redirect: '/404', hidden: true }
 ]
 
 const createRouter = () => new Router({
     // mode: 'history', // require service support
-    scrollBehavior: () => ({y: 0}),
+    scrollBehavior: () => ({ y: 0 }),
     routes: constantRoutes
 })
 

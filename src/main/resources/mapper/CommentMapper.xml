@@ -6,6 +6,7 @@
 
     <resultMap id="BaseResultMap" type="xyz.esion.blog.entity.Comment">
             <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="icon" column="icon" jdbcType="VARCHAR"/>
             <result property="email" column="email" jdbcType="VARCHAR"/>
             <result property="website" column="website" jdbcType="VARCHAR"/>
             <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
@@ -14,7 +15,8 @@
             <result property="browser" column="browser" jdbcType="VARCHAR"/>
             <result property="systemVersion" column="system_version" jdbcType="VARCHAR"/>
             <result property="type" column="type" jdbcType="TINYINT"/>
-            <result property="articleId" column="article_id" jdbcType="INTEGER"/>
+            <result property="sourceId" column="source_id" jdbcType="INTEGER"/>
+            <result property="sourceType" column="source_type" jdbcType="BOOLEAN"/>
             <result property="rootId" column="root_id" jdbcType="INTEGER"/>
             <result property="targetId" column="target_id" jdbcType="INTEGER"/>
             <result property="targetNickname" column="target_nickname" jdbcType="VARCHAR"/>
@@ -23,10 +25,11 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,email,website,
-        nickname,create_time,status,
-        browser,system_version,type,
-        article_id,root_id,target_id,
-        target_nickname,target_website,content
+        id,icon,email,
+        website,nickname,create_time,
+        status,browser,system_version,
+        type,source_id,source_type,
+        root_id,target_id,target_nickname,
+        target_website,content
     </sql>
 </mapper>
