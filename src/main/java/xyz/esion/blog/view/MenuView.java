@@ -2,6 +2,7 @@ package xyz.esion.blog.view;
 
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,6 +33,22 @@ public class MenuView {
      * 链接
      */
     private String href;
+
+    /**
+     * 父级菜单，顶级为0
+     */
+    private Integer pId;
+
+    /**
+     * 顺序
+     */
+    private Integer sequence;
+
+    /**
+     * 创建时间
+     */
+    private Date createTime;
+
 
     /**
      * 子菜单

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import xyz.esion.blog.view.MenuView;
 
 import javax.annotation.PostConstruct;
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -36,7 +37,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu>
 
     private List<MenuView> sync() {
         List<MenuView> views = new LinkedList<>();
-        List<Menu> menus = this.baseMapper.selectList(new QueryWrapper<>());
+        List<Menu> menus = this.baseMapper.selectList(new QueryWrapper<Menu>()
+                .orderByAsc("sequence")
+                .orderByDesc("create_time"));
         Iterator<Menu> menuIterator = menus.iterator();
         // 第一遍，获取一级菜单
         while (menuIterator.hasNext()) {
@@ -59,6 +62,27 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu>
             }
         }
         return views;
+    }
+
+    @Override
+    public boolean updateById(Menu entity) {
+        boolean result = super.updateById(entity);
+        init();
+        return result;
+    }
+
+    @Override
+    public boolean save(Menu entity) {
+        boolean result = super.save(entity);
+        init();
+        return result;
+    }
+
+    @Override
+    public boolean removeById(Serializable id) {
+        boolean result = super.removeById(id);
+        init();
+        return result;
     }
 
 }

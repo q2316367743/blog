@@ -5,7 +5,9 @@ import com.baomidou.mybatisplus.annotation.*;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * 菜单
@@ -50,20 +52,29 @@ public class Menu implements Serializable {
     private Integer pId;
 
     /**
+     * 顺序
+     */
+    private Integer sequence;
+
+    /**
      * 创建时间
      */
     @TableField(fill = FieldFill.INSERT)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     /**
      * 更新时间
      */
     @TableField(fill = FieldFill.INSERT_UPDATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
     /**
      * 逻辑删除
      */
+    @TableLogic
+    @JsonIgnore
     private Boolean isDelete;
 
     @TableField(exist = false)

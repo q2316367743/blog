@@ -106,7 +106,7 @@ export const constantRoutes = [{
                 path: 'save',
                 name: 'save',
                 component: () =>
-                    import ('@/views/page/save'),
+                    import ('@/views/page/info'),
                 meta: { title: '新增页面', icon: 'table' },
                 hidden: true
             },
@@ -114,7 +114,7 @@ export const constantRoutes = [{
                 path: 'update',
                 name: 'update',
                 component: () =>
-                    import ('@/views/page/update'),
+                    import ('@/views/page/info'),
                 meta: { title: '修改页面', icon: 'table' },
                 hidden: true
             },
@@ -133,8 +133,8 @@ export const constantRoutes = [{
                 meta: { title: '原生页面', icon: 'el-icon-edit-outline' }
             },
             {
-                path: 'category',
-                name: 'category',
+                path: 'menu',
+                name: 'menu',
                 component: () =>
                     import ('@/views/page/menu'),
                 meta: { title: '菜单管理', icon: 'el-icon-menu' }

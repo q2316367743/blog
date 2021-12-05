@@ -115,6 +115,7 @@ create table menu
     target      tinyint unsigned    default 0                     not null comment '打开方式：0：当前页面，1：新页面',
     href        varchar(128)        default ''                    not null comment '链接',
     p_id        int unsigned        default 0                     not null comment '父级菜单，顶级为0',
+    sequence    int                 default 0                     not null comment '顺序',
     create_time datetime            default '1998-08-06 00:00:00' not null comment '创建时间',
     update_time datetime            default '1998-08-06 00:00:00' not null comment '更新时间',
     is_delete   tinyint(1) unsigned default 0                     not null comment '逻辑删除'
@@ -133,7 +134,7 @@ create table dict
 
 ) comment '字典项';
 
-create unique index idx_type_key on dict(type, item_key);
+create unique index idx_type_key on dict (type, item_key);
 
 # 默认字典数据
 insert into dict value (1, 1, '1', '博客', '2021-12-04', '2021-12-04', 0);
