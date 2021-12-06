@@ -179,7 +179,7 @@ export default {
 		node_click(data) {
 			this.is_update = true;
 			// 使用深拷贝
-			this.menu = Object.assign({}, data);
+			this.menu = Object.assign({}, data.data);
 		},
 		update() {
 			if (this.is_update) {

@@ -133,30 +133,44 @@ public class RouterController {
     @GetMapping("category.html")
     public String category(Model model) {
         // 获取全部分类
-        List<Category> categories = categoryService.list(new QueryWrapper<Category>()
-                .orderByDesc("update_time"));
+        List<CategoryView> views = categoryService.tree();
         // 获取每个分类的数量
-        List<KeyValue<Long, Long>> keyValues = articleService.countByCategory(categories.stream().map(Category::getId).collect(Collectors.toList()));
+        List<Integer> categoryIds = views.stream().map(CategoryView::getId).collect(Collectors.toList());
+        categoryIds.addAll(views.stream()
+                .map(CategoryView::getChildren)
+                .flatMap(e -> e.stream().map(CategoryView::getId))
+                .collect(Collectors.toList()));
+        List<KeyValue<Long, Long>> keyValues = articleService.countByCategory(categoryIds);
         Map<Long, Long> categoryMap = keyValues.stream().collect(Collectors.toMap(KeyValue::getKey, KeyValue::getValue));
-        model.addAttribute("categories", categories.stream().map(item -> {
-            CategoryView view = new CategoryView();
-            view.setId(item.getId());
-            view.setName(item.getName());
-            view.setCount(categoryMap.containsKey(item.getId().longValue()) ? categoryMap.get(item.getId().longValue()) : 0);
-            if (view.getCount() > 0) {
+        model.addAttribute("categories", views.stream().peek(item -> {
+            item.setCount(categoryMap.containsKey(item.getId().longValue()) ? categoryMap.get(item.getId().longValue()) : 0);
+            if (item.getCount() > 0) {
                 // 获取这个分类下前十篇文章，id+名称
                 List<Article> articles = articleService.list(new QueryWrapper<Article>()
-                        .eq("category_id", view.getId())
+                        .eq("category_id", item.getId())
                         .eq("status", ArticleStatusEnum.RELEASE.getValue())
                         .last("limit 10"));
-                view.setArticles(articles
+                item.getArticles().addAll(articles
                         .stream()
                         .map(article -> new CategoryView.Article(article.getId(), article.getTitle()))
                         .collect(Collectors.toList()));
-            } else {
-                view.setArticles(new LinkedList<>());
             }
-            return view;
+            // 遍历子分类
+            for (CategoryView child : item.getChildren()) {
+                child.setCount(categoryMap.containsKey(child.getId().longValue()) ? categoryMap.get(child.getId().longValue()) : 0);
+                if (child.getCount() > 0) {
+                    // 获取这个分类下前十篇文章，id+名称
+                    List<Article> articles = articleService.list(new QueryWrapper<Article>()
+                            .eq("category_id", child.getId())
+                            .eq("status", ArticleStatusEnum.RELEASE.getValue())
+                            .last("limit 10"));
+                    child.getArticles().addAll(articles
+                            .stream()
+                            .map(article -> new CategoryView.Article(article.getId(), article.getTitle()))
+                            .collect(Collectors.toList()));
+
+                }
+            }
         }).collect(Collectors.toList()));
         return "category";
     }
@@ -265,7 +279,7 @@ public class RouterController {
                 CommentView commentView = BeanUtil.copyProperties(comment, CommentView.class);
                 commentView.setChildren(new LinkedList<>());
                 viewMap.put(comment.getId(), commentView);
-            }else {
+            } else {
                 commentTwos.add(comment);
             }
         }

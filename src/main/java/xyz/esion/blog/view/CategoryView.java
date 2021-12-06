@@ -36,6 +36,11 @@ public class CategoryView implements Serializable {
      */
     private List<Article> articles;
 
+    /**
+     * 子分类
+     */
+    private List<CategoryView> children;
+
     @Data
     @NoArgsConstructor
     @AllArgsConstructor

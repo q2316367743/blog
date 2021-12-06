@@ -1,5 +1,6 @@
 package xyz.esion.blog.controller.manage;
 
+import cn.hutool.core.lang.tree.Tree;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class MenuController {
     private final MenuService menuService;
 
     @GetMapping
-    public Result<List<MenuView>> list() {
+    public Result<List<Tree<Integer>>> list() {
         return Result.success(menuService.tree());
     }
 

@@ -12,27 +12,27 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto text-center">
                 <#list menus as menu>
-                    <#if menu.children?size == 0 >
+                    <#if !menu.children?? || menu.children?size == 0 >
                         <li class="nav-item">
-                            <a class="nav-link" href="${menu.href}"
-                               target="<#if menu.target == 0>_self<#else>_blank</#if>">
-                                <i class="${menu.icon}"></i>
-                                ${menu.name}
+                            <a class="nav-link" href="${menu.data.href}"
+                               target="<#if menu.data.target == 0>_self<#else>_blank</#if>">
+                                <i class="${menu.data.icon}"></i>
+                                ${menu.data.name}
                             </a>
                         </li>
                     <#else >
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="${menu.icon}"></i>
-                                ${menu.name}
+                                <i class="${menu.data.icon}"></i>
+                                ${menu.data.name}
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <#list menu.children as child>
-                                    <a class="dropdown-item" target="<#if child.target == 0>_self<#else>_blank</#if>"
+                                    <a class="dropdown-item" target="<#if child.data.target == 0>_self<#else>_blank</#if>"
                                        rel="noopener external nofollow noreferrer"
-                                       href="${child.href}">
-                                        ${child.name}
+                                       href="${child.data.href}">
+                                        ${child.data.name}
                                     </a>
                                 </#list>
                             </div>

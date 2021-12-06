@@ -51,7 +51,6 @@
                 <div class="row">
                     <div class="col-12 col-md-10 m-auto">
                         <div class="category-list">
-
                             <#list categories as category>
                                 <div class="category row">
                                     <a
@@ -86,6 +85,41 @@
                                         </div>
                                     </div>
                                 </div>
+                                <#list category.children as child>
+                                    <div class="category row">
+                                        <a
+                                                class="category-item collapsed list-group-item category-item-action col-10 col-md-11"
+                                                id="heading-${child.id}" role="tab" data-toggle="collapse"
+                                                href="#collapse-${child.id}"
+                                                aria-expanded="false"
+                                        >
+                                            ${child.name}
+                                            <i class="iconfont icon-arrowright"></i>
+                                        </a>
+                                        <a href="${config.href}/category/${child.id}.html"
+                                           class="category-count col-2 col-md-1">
+                                            <i class="iconfont icon-articles"></i>
+                                            <span>${child.count}</span>
+                                        </a>
+                                        <div class="category-collapse collapse" id="collapse-${child.id}"
+                                             role="tabpanel" aria-labelledby="heading-${child.id}">
+                                            <div class="category-post-list">
+                                                <#list child.articles as article>
+                                                    <a href="${config.href}/article/${article.id}.html"
+                                                       class="list-group-item list-group-item-action">
+                                                        <span class="category-post">${article.title}</span>
+                                                    </a>
+                                                </#list>
+                                                <#if child.count &gt; 10>
+                                                    <a href="${config.href}/category/${child.id}.html"
+                                                       class="list-group-item list-group-item-action">
+                                                        <span class="category-post">More...</span>
+                                                    </a>
+                                                </#if>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </#list>
                             </#list>
                         </div>
                     </div>

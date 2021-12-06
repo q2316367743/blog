@@ -1,0 +1,3 @@
+### 获取全部树
+GET {{api}}/menu
+token: {{token}}
