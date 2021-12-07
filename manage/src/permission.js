@@ -1,8 +1,10 @@
 import router from './router'
+import store from './store'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 import { getToken } from '@/utils/auth' // get token from cookie
 import getPageTitle from '@/utils/get-page-title'
+import { info } from '@/api/user';
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
@@ -26,6 +28,11 @@ router.beforeEach(async(to, from, next) => {
         } else {
             next()
             NProgress.done();
+        }
+        if (!store.getters.website) {
+            info(res => {
+                store.commit('user/SET_WEBSITE', res.data.website);
+            })
         }
     } else {
         /* has no token*/

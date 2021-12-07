@@ -41,6 +41,8 @@ export default {
                     completeSingle: true, // 当匹配只有一项的时候是否自动补全
                 },
             },
+            vditor: null,
+            editor: null
         }
     },
     components: {
@@ -104,6 +106,9 @@ export default {
                 return this.content;
             }
         }
+    },
+    destroyed() {
+        this.vditor.destroy();
     }
 }
 </script>

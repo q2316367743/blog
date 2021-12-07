@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import xyz.esion.blog.entity.Article;
 import xyz.esion.blog.global.KeyValue;
-import xyz.esion.blog.view.ArticleListView;
+import xyz.esion.blog.view.article.ArticleListView;
 import xyz.esion.blog.param.PageParam;
 import xyz.esion.blog.view.PageView;
 

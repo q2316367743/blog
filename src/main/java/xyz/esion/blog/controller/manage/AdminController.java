@@ -39,6 +39,14 @@ public class AdminController {
         }
     }
 
+    @GetMapping("info")
+    public Result<LoginView> info() {
+        Config config = configService.info();
+        LoginView view = new LoginView();
+        view.setWebsite(config.getHref());
+        return Result.success(view);
+    }
+
     @GetMapping("logout")
     public Result<Boolean> logout() {
         StpUtil.logout();

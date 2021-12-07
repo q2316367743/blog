@@ -12,7 +12,7 @@ import xyz.esion.blog.global.KeyValue;
 import xyz.esion.blog.mapper.ArticleMapper;
 import xyz.esion.blog.mapper.CategoryMapper;
 import xyz.esion.blog.service.ArticleService;
-import xyz.esion.blog.view.ArticleListView;
+import xyz.esion.blog.view.article.ArticleListView;
 import xyz.esion.blog.param.PageParam;
 import xyz.esion.blog.view.PageView;
 

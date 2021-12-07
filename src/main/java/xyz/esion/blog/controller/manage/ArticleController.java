@@ -18,8 +18,8 @@ import xyz.esion.blog.param.ArticleParam;
 import xyz.esion.blog.service.ArticleService;
 import xyz.esion.blog.param.PageParam;
 import xyz.esion.blog.service.CategoryService;
-import xyz.esion.blog.view.ArticleInfoView;
-import xyz.esion.blog.view.ArticleListView;
+import xyz.esion.blog.view.article.ArticleInfoView;
+import xyz.esion.blog.view.article.ArticleListView;
 import xyz.esion.blog.view.PageView;
 
 import java.util.Arrays;

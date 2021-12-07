@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 /**
@@ -38,6 +40,11 @@ public class Page implements Serializable {
     private String description;
 
     /**
+     * 状态
+     */
+    private Integer status;
+
+    /**
      * 创建时间
      */
     @TableField(fill = FieldFill.INSERT)
@@ -52,6 +59,8 @@ public class Page implements Serializable {
     /**
      * 逻辑删除
      */
+    @TableLogic
+    @JsonIgnore
     private Boolean isDelete;
 
     /**
@@ -63,6 +72,11 @@ public class Page implements Serializable {
      * 评论数量
      */
     private Integer commentCount;
+
+    /**
+     * 编辑器类型
+     */
+    private Integer type;
 
     /**
      * 文章内容，内容为html文件

@@ -9,11 +9,13 @@
         <result property="title" column="title" jdbcType="VARCHAR"/>
         <result property="image" column="image" jdbcType="VARCHAR"/>
         <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="TINYINT"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
         <result property="isDelete" column="is_delete" jdbcType="BOOLEAN"/>
         <result property="viewCount" column="view_count" jdbcType="INTEGER"/>
         <result property="commentCount" column="comment_count" jdbcType="INTEGER"/>
+        <result property="type" column="type" jdbcType="TINYINT"/>
         <result property="content" column="content" jdbcType="VARCHAR"/>
         <result property="originalContent" column="original_content" jdbcType="VARCHAR"/>
     </resultMap>
@@ -21,8 +23,8 @@
     <sql id="Base_Column_List">
         id
         ,title,
-        image,description,create_time,
+        image,description,status,create_time,
         update_time,is_delete,view_count,
-        comment_count,content,original_content
+        comment_count,type,content,original_content
     </sql>
 </mapper>

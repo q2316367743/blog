@@ -40,7 +40,6 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
                     if (view.getId().equals(category.getPId())) {
                         CategoryView child = new CategoryView();
                         child.setArticles(new LinkedList<>());
-                        child.setChildren(new LinkedList<>());
                         child.setId(category.getId());
                         child.setName(category.getName());
                         child.setCount(0L);

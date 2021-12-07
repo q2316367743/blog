@@ -73,6 +73,15 @@
 				<el-form-item label="图片">
 					<el-input v-model="article.image"></el-input>
 				</el-form-item>
+				<el-form-item label="分类">
+					<el-cascader
+						:options="categories"
+						:props="props"
+						clearable
+						placeholder="单选"
+						v-model="category_ids"
+					></el-cascader>
+				</el-form-item>
 				<el-form-item label="文章标签">
 					<el-tag
 						:key="tag"
@@ -129,6 +138,7 @@ import editor from "@/components/editor";
 
 // 引入api
 import article_api from "@/api/article";
+import category_api from "@/api/category";
 
 export default {
 	name: "info",
@@ -152,9 +162,17 @@ export default {
 				original_content: "",
 				content: "",
 			},
+			category_ids: [],
 			publish_dialog: false,
 			tag_input: false,
 			tag_value: "",
+			categories: [],
+			props: {
+				children: "children",
+				label: "name",
+				value: "id",
+				checkStrictly: true,
+			},
 		};
 	},
 	created() {
@@ -190,6 +208,27 @@ export default {
 				content: "",
 			};
 		}
+		category_api.list((res) => {
+			this.categories = res.data;
+			// 如果是更新，需要遍历赋值分类
+			if (this.$route.query.id) {
+				for (let category of this.categories) {
+					if (category.id === this.article.category_id) {
+						this.category_ids.push(category.id);
+						return;
+					}
+					if (category.children.length > 0) {
+						for (let child of category.children) {
+							if (child.id === this.article.category_id) {
+								this.category_ids.push(category.id);
+								this.category_ids.push(child.id);
+								return;
+							}
+						}
+					}
+				}
+			}
+		});
 	},
 	methods: {
 		submit() {
@@ -197,7 +236,8 @@ export default {
 			this.article.content = this.$refs.editor.get_content();
 			this.article.original_content =
 				this.$refs.editor.get_original_content();
-			console.log(this.article);
+			let temp_len = this.category_ids.length;
+			this.article.category_id = this.category_ids[temp_len - 1];
 			if (this.is_save) {
 				article_api.save(
 					this.article,

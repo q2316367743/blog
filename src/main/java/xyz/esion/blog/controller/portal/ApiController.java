@@ -22,7 +22,7 @@ import xyz.esion.blog.param.MessageParam;
 import xyz.esion.blog.param.PageParam;
 import xyz.esion.blog.service.*;
 import xyz.esion.blog.util.FieldUtil;
-import xyz.esion.blog.view.ArticleListView;
+import xyz.esion.blog.view.article.ArticleListView;
 import xyz.esion.blog.view.PageView;
 
 import javax.servlet.http.HttpServletRequest;
