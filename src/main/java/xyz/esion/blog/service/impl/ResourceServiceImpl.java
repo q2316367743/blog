@@ -1,5 +1,6 @@
 package xyz.esion.blog.service.impl;
 
+import cn.hutool.core.io.FileTypeUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.StrUtil;
@@ -9,8 +10,10 @@ import org.springframework.web.multipart.MultipartFile;
 import xyz.esion.blog.constant.PathConstant;
 import xyz.esion.blog.service.ResourceService;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
 
 /**
  * @author Esion
@@ -20,12 +23,17 @@ import java.io.IOException;
 public class ResourceServiceImpl implements ResourceService {
 
     @Override
-    public byte[] download(String path) {
+    public void download(String path, HttpServletResponse response) throws IOException {
         File file = new File(PathConstant.RESOURCE_PATH + File.separator + path);
         if (!file.exists()) {
-            return new byte[0];
+            return;
         }
-        return FileUtil.readBytes(file);
+        response.setContentType(FileTypeUtil.getType(file));
+        response.setContentLengthLong(file.length());
+        response.setCharacterEncoding("utf-8");
+        String fileName = URLEncoder.encode(file.getName(), "UTF-8").replaceAll("\\+", "%20");
+        response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName);
+        IoUtil.write(response.getOutputStream(), true, FileUtil.readBytes(file));
     }
 
     @Override
@@ -36,7 +44,13 @@ public class ResourceServiceImpl implements ResourceService {
             // 如果没有内容则为时间戳
             name = System.currentTimeMillis() + "";
         }
-        FileUtil.writeBytes(IoUtil.readBytes(multipartFile.getInputStream()), PathConstant.RESOURCE_PATH + File.separator + path + File.separator + name);
+        File file = new File(PathConstant.RESOURCE_PATH, path);
+        if (!file.exists()) {
+            if (!file.mkdirs()) {
+                file = new File(PathConstant.RESOURCE_PATH);
+            }
+        }
+        FileUtil.writeBytes(IoUtil.readBytes(multipartFile.getInputStream()), new File(file, name));
         return name;
     }
 

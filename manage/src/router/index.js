@@ -138,12 +138,21 @@ export const constantRoutes = [{
     {
         path: '/attachment',
         component: Layout,
+        redirect: '/attachment/resource',
+        name: 'attachment',
+        meta: { title: '资源管理', icon: 'el-icon-reading' },
         children: [{
-            path: 'index',
-            name: 'attachment',
+            path: 'resource',
+            name: 'resource',
             component: () =>
-                import ('@/views/attachment/index'),
+                import ('@/views/attachment/resource'),
             meta: { title: '附件管理', icon: 'el-icon-folder-opened' }
+        }, {
+            path: 'file',
+            name: 'file',
+            component: () =>
+                import ('@/views/attachment/file'),
+            meta: { title: '文件管理', icon: 'el-icon-folder-opened' }
         }]
     },
 

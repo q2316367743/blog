@@ -2,6 +2,7 @@ package xyz.esion.blog.service;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
@@ -16,9 +17,9 @@ public interface ResourceService {
      * 在指定路径下获取资源
      *
      * @param path 资源路径
-     * @return 资源字节数组
+     * @throws IOException IO异常
      */
-    byte[] download(String path);
+    void download(String path, HttpServletResponse response) throws IOException;
 
     /**
      * 上传文件到指定目录下
@@ -26,6 +27,7 @@ public interface ResourceService {
      * @param path 目录
      * @param multipartFile 文件
      * @return  文件路径
+     * @throws IOException IO异常
      */
     String update(String path, MultipartFile multipartFile) throws IOException;
 

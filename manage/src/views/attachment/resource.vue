@@ -1,13 +1,12 @@
 <template>
-<div>附件管理</div>
+	<div class="app-container">资源管理</div>
 </template>
 
 <script>
 export default {
-    name: "index"
-}
+	name: "index",
+};
 </script>
 
 <style scoped>
-
 </style>
