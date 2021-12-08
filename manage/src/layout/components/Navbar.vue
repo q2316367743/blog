@@ -10,7 +10,7 @@
 
 		<div class="right-menu">
 			<div class="menu-link">
-				<el-button type="text" icon="el-icon-link" @click="toPortal()"></el-button>
+				<el-button icon="el-icon-link" @click="toPortal()"></el-button>
 			</div>
 			<el-dropdown class="avatar-container" trigger="click">
 				<div class="avatar-wrapper">
@@ -102,6 +102,7 @@ export default {
 			text-align: center;
 			line-height: 50px;
 			color: #000000;
+			margin-right: 20px;
 		}
 
 		&:focus {

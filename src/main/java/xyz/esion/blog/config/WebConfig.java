@@ -32,6 +32,7 @@ import java.util.*;
 public class WebConfig implements WebMvcConfigurer {
 
     private final static Logger logger = LoggerFactory.getLogger(WebConfig.class);
+    private final static String OPTIONS = "OPTIONS";
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -46,7 +47,6 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         // 访问量计算
         // 权限拦截
-        String OPTIONS = "OPTIONS";
         registry.addInterceptor(new HandlerInterceptor() {
                     @Override
                     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
@@ -77,7 +77,7 @@ public class WebConfig implements WebMvcConfigurer {
                         return true;
                     }
                 })
-                .addPathPatterns("/manage/api/*")
+                .addPathPatterns("/manage/api/**/*")
                 .excludePathPatterns("/manage/api/admin/login");
     }
 

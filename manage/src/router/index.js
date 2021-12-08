@@ -126,13 +126,6 @@ export const constantRoutes = [{
                 meta: { title: '页面列表', icon: 'el-icon-takeaway-box' }
             },
             {
-                path: 'static',
-                name: 'static',
-                component: () =>
-                    import ('@/views/page/static'),
-                meta: { title: '原生页面', icon: 'el-icon-edit-outline' }
-            },
-            {
                 path: 'menu',
                 name: 'menu',
                 component: () =>

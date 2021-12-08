@@ -1,2 +1,7 @@
+### 查询静态信息
 GET {{api}}/statistics/base
+token: {{token}}
+
+### 查询动态信息
+GET {{api}}/statistics/dynamic
 token: {{token}}
