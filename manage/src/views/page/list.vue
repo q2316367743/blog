@@ -78,35 +78,42 @@
 						<el-button type="text" @click="update(scope.row.id)"
 							>编辑</el-button
 						>
-						<el-button
-							type="text"
-							@click="recovery(scope.row.id)"
-							v-if="
-								scope.row.status === 1 || scope.row.status === 0
-							"
-							>回收站</el-button
-						>
-						<el-button
-							type="text"
-							@click="draft(scope.row.id)"
-							v-if="
-								scope.row.status === 1 ||
-								scope.row.status === -1
-							"
-							>草稿</el-button
-						>
-						<el-button
-							type="text"
-							@click="publish(scope.row.id)"
-							v-if="
-								scope.row.status === -1 ||
-								scope.row.status === 0
-							"
-							>发布</el-button
-						>
-						<el-button type="text" @click="open_setting(scope.row)"
-							>设置</el-button
-						>
+						<el-dropdown>
+							<el-button style="margin-left: 10px" type="text"
+								>设置</el-button
+							>
+							<el-dropdown-menu slot="dropdown">
+								<el-dropdown-item
+									@click.native="recovery(scope.row.id)"
+									v-if="
+										scope.row.status === 1 ||
+										scope.row.status === 0
+									"
+									style="color: #f56c6c"
+									>移到回收站</el-dropdown-item
+								>
+								<el-dropdown-item
+									@click.native="draft(scope.row.id)"
+									v-if="
+										scope.row.status === 1 ||
+										scope.row.status === -1
+									"
+									>转为草稿</el-dropdown-item
+								>
+								<el-dropdown-item
+									@click.native="publish(scope.row.id)"
+									v-if="
+										scope.row.status === -1 ||
+										scope.row.status === 0
+									"
+									>发布</el-dropdown-item
+								>
+								<el-dropdown-item
+									@click.native="open_setting(scope.row)"
+									>设置</el-dropdown-item
+								>
+							</el-dropdown-menu>
+						</el-dropdown>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -145,6 +152,13 @@
 				</div>
 				<el-form-item label="图片">
 					<el-input v-model="page.image"></el-input>
+				</el-form-item>
+				<el-form-item label="状态">
+					<el-select v-model="page.status">
+						<el-option label="发布" :value="1"></el-option>
+						<el-option label="草稿" :value="0"></el-option>
+						<el-option label="回收站" :value="-1"></el-option>
+					</el-select>
 				</el-form-item>
 				<el-form-item label="文章描述">
 					<el-input

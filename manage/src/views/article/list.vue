@@ -42,7 +42,9 @@
 					<template slot-scope="scope">
 						<i class="el-icon-top" v-if="scope.row.is_top"></i>
 						<el-link
-							:href="website + '/article/' + scope.row.id + '.html'"
+							:href="
+								website + '/article/' + scope.row.id + '.html'
+							"
 							target="_blank"
 							>{{ scope.row.title }}</el-link
 						>
@@ -82,35 +84,42 @@
 						<el-button type="text" @click="update(scope.row.id)"
 							>编辑</el-button
 						>
-						<el-button
-							type="text"
-							@click="recovery(scope.row.id)"
-							v-if="
-								scope.row.status === 1 || scope.row.status === 0
-							"
-							>回收站</el-button
-						>
-						<el-button
-							type="text"
-							@click="draft(scope.row.id)"
-							v-if="
-								scope.row.status === 1 ||
-								scope.row.status === -1
-							"
-							>草稿</el-button
-						>
-						<el-button
-							type="text"
-							@click="publish(scope.row.id)"
-							v-if="
-								scope.row.status === -1 ||
-								scope.row.status === 0
-							"
-							>发布</el-button
-						>
-						<el-button type="text" @click="open_setting(scope.row)"
-							>设置</el-button
-						>
+						<el-dropdown>
+							<el-button style="margin-left: 10px" type="text"
+								>设置</el-button
+							>
+							<el-dropdown-menu slot="dropdown">
+								<el-dropdown-item
+									@click.native="recovery(scope.row.id)"
+									v-if="
+										scope.row.status === 1 ||
+										scope.row.status === 0
+									"
+									style="color: #f56c6c"
+									>移到回收站</el-dropdown-item
+								>
+								<el-dropdown-item
+									@click.native="draft(scope.row.id)"
+									v-if="
+										scope.row.status === 1 ||
+										scope.row.status === -1
+									"
+									>转为草稿</el-dropdown-item
+								>
+								<el-dropdown-item
+									@click.native="publish(scope.row.id)"
+									v-if="
+										scope.row.status === -1 ||
+										scope.row.status === 0
+									"
+									>发布</el-dropdown-item
+								>
+								<el-dropdown-item
+									@click.native="open_setting(scope.row)"
+									>设置</el-dropdown-item
+								>
+							</el-dropdown-menu>
+						</el-dropdown>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -190,6 +199,13 @@
 				</el-form-item>
 				<el-form-item label="是否置顶">
 					<el-switch v-model="article.is_top"></el-switch>
+				</el-form-item>
+				<el-form-item label="状态">
+					<el-select v-model="article.status">
+						<el-option label="发布" :value="1"></el-option>
+						<el-option label="草稿" :value="0"></el-option>
+						<el-option label="回收站" :value="-1"></el-option>
+					</el-select>
 				</el-form-item>
 				<el-form-item label="文章描述">
 					<el-input
@@ -273,7 +289,7 @@ export default {
 				(res) => {
 					if (res.code === 200) {
 						this.articles = res.data.records;
-                        this.total = res.data.total;
+						this.total = res.data.total;
 					} else {
 						this.$message({
 							message: "获取文章失败",
@@ -379,7 +395,7 @@ export default {
 					this.$message.success("修改文章成功");
 					this.publish_dialog = false;
 					this.search();
-                    this.setting_dialog = false;
+					this.setting_dialog = false;
 				},
 				(e) => {
 					console.error(e);
@@ -405,7 +421,7 @@ export default {
 			this.tag_input = false;
 			this.tag_value = "";
 		},
-        to_page(page_num) {
+		to_page(page_num) {
 			this.page_num = page_num;
 			this.search();
 		},
