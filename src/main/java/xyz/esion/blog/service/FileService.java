@@ -1,6 +1,7 @@
 package xyz.esion.blog.service;
 
 import org.springframework.web.multipart.MultipartFile;
+import xyz.esion.blog.param.FileParam;
 import xyz.esion.blog.view.file.FileListView;
 
 import javax.servlet.http.HttpServletResponse;
@@ -49,6 +50,13 @@ public interface FileService {
     void upload(String path, MultipartFile multipartFile) throws IOException;
 
     /**
+     * 新建文件夹
+     *
+     * @param param 参数
+     */
+    void mkdir(FileParam param);
+
+    /**
      * 文件/文件夹删除
      *
      * @param path 文件/文件夹
@@ -61,6 +69,7 @@ public interface FileService {
      * @param path 目录
      * @param command 命令
      * @return 结果
+     * @throws IOException IO异常
      */
     List<String> execCommandByPath(String path, String command) throws IOException;
 

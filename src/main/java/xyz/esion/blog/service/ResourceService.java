@@ -17,6 +17,7 @@ public interface ResourceService {
      * 在指定路径下获取资源
      *
      * @param path 资源路径
+     * @param response 响应体
      * @throws IOException IO异常
      */
     void download(String path, HttpServletResponse response) throws IOException;

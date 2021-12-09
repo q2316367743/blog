@@ -14,6 +14,11 @@ import java.io.File;
 public class PathConstant {
 
     /**
+     * 网络分隔符
+     */
+    public static final String WEB_SEPARATOR = "/";
+
+    /**
      * 项目主要目录
      */
     public static final String HOME_PATH = SystemUtil.getUserInfo().getHomeDir() + File.separator + ".blog";

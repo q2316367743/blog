@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import xyz.esion.blog.constant.PathConstant;
 import xyz.esion.blog.domain.Config;
+import xyz.esion.blog.param.FileParam;
 import xyz.esion.blog.service.ConfigService;
 import xyz.esion.blog.service.FileService;
 import xyz.esion.blog.view.file.FileListView;
@@ -58,10 +59,18 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public String link(String path) {
+        // 只有文件可以分享
+        if (!FileUtil.isFile(path)) {
+            throw new IllegalArgumentException("只有文件才可以分享");
+        }
         Config config = configService.info();
         if (path.startsWith(PathConstant.RESOURCE_PATH)) {
             // 资源路径下，问项目路径+resource+路径
-            return config.getHref() + "/resource" + path.substring(PathConstant.RESOURCE_PATH.length()).replace("\\", "/");
+            String url = path.substring(PathConstant.RESOURCE_PATH.length());
+            if (!PathConstant.WEB_SEPARATOR.equals(File.separator)) {
+                url = url.replace(File.separator, "/");
+            }
+            return config.getHref() + "/resource" + url;
         } else {
             return "";
         }
@@ -100,13 +109,30 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public void remove(String path) {
+    public void mkdir(FileParam param) {
+        if (StrUtil.isBlank(param.getName())) {
+            throw new IllegalArgumentException("目录不能为空");
+        }
+        if (StrUtil.isBlank(param.getPath())) {
+            throw new IllegalArgumentException("文件夹名称不能为空");
+        }
+        if (!new File(param.getPath(), param.getName()).mkdir()) {
+            throw new IllegalArgumentException("文件夹创建失败");
+        }
+    }
 
+    @Override
+    public void remove(String path) {
+        File file = new File(path);
+        if (!file.exists()) {
+            throw new IllegalArgumentException("文件/夹不存在");
+        }
+        FileUtil.del(file);
     }
 
     @Override
     public List<String> execCommandByPath(String path, String command) throws IOException {
-        return RuntimeUtil.getResultLines(new ProcessBuilder(command).redirectErrorStream(true).directory(new File(path)).start());
+        return RuntimeUtil.getResultLines(new ProcessBuilder(StrUtil.splitToArray(command, StrUtil.C_SPACE)).redirectErrorStream(true).directory(new File(path)).start());
     }
 
 }

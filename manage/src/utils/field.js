@@ -21,3 +21,29 @@ export function format(data, level) {
         }
     }
 }
+
+export function split_path(path) {
+    let parts = [];
+    let items = path.split('/');
+    for (let item of items) {
+        if (item !== '') {
+            parts.push(item);
+        }
+    }
+    return parts;
+}
+
+export function get_upper_path(path) {
+    if (path == '/') {
+        return '/';
+    }
+    let parts = split_path(path);
+    if (parts.length === 1) {
+        return '/';
+    }
+    let result = '';
+    for (let i = 0; i < parts.length - 1; i++) {
+        result = result + '/' + parts[i];
+    }
+    return result;
+}

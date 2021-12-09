@@ -44,7 +44,10 @@ public class ResourceServiceImpl implements ResourceService {
             // 如果没有内容则为时间戳
             name = System.currentTimeMillis() + "";
         }
-        File file = new File(PathConstant.RESOURCE_PATH, path);
+        File file = new File(path);
+        if (!file.isDirectory()) {
+            throw new IllegalArgumentException("路径不是文件夹");
+        }
         if (!file.exists()) {
             if (!file.mkdirs()) {
                 file = new File(PathConstant.RESOURCE_PATH);
