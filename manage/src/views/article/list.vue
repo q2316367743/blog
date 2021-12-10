@@ -239,7 +239,7 @@ export default {
 			total: 1,
 			condition: {
 				title: "",
-				status: "",
+				status: 1,
 				is_delete: false,
 				is_release: true,
 			},

@@ -44,6 +44,7 @@
 				ref="editor"
 				:type="page.type"
 				:original_content="page.original_content"
+				path="/page"
 			></editor>
 		</div>
 		<el-drawer

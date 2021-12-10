@@ -45,13 +45,13 @@ public class ResourceServiceImpl implements ResourceService {
             name = System.currentTimeMillis() + "";
         }
         File file = new File(path);
-        if (!file.isDirectory()) {
-            throw new IllegalArgumentException("路径不是文件夹");
-        }
         if (!file.exists()) {
             if (!file.mkdirs()) {
                 file = new File(PathConstant.RESOURCE_PATH);
             }
+        }
+        if (!file.isDirectory()) {
+            throw new IllegalArgumentException("路径不是文件夹");
         }
         FileUtil.writeBytes(IoUtil.readBytes(multipartFile.getInputStream()), new File(file, name));
         return name;

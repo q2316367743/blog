@@ -524,7 +524,7 @@
     animate();
 
     function to(path) {
-        window.location.href = '${config.href}' + path
+        window.location.href = '/'
     }
 </script>
 

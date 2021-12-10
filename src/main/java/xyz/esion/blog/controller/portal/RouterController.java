@@ -3,16 +3,21 @@ package xyz.esion.blog.controller.portal;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import xyz.esion.blog.domain.Author;
+import xyz.esion.blog.domain.Config;
+import xyz.esion.blog.domain.RssItem;
 import xyz.esion.blog.entity.Article;
 import xyz.esion.blog.entity.*;
 import xyz.esion.blog.enumeration.*;
@@ -223,9 +228,45 @@ public class RouterController {
         return "about";
     }
 
-    @GetMapping("*")
-    public String to404() {
-        return "error/404";
+    @GetMapping("favicon.ico")
+    public String icon() {
+        // 图标重定向
+        return "redirect:" + configService.info().getFavicon();
+    }
+
+    @GetMapping("rss.xml")
+    public ResponseEntity<String> rss() {
+        Author author = authorService.info();
+        Config config = configService.info();
+        List<Article> articles = articleService.list(new QueryWrapper<Article>()
+                .eq("status", 1)
+                .orderByDesc("create_time")
+                .last("limit 10"));
+        List<RssItem> items = new LinkedList<>();
+        for (Article article : articles) {
+            RssItem item = new RssItem();
+            item.setTitle(article.getTitle());
+            item.setDescription(article.getDescription());
+            item.setAuthor(author.getName());
+            item.setPubDate(DateUtil.format(article.getCreateTime(), "yyyy-MM-dd HH:mm:ss"));
+            String link = config.getHref() + "/article/" + article.getId() + ".html";
+            item.setLink(link);
+            item.setGuid(link);
+            items.add(item);
+        }
+        String itemStr = JSONUtil.toXmlStr(new JSONObject().set("item", items));
+        String prefix = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  \n" +
+                "<rss version=\"2.0\">  \n" +
+                "  <channel>\n" +
+                "    <title>" + config.getIndex().getTitle() + "</title>\n" +
+                "    <link>" + config.getHref() + "</link>\n" +
+                "    <description>" + config.getIndex().getDescription() + "</description>\n" +
+                "    <language>zh-CN</language>\n";
+        String suffix = "</channel>\n" +
+                "</rss> ";
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_RSS_XML)
+                .body(prefix + itemStr + suffix);
     }
 
     private PageView<ArticleCategoryListView> buildArticleView(Page<Article> articlePage) {

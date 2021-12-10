@@ -15,8 +15,33 @@
                     <label data-error="x" data-success="v"
                            for="local-search-input">关键词</label>
                 </div>
-                <div class="list-group" id="local-search-result"></div>
+                <div class="list-group" id="local-search-result">
+                </div>
             </div>
         </div>
     </div>
+    <script type="application/javascript">
+        $('#local-search-input').on('keyup', function (e) {
+            search(e.target.value)
+        })
+
+        function search(keyword) {
+            // 1. 搜索
+            $.getJSON('${config.href}/api/article', {
+                title: keyword
+            }, function (res) {
+                let content = $('#local-search-result');
+                // 2. 删除之前的
+                content.html('');
+                // 3. 遍历渲染
+                let views = [];
+                for (let article of res.data.records) {
+                    views.push('<a href="${config.href}/article/' + article.id + '.html" ' +
+                        'class="list-group-item list-group-item-action font-weight-bolder search-list-title">' + article.title + '</a>' +
+                        '<p class="search-list-content" id="search-list-content">' + article.description + '</p>')
+                }
+                content.html(views.join('\n'));
+            })
+        }
+    </script>
 </div>

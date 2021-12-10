@@ -77,7 +77,7 @@
                     </el-option>
                 </el-select>
             </div>
-            <editor ref="editor" :type="author.type" :original_content="author.original_content"></editor>
+            <editor ref="editor" :type="author.type" :original_content="author.original_content" path="/image"></editor>
         </div>
     </div>
 </template>

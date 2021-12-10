@@ -95,7 +95,6 @@ public class ApiController {
                     true,
                     ArrayUtil.toArray(condition.getOrderBy(), String.class));
         }
-        queryWrapper.eq("status", 1);
         return Result.success(articleService.page(pageParam,queryWrapper));
     }
 

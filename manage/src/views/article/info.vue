@@ -44,6 +44,7 @@
 				ref="editor"
 				:type="article.type"
 				:original_content="article.original_content"
+				path="/article"
 			></editor>
 		</div>
 		<el-drawer
@@ -332,5 +333,6 @@ export default {
 	left: 20px;
 	bottom: 20px;
 	right: 20px;
+	overflow: auto;
 }
 </style>
