@@ -68,7 +68,7 @@ create table comment
     website         varchar(64)         default ''                    not null comment '个人网站',
     nickname        varchar(32)         default ''                    not null comment '昵称',
     create_time     datetime            default '1998-08-06 00:00:00' not null comment '创建时间',
-    status          tinyint(1) unsigned default 1                     not null comment '是否展示，0：未审查，1：通过，2：不通过',
+    status          tinyint(1) unsigned default 1                     not null comment '是否展示',
     browser         varchar(64)         default ''                    not null comment '浏览器版本',
     system_version  varchar(64)         default ''                    not null comment '系统',
     type            tinyint unsigned    default 1                     not null comment '评论类型；1：访客',
@@ -146,21 +146,21 @@ insert into dict value (2, 1, '2', 'es-client', '2021-12-04', '2021-12-04', 0);
 insert into menu
     value (1, 'iconfont icon-home-fill', '首页', 0, '/', 0, 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
 insert into menu
-    value (2, 'iconfont icon-archive-fill', '归档', 0, 0, '/archive.html', 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00',
+    value (2, 'iconfont icon-archive-fill', '归档', 0, '/archive.html', 0, 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00',
            0);
 insert into menu
-    value (3, 'iconfont icon-category-fill', '分类', 0, 0, '/category.html', 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00',
+    value (3, 'iconfont icon-category-fill', '分类', 0, '/category.html', 0, 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00',
            0);
 insert into menu
-    value (4, 'iconfont icon-user-fill', '关于', 0, 0, '/about.html', 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
+    value (4, 'iconfont icon-user-fill', '关于', 0, '/about.html', 0, 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
 insert into menu
-    value (5, 'iconfont icon-link-fill', '连接', 0, 0, '/', 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
+    value (5, 'iconfont icon-link-fill', '连接', 0, '/', 0, 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
 insert into menu
     value (6, '', '友链', 0, '/page/link.html', 5, 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
 insert into menu
     value (7, '', '我的页面', 0, '/page/1.html', 5, 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
 insert into menu
-    value (8, 'iconfont icon-books', '文档', 0, 0, '/', 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
+    value (8, 'iconfont icon-books', '文档', 0, '/', 0, 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
 insert into menu
     value (9, '', '安装主题', 1, 'https://hexo.fluid-dev.com/docs/start/', 8, 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00',
            0);
