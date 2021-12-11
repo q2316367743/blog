@@ -23,13 +23,13 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     property-naming-strategy: CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES
   freemarker:
-    template-loader-path: file://${user.home}/.blog/templates/
+    template-loader-path: file:///${user.home}/.blog/templates/
     suffix: .ftl
     cache: true
     check-template-location: false
   resources:
     static-locations:
-      - file://${user.home}/.blog/static/
+      - file:///${user.home}/.blog/static/
       - classpath:/static/
 
 mybatis-plus:
