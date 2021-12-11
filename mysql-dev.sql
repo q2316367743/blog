@@ -3,7 +3,7 @@
 
 create table category
 (
-    id          int unsigned primary key comment '分类ID',
+    id          int unsigned auto_increment primary key comment '分类ID',
     name        varchar(32)  default ''                    not null comment '分类标题',
     p_id        int unsigned default 0                     not null comment '父级分类',
     create_time datetime     default '1998-08-06 00:00:00' not null comment '创建时间',
