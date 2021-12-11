@@ -48,7 +48,7 @@
     <div class="container nopadding-x-md">
         <div class="py-5" id="board">
             <div class="about-avatar">
-                <img src="https://static.zkqiang.cn/images/20190726002726.JPG-slim"
+                <img src="${author.avatar}"
                      class="img-fluid" alt="avatar">
             </div>
             <div class="container">
