@@ -10,6 +10,7 @@ import java.io.IOException;
  *
  * @author Esion
  * @since 2021/11/29
+ * @deprecated {@link FileService}
  */
 public interface ResourceService {
 

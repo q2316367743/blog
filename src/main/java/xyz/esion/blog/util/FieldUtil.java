@@ -1,6 +1,9 @@
 package xyz.esion.blog.util;
 
 import cn.hutool.core.util.StrUtil;
+import xyz.esion.blog.constant.PathConstant;
+
+import java.io.File;
 
 /**
  * @author Esion
@@ -22,6 +25,22 @@ public class FieldUtil {
         } else {
             return website + FAVICON;
         }
+    }
+
+    /**
+     * 美化结果路径
+     * <li>分隔符转换</li>
+     * <li>路径抹除</li>
+     *
+     * @param path 需要美化的路径
+     * @param prefix 需要删除的前缀
+     * @return 路径
+     */
+    public static String buildResultPath(String path, String prefix) {
+        if (path.length() > prefix.length()) {
+            return path.substring(prefix.length()).replace(File.separator, PathConstant.WEB_SEPARATOR);
+        }
+        return path;
     }
 
 }

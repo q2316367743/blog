@@ -3,6 +3,7 @@ package xyz.esion.blog.service.impl;
 import cn.hutool.core.io.FileTypeUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.RuntimeUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;
@@ -14,14 +15,18 @@ import xyz.esion.blog.domain.Config;
 import xyz.esion.blog.param.FileParam;
 import xyz.esion.blog.service.ConfigService;
 import xyz.esion.blog.service.FileService;
+import xyz.esion.blog.util.FieldUtil;
 import xyz.esion.blog.view.file.FileListView;
+import xyz.esion.blog.view.file.FileTreeView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Esion
@@ -58,6 +63,41 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
+    public FileTreeView tree(String path, String prefix) {
+        File file = new File(path);
+        if (!file.exists()) {
+            throw new IllegalArgumentException("路径不存在");
+        }
+        if (!file.isDirectory()) {
+            throw new IllegalArgumentException("路径不是文件夹");
+        }
+        FileTreeView view = new FileTreeView();
+        view.setChildren(new LinkedList<>());
+        view.setName(file.getName());
+        view.setPath(file.getAbsolutePath());
+        view.setIsDirectory(file.isDirectory());
+        treeLoop(view.getPath(), view, prefix);
+        return view;
+    }
+
+    private void treeLoop(String path, FileTreeView view, String prefix) {
+        File file = new File(path);
+        if (file.isDirectory()) {
+            for (File listFile : Objects.requireNonNull(file.listFiles())) {
+                FileTreeView item = new FileTreeView();
+                item.setName(listFile.getName());
+                item.setPath(FieldUtil.buildResultPath(listFile.getAbsolutePath(), prefix));
+                item.setIsDirectory(listFile.isDirectory());
+                view.getChildren().add(item);
+                if (listFile.isDirectory()) {
+                    item.setChildren(new LinkedList<>());
+                    treeLoop(listFile.getAbsolutePath(), item, prefix);
+                }
+            }
+        }
+    }
+
+    @Override
     public String link(String path) {
         // 只有文件可以分享
         if (!FileUtil.isFile(path)) {
@@ -91,6 +131,30 @@ public class FileServiceImpl implements FileService {
         String fileName = URLEncoder.encode(file.getName(), "UTF-8").replaceAll("\\+", "%20");
         response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName);
         IoUtil.write(response.getOutputStream(), true, FileUtil.readBytes(file));
+    }
+
+    @Override
+    public String cat(String path, String charset) {
+        File file = new File(path);
+        if (!file.exists()) {
+            throw new IllegalArgumentException("路径不存在，可能已被删除");
+        }
+        if (!file.isFile()) {
+            throw new IllegalArgumentException("路径不是文件");
+        }
+        return FileUtil.readString(file, CharsetUtil.charset(charset));
+    }
+
+    @Override
+    public void write(String path, String content) {
+        File file = new File(path);
+        if (!file.exists()) {
+            throw new IllegalArgumentException("路径不存在，可能已被删除");
+        }
+        if (!file.isFile()) {
+            throw new IllegalArgumentException("路径不是文件");
+        }
+        FileUtil.writeString(content, file, StandardCharsets.UTF_8);
     }
 
     @Override

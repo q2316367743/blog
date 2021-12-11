@@ -6,8 +6,13 @@ import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import xyz.esion.blog.domain.RssItem;
+import xyz.esion.blog.util.FieldUtil;
+import xyz.esion.blog.view.file.FileTreeView;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.Objects;
 
 /**
  * @author Esion
@@ -15,7 +20,34 @@ import java.io.IOException;
  */
 public class BaseTest {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
+        FileTreeView view = new FileTreeView();
+        view.setChildren(new LinkedList<>());
+        view.setName("templates");
+        view.setPath("C:\\Users\\Esion\\.blog\\templates");
+        view.setIsDirectory(true);
+        treeLoop(view.getPath(), view, "C:\\Users\\Esion\\.blog");
+        System.out.println(JSONUtil.parseObj(view).toJSONString(4));
+    }
+
+    public static void treeLoop(String path, FileTreeView view, String prefix) {
+        File file = new File(path);
+        if (file.isDirectory()) {
+            for (File listFile : Objects.requireNonNull(file.listFiles())) {
+                FileTreeView item = new FileTreeView();
+                item.setName(listFile.getName());
+                item.setPath(FieldUtil.buildResultPath(listFile.getAbsolutePath(), prefix));
+                item.setIsDirectory(listFile.isDirectory());
+                view.getChildren().add(item);
+                if (listFile.isDirectory()) {
+                    item.setChildren(new LinkedList<>());
+                    treeLoop(listFile.getAbsolutePath(), item, prefix);
+                }
+            }
+        }
+    }
+
+    public static void rss() throws IOException {
         RssItem item = new RssItem();
         item.setTitle("标题");
         item.setDescription("描述");

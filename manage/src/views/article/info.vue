@@ -239,6 +239,10 @@ export default {
 				this.$refs.editor.get_original_content();
 			let temp_len = this.category_ids.length;
 			this.article.category_id = this.category_ids[temp_len - 1];
+			if (this.article.image === "") {
+				this.article.image =
+					"https://pc-index-skin.cdn.bcebos.com/hiphoto/66225335900.jpg?x-bce-process=image/crop,x_144,y_30,w_1680,h_1050";
+			}
 			if (this.is_save) {
 				article_api.save(
 					this.article,

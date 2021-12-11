@@ -136,61 +136,82 @@ export const constantRoutes = [{
     },
 
     {
-        path: '/attachment',
-        component: Layout,
-        redirect: '/attachment/resource',
-        name: 'attachment',
-        meta: { title: '资源管理', icon: 'el-icon-reading' },
-        children: [{
-            path: 'resource',
-            name: 'resource',
-            component: () =>
-                import ('@/views/attachment/resource'),
-            meta: { title: '附件管理', icon: 'el-icon-folder-opened' }
-        }, {
-            path: 'file',
-            name: 'file',
-            component: () =>
-                import ('@/views/attachment/file'),
-            meta: { title: '文件管理', icon: 'el-icon-folder-opened' }
-        }]
-    },
-
-    {
         path: '/news',
         component: Layout,
         redirect: '/news/comment',
         name: 'news',
-        meta: { title: '消息管理', icon: 'el-icon-reading' },
+        meta: { title: '消息管理', icon: 'el-icon-chat-square' },
         children: [{
                 path: 'comment',
                 name: 'comment',
                 component: () =>
                     import ('@/views/news/comment'),
-                meta: { title: '评论管理', icon: 'el-icon-chat-line-square' },
+                meta: { title: '评论管理', icon: 'el-icon-chat-line-round' },
             },
             {
                 path: 'link',
                 name: 'link',
                 component: () =>
                     import ('@/views/news/link'),
-                meta: { title: '友链管理', icon: 'el-icon-chat-line-square' },
+                meta: { title: '友链管理', icon: 'el-icon-connection' },
             },
             {
                 path: 'message',
                 name: 'message',
                 component: () =>
                     import ('@/views/news/message'),
-                meta: { title: '意见反馈', icon: 'el-icon-chat-line-square' },
+                meta: { title: '意见反馈', icon: 'el-icon-chat-round' },
             },
             {
                 path: 'notice',
                 name: 'notice',
                 component: () =>
                     import ('@/views/news/notice'),
-                meta: { title: '通知管理', icon: 'el-icon-chat-line-square' },
+                meta: { title: '通知管理', icon: 'el-icon-message' },
             }
         ]
+    },
+
+    {
+        path: '/attachment',
+        component: Layout,
+        redirect: '/attachment/resource',
+        name: 'attachment',
+        meta: { title: '资源管理', icon: 'el-icon-folder-opened' },
+        children: [{
+            path: 'resource',
+            name: 'resource',
+            component: () =>
+                import ('@/views/attachment/resource'),
+            meta: { title: '附件管理', icon: 'el-icon-notebook-2' }
+        }, {
+            path: 'file',
+            name: 'file',
+            component: () =>
+                import ('@/views/attachment/file'),
+            meta: { title: '文件管理', icon: 'el-icon-folder' }
+        }]
+    },
+
+    {
+        path: '/theme',
+        component: Layout,
+        redirect: '/theme/list',
+        name: 'theme',
+        meta: { title: '外观', icon: 'el-icon-view' },
+        children: [{
+            path: 'list',
+            name: 'list',
+            component: () =>
+                import ('@/views/theme/list'),
+            meta: { title: '主题管理', icon: 'el-icon-set-up' }
+        }, {
+            path: 'editor',
+            name: 'editor',
+            component: () =>
+                import ('@/views/theme/edit'),
+            meta: { title: '主题编辑', icon: 'el-icon-edit' }
+        }]
     },
 
     {

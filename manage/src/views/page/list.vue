@@ -144,7 +144,7 @@
 						<el-image :src="page.image">
 							<div slot="error" class="image-slot">
 								<el-image
-									src="https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg"
+									src="https://pc-index-skin.cdn.bcebos.com/hiphoto/66225335900.jpg?x-bce-process=image/crop,x_144,y_30,w_1680,h_1050"
 								></el-image>
 							</div>
 						</el-image>
@@ -309,6 +309,10 @@ export default {
 			this.page = record;
 		},
 		submit() {
+			if (this.page.image === "") {
+				this.page.image =
+					"https://pc-index-skin.cdn.bcebos.com/hiphoto/66225335900.jpg?x-bce-process=image/crop,x_144,y_30,w_1680,h_1050";
+			}
 			page_api.update(
 				this.page.id,
 				this.page,

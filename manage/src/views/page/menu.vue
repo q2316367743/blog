@@ -1,11 +1,13 @@
 <template>
 	<div class="container">
 		<div class="menu-tree">
+			<el-button type="primary" size="small" @click="open_save(null)">新增根目录</el-button>
 			<el-tree
 				:data="menus"
 				:props="props"
 				@node-click="node_click"
 				v-loading="menu_load"
+				style="margin-top: 20px;"
 			>
 				<div class="menu-tree-item" slot-scope="{ node, data }">
 					<div>{{ node.label }}</div>

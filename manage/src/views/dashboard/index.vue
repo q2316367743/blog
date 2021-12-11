@@ -202,10 +202,9 @@ export default {
 		member_value() {
 			return parseFloat(
 				(
-					100 -
 					(this.dynamic.memory.available /
 						this.dynamic.memory.total) *
-						100
+					100
 				).toFixed(2)
 			);
 		},
