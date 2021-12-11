@@ -29,7 +29,7 @@ spring:
     check-template-location: false
   resources:
     static-locations:
-      - ${user.home}/.blog/static/
+      - file://${user.home}/.blog/static/
       - classpath:/static/
 
 mybatis-plus:
