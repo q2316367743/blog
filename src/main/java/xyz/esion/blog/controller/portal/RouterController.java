@@ -5,6 +5,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -229,9 +230,11 @@ public class RouterController {
     }
 
     @GetMapping("favicon.ico")
-    public String icon() {
+    public ResponseEntity<byte[]> icon() {
         // 图标重定向
-        return "redirect:" + configService.info().getFavicon();
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_JPEG)
+                .body(HttpUtil.downloadBytes(configService.info().getFavicon()));
     }
 
     @GetMapping("rss.xml")
