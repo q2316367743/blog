@@ -81,7 +81,7 @@ public class Author implements Serializable {
          */
         private String icon;
         /**
-         * 连接
+         * 链接
          */
         private String href;
         /**

@@ -63,8 +63,12 @@ export default {
 		}
 		let article_info_body = document.querySelector(".article-info-body");
 		if (article_info_body) {
-			height = article_info_body.offsetHeight - 20;
+			height = article_info_body.offsetHeight - 42;
 			this.$refs.editor.style.marginTop = "20px";
+		}
+		let author_content = document.querySelector(".author-content");
+		if (author_content) {
+			height = author_content.offsetHeight - 42;
 		}
 		this.$refs.editor.style.height = height + "px";
 		let vditor_option = {
@@ -102,8 +106,8 @@ export default {
 		});
 		// wangEditor配置
 		this.editor = new Editor("#editor");
-		this.editor.config.height = height;
-        // 配置上传图片
+		this.editor.config.height = height - 60;
+		// 配置上传图片
 		this.editor.config.uploadImgServer = upload_url;
 		this.editor.config.uploadImgMaxLength = 1;
 		this.editor.config.uploadImgParams = {
@@ -118,11 +122,11 @@ export default {
 				insertImgFn(result.data);
 			},
 		};
-        // 配置上传视频
+		// 配置上传视频
 		this.editor.config.uploadVideoServer = upload_url;
 		this.editor.config.uploadVideoMaxLength = 1;
 		this.editor.config.uploadVideoParams = {
-			path: '/video',
+			path: "/video",
 		};
 		this.editor.config.uploadVideoName = "file";
 		this.editor.config.uploadVideoHeaders = {
@@ -133,15 +137,19 @@ export default {
 				insertVideoFn(result.data);
 			},
 		};
-        // 创建
+		// 创建
 		this.editor.create();
 		this.editor.txt.html(editor_content);
 	},
 	watch: {
 		original_content(new_value, old_value) {
 			this.content = new_value;
-			this.editor.txt.html(new_value);
-			this.vditor.setValue(new_value);
+			if (this.editor) {
+				this.editor.txt.html(new_value);
+			}
+			if (this.vditor) {
+				this.vditor.setValue(new_value);
+			}
 		},
 	},
 	methods: {

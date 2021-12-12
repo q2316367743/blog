@@ -137,19 +137,32 @@ create table dict
 
 create unique index idx_type_key on dict (type, item_key);
 
+create table admin
+(
+    id int unsigned auto_increment primary key comment 'ID',
+    username varchar(32) default '' not null comment '用户名',
+    password varchar(64) default '' not null comment '密码'
+) comment '管理员';
+
+create unique index idx_admin_username on admin(username);
+
 # 默认字典数据
 insert into dict value (1, 1, '1', '博客', '2021-12-04', '2021-12-04', 0);
 insert into dict value (2, 1, '2', 'es-client', '2021-12-04', '2021-12-04', 0);
+
+insert into admin(username, password) value ('admin', '96e79218965eb72c92a549dd5a330112');
 
 # 测试数据
 
 insert into menu
     value (1, 'iconfont icon-home-fill', '首页', 0, '/', 0, 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
 insert into menu
-    value (2, 'iconfont icon-archive-fill', '归档', 0, '/archive.html', 0, 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00',
+    value (2, 'iconfont icon-archive-fill', '归档', 0, '/archive.html', 0, 0, '2021-11-17 00:00:00',
+           '2021-11-17 00:00:00',
            0);
 insert into menu
-    value (3, 'iconfont icon-category-fill', '分类', 0, '/category.html', 0, 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00',
+    value (3, 'iconfont icon-category-fill', '分类', 0, '/category.html', 0, 0, '2021-11-17 00:00:00',
+           '2021-11-17 00:00:00',
            0);
 insert into menu
     value (4, 'iconfont icon-user-fill', '关于', 0, '/about.html', 0, 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
@@ -162,13 +175,16 @@ insert into menu
 insert into menu
     value (8, 'iconfont icon-books', '文档', 0, '/', 0, 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00', 0);
 insert into menu
-    value (9, '', '安装主题', 1, 'https://hexo.fluid-dev.com/docs/start/', 8, 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00',
+    value (9, '', '安装主题', 1, 'https://hexo.fluid-dev.com/docs/start/', 8, 0, '2021-11-17 00:00:00',
+           '2021-11-17 00:00:00',
            0);
 insert into menu
-    value (10, '', '配置指南', 1, 'https://hexo.fluid-dev.com/docs/guide/', 8, 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00',
+    value (10, '', '配置指南', 1, 'https://hexo.fluid-dev.com/docs/guide/', 8, 0, '2021-11-17 00:00:00',
+           '2021-11-17 00:00:00',
            0);
 insert into menu
-    value (11, '', '图标用法', 1, 'https://hexo.fluid-dev.com/docs/icon/', 8, 0, '2021-11-17 00:00:00', '2021-11-17 00:00:00',
+    value (11, '', '图标用法', 1, 'https://hexo.fluid-dev.com/docs/icon/', 8, 0, '2021-11-17 00:00:00',
+           '2021-11-17 00:00:00',
            0);
 
 insert into category(id, name) value (1, '个人杂谈');

@@ -11,6 +11,10 @@ import xyz.esion.blog.view.file.FileTreeView;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.LinkedList;
 import java.util.Objects;
 
@@ -20,7 +24,14 @@ import java.util.Objects;
  */
 public class BaseTest {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnsupportedEncodingException {
+        String s = "你好";
+        String encode = URLEncoder.encode(s, "UTF-8");
+        System.out.println(s);
+        System.out.println(encode);
+    }
+
+    public static void tree() {
         FileTreeView view = new FileTreeView();
         view.setChildren(new LinkedList<>());
         view.setName("templates");

@@ -23,3 +23,19 @@ export function logout() {
         method: 'GET'
     })
 }
+
+export function update(admin, success, error) {
+    request({
+        url: 'admin/update',
+        method: 'PUT',
+        data: admin
+    }).then((res) => {
+        success(res);
+    }).catch((e) => {
+        if (error) {
+            error(e);
+        } else {
+            console.error(e);
+        }
+    })
+}

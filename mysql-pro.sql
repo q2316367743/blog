@@ -137,6 +137,17 @@ create table dict
 
 create unique index idx_type_key on dict (type, item_key);
 
+create table admin
+(
+    id int unsigned auto_increment primary key comment 'ID',
+    username varchar(32) default '' not null comment '用户名',
+    password varchar(64) default '' not null comment '密码'
+) comment '管理员';
+
+create unique index idx_admin_username on admin(username);
+
+insert into admin(username, password) value ('admin', '96e79218965eb72c92a549dd5a330112');
+
 # 默认字典数据
 insert into dict value (1, 1, '1', '博客', '2021-12-04', '2021-12-04', 0);
 insert into dict value (2, 1, '2', 'es-client', '2021-12-04', '2021-12-04', 0);
