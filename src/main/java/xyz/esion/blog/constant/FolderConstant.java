@@ -6,6 +6,8 @@ package xyz.esion.blog.constant;
  */
 public class FolderConstant {
 
+    public static final String THEME_FOLDER = "theme";
+
     /**
      * 自定义主题路径
      */
@@ -24,7 +26,7 @@ public class FolderConstant {
     /**
      * 主题路径
      */
-    public static final String THEME_FOLDER = "themes";
+    public static final String THEMES_FOLDER = "themes";
 
     /**
      * 资源路径

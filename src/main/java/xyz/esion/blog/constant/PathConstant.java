@@ -23,15 +23,17 @@ public class PathConstant {
      */
     public static final String HOME_PATH = SystemUtil.getUserInfo().getHomeDir() + File.separator + ".blog";
 
+    public static final String THEME_PATH = HOME_PATH + File.separator + FolderConstant.THEME_FOLDER;
+
     /**
      * 自定义主题路径
      */
-    public static final String TEMPLATES_PATH = HOME_PATH + File.separator + FolderConstant.TEMPLATES_FOLDER;
+    public static final String TEMPLATES_PATH = THEME_PATH + File.separator + FolderConstant.TEMPLATES_FOLDER;
 
     /**
      * 静态文件路径
      */
-    public static final String STATIC_PATH = HOME_PATH + File.separator + FolderConstant.STATIC_FOLDER;
+    public static final String STATIC_PATH = THEME_PATH + File.separator + FolderConstant.STATIC_FOLDER;
 
     /**
      * 备份目录
@@ -41,7 +43,7 @@ public class PathConstant {
     /**
      * 主题路径
      */
-    public static final String THEME_PATH = HOME_PATH + File.separator + FolderConstant.THEME_FOLDER;
+    public static final String THEMES_PATH = HOME_PATH + File.separator + FolderConstant.THEMES_FOLDER;
 
     /**
      * 资源路径

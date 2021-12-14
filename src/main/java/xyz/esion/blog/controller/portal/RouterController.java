@@ -11,6 +11,7 @@ import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -40,6 +41,7 @@ import java.util.stream.Collectors;
 @Controller("portalRouter")
 @RequestMapping
 @RequiredArgsConstructor
+@Slf4j
 public class RouterController {
 
     private final ArticleService articleService;
@@ -217,10 +219,7 @@ public class RouterController {
     }
 
     @GetMapping("message.html")
-    public String message(
-            Model model,
-            @NameConvertModel PageParam pageParam
-    ) {
+    public String message() {
         return "message";
     }
 
@@ -232,9 +231,15 @@ public class RouterController {
     @GetMapping("favicon.ico")
     public ResponseEntity<byte[]> icon() {
         // 图标重定向
-        return ResponseEntity.ok()
-                .contentType(MediaType.IMAGE_JPEG)
-                .body(HttpUtil.downloadBytes(configService.info().getFavicon()));
+        try {
+            return ResponseEntity.ok()
+                    .contentType(MediaType.IMAGE_JPEG)
+                    .body(HttpUtil.downloadBytes(configService.info().getFavicon()));
+        }catch (Exception e) {
+            return ResponseEntity.ok()
+                    .contentType(MediaType.IMAGE_JPEG)
+                    .body(HttpUtil.downloadBytes("https://esion.xyz/favicon.ico"));
+        }
     }
 
     @GetMapping("rss.xml")

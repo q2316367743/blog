@@ -34,13 +34,11 @@ public class BlogApplication implements CommandLineRunner {
         FileUtil.mkdir(PathConstant.IMAGE_PATH);
         FileUtil.mkdir(PathConstant.MUSIC_PATH);
         FileUtil.mkdir(PathConstant.RESOURCE_PATH);
-        FileUtil.mkdir(PathConstant.THEME_PATH);
-        File templatesPath = FileUtil.mkdir(PathConstant.TEMPLATES_PATH);
-        File staticPath = FileUtil.mkdir(PathConstant.STATIC_PATH);
+        FileUtil.mkdir(PathConstant.THEMES_PATH);
+        File theme = FileUtil.mkdir(PathConstant.THEME_PATH);
         // 2. 判断是否存在对应的模板文件
-        if (Objects.requireNonNull(templatesPath.list()).length == 0) {
-            ZipUtil.unzip(ResourceUtil.getStream("templates.zip"), templatesPath, StandardCharsets.UTF_8);
-            ZipUtil.unzip(ResourceUtil.getStream("static.zip"), staticPath, StandardCharsets.UTF_8);
+        if (Objects.requireNonNull(theme.list()).length == 0) {
+            ZipUtil.unzip(ResourceUtil.getStream("theme-default.zip"), theme, StandardCharsets.UTF_8);
         }
     }
 }

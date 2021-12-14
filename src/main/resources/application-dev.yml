@@ -36,9 +36,7 @@ spring:
     cache: false
     content-type: text/html; charset=UTF-8
   resources:
-    static-locations:
-      - file:///${user.home}/.blog/static/
-      - classpath:/static/
+    static-locations: classpath:/static/
 
 mybatis-plus:
   configuration:
