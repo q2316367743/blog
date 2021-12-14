@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import xyz.esion.blog.enumeration.ResultCodeEnum;
 import xyz.esion.blog.global.*;
+import xyz.esion.blog.service.WebsiteService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,6 +35,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     private final static Logger logger = LoggerFactory.getLogger(WebConfig.class);
     private final static String OPTIONS = "OPTIONS";
+    private WebsiteService websiteService;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -46,6 +49,13 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 访问量计算
+        registry.addInterceptor(new HandlerInterceptor() {
+            @Override
+            public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+                websiteService.accountCountIncrement();
+                return true;
+            }
+        }).addPathPatterns("/");
         // 权限拦截
         registry.addInterceptor(new HandlerInterceptor() {
                     @Override
@@ -112,4 +122,8 @@ public class WebConfig implements WebMvcConfigurer {
         };
     }
 
+    @Autowired
+    public void setWebsiteService(WebsiteService websiteService) {
+        this.websiteService = websiteService;
+    }
 }

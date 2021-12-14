@@ -36,8 +36,8 @@ public class ThemeEditorController {
     @GetMapping("ls")
     public Result<List<FileTreeView>> files() {
         List<FileTreeView> views = new LinkedList<>();
-        views.add(fileService.tree(PathConstant.TEMPLATES_PATH, PathConstant.HOME_PATH));
-        views.add(fileService.tree(PathConstant.STATIC_PATH, PathConstant.HOME_PATH));
+        views.add(fileService.tree(PathConstant.TEMPLATES_PATH, PathConstant.THEME_PATH));
+        views.add(fileService.tree(PathConstant.STATIC_PATH, PathConstant.THEME_PATH));
         return Result.success(views);
     }
 
@@ -68,7 +68,7 @@ public class ThemeEditorController {
         if (!PathConstant.WEB_SEPARATOR.equals(File.separator)) {
             path = path.replace(PathConstant.WEB_SEPARATOR, File.separator);
         }
-        return PathConstant.HOME_PATH + path;
+        return PathConstant.THEME_PATH + path;
     }
 
 }

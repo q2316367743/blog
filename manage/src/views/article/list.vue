@@ -19,6 +19,16 @@
 					<el-option label="草稿" :value="0"></el-option>
 					<el-option label="回收站" :value="-1"></el-option>
 				</el-select>
+				<div style="margin-left: 10px">分类：</div>
+				<el-cascader
+					style="width: 180px"
+					:options="categories"
+					:props="props"
+					clearable
+					placeholder="单选"
+					v-model="category_ids_condition"
+					@change="search"
+				></el-cascader>
 				<el-button
 					@click="search"
 					type="primary"
@@ -36,7 +46,7 @@
 					>新增</el-button
 				>
 			</div>
-			<el-table :data="articles">
+			<el-table :data="articles" v-loading="loading">
 				<el-table-column type="index" label="序号"></el-table-column>
 				<el-table-column label="博客标题">
 					<template slot-scope="scope">
@@ -86,7 +96,7 @@
 						>
 						<el-dropdown>
 							<el-button style="margin-left: 10px" type="text"
-								>设置</el-button
+								>更多</el-button
 							>
 							<el-dropdown-menu slot="dropdown">
 								<el-dropdown-item
@@ -165,7 +175,7 @@
 						:props="props"
 						clearable
 						placeholder="单选"
-						:value="category_ids"
+						v-model="category_ids"
 					></el-cascader>
 				</el-form-item>
 				<el-form-item label="文章标签">
@@ -246,6 +256,7 @@ export default {
 			articles: [],
 			categories: [],
 			category_ids: [],
+			category_ids_condition: [],
 			props: {
 				children: "children",
 				label: "name",
@@ -268,6 +279,7 @@ export default {
 			tag_value: "",
 			setting_dialog: false,
 			website: "",
+			loading: false,
 		};
 	},
 	created() {
@@ -279,12 +291,19 @@ export default {
 	},
 	methods: {
 		search() {
+			this.loading = true;
+			let category_id = null;
+			if (this.category_ids_condition.length > 0) {
+				let temp_len = this.category_ids_condition.length;
+				category_id = this.category_ids_condition[temp_len - 1];
+			}
 			article_api.list(
 				{
 					page_num: this.page_num,
 					page_size: this.page_size,
 					title: this.condition.title,
 					status: this.condition.status,
+					category_id: category_id,
 				},
 				(res) => {
 					if (res.code === 200) {
@@ -296,6 +315,10 @@ export default {
 							type: "error",
 						});
 					}
+					this.loading = false;
+				},
+				() => {
+					this.loading = false;
 				}
 			);
 		},
@@ -369,6 +392,7 @@ export default {
 			// 1. 对文章赋值
 			this.article = record;
 			// 2. 对分类赋值
+			this.category_ids = [];
 			for (let category of this.categories) {
 				if (category.id === this.article.category_id) {
 					this.category_ids.push(category.id);

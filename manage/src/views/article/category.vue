@@ -90,7 +90,7 @@ export default {
 		list() {
 			category_api.list((res) => {
 				this.categories = res.data;
-				this.category_id = res.data[0].id;
+				this.category_id = this.category_id == 0 ? res.data[0].id : this.category_id;
 			});
 		},
 		one_click(id) {

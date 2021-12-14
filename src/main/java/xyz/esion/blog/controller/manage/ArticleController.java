@@ -54,6 +54,7 @@ public class ArticleController {
                     ArrayUtil.toArray(articleCondition.getOrderByDesc(), String.class));
         }
         queryWrapper.eq(articleCondition.getStatus() != null, "status", articleCondition.getStatus());
+        queryWrapper.eq(articleCondition.getCategoryId() != null, "category_id", articleCondition.getCategoryId());
         return Result.success(articleService.page(pageParam,queryWrapper));
     }
 

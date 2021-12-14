@@ -25,6 +25,11 @@ public class ArticleCondition implements Serializable {
     private Integer status;
 
     /**
+     * 分类ID
+     */
+    private Integer categoryId;
+
+    /**
      * 正序
      */
     private List<String> orderBy;

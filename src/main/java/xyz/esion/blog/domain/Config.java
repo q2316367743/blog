@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * 系统配置
@@ -152,5 +154,10 @@ public class Config implements Serializable {
         private Boolean loop;
 
     }
+
+    /**
+     * 主题配置
+     */
+    private Map<String, Objects> themeConfig;
 
 }

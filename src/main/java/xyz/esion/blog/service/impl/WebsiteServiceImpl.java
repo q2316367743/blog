@@ -71,4 +71,9 @@ public class WebsiteServiceImpl implements WebsiteService {
         this.website = website;
     }
 
+    @Override
+    public void accountCountIncrement() {
+        this.website.setAccessCount(this.website.getAccessCount() + 1);
+    }
+
 }

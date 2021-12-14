@@ -1,6 +1,7 @@
 package xyz.esion.blog.controller.manage;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.thread.GlobalThreadPool;
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -88,7 +89,7 @@ public class CommentController {
                     if (item.getSourceType().equals(CommentSourceTypeEnum.PAGE.getValue())) {
                         view.setSourceTitle(commentPageMap.containsKey(view.getSourceId()) ?
                                 commentPageMap.get(view.getSourceId()).getTitle() : "");
-                    }else if (item.getSourceType().equals(CommentSourceTypeEnum.ARTICLE.getValue())) {
+                    } else if (item.getSourceType().equals(CommentSourceTypeEnum.ARTICLE.getValue())) {
                         view.setSourceTitle(commentArticleMap.containsKey(view.getSourceId()) ?
                                 commentArticleMap.get(view.getSourceId()).getTitle() : "");
                     }
@@ -118,8 +119,24 @@ public class CommentController {
 
     @PutMapping("{id}")
     public Result<Boolean> update(@PathVariable Integer id, @RequestBody Comment comment) {
+        Comment record = commentService.getById(id);
+        if (record == null) {
+            throw new IllegalArgumentException("评论不存在");
+        }
         comment.setId(id);
-        return Result.success(commentService.updateById(comment));
+        commentService.updateById(comment);
+        if (record.getSourceType().equals(CommentSourceTypeEnum.ARTICLE.getValue())) {
+            GlobalThreadPool.execute(() -> {
+                // 更新文章评论数
+                Article article = new Article();
+                article.setId(record.getSourceId());
+                article.setCommentCount(commentService.count(new QueryWrapper<Comment>()
+                        .eq("status", CommentStatusEnum.APPLY.getValue())
+                        .eq("source_id", record.getSourceId())
+                        .eq("source_type", CommentSourceTypeEnum.ARTICLE.getValue())));
+            });
+        }
+        return Result.success();
     }
 
 }

@@ -4,6 +4,8 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.thread.GlobalThreadPool;
+import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONObject;
@@ -126,6 +128,12 @@ public class RouterController {
         );
         model.addAttribute("after", after);
         buildComment(id, CommentSourceTypeEnum.ARTICLE, model);
+        GlobalThreadPool.execute(() -> {
+            Article record = new Article();
+            record.setId(id);
+            record.setViewCount(article.getViewCount() + 1);
+            articleService.updateById(record);
+        });
         return "article";
     }
 

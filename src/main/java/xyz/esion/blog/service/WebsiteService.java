@@ -20,4 +20,9 @@ public interface WebsiteService {
      */
     void sync();
 
+    /**
+     * 网站访问量增加
+     */
+    void accountCountIncrement();
+
 }
