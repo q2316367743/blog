@@ -100,10 +100,10 @@ export default {
 			editor_content = this.original_content;
 		}
 		this.content = this.original_content;
+		// 创建vditor对象
 		this.vditor = new Vditor("vditor", vditor_option);
-		this.$refs.codemirror.cminstance.on("cursorActivity", () => {
-			this.$refs.codemirror.cminstance.showHint();
-		});
+		// 禁用缓存
+		this.vditor.disabledCache();
 		// wangEditor配置
 		this.editor = new Editor("#editor");
 		this.editor.config.height = height - 60;
@@ -140,6 +140,10 @@ export default {
 		// 创建
 		this.editor.create();
 		this.editor.txt.html(editor_content);
+		// 配置语法提示，目前不起作用
+		this.$refs.codemirror.cminstance.on("cursorActivity", () => {
+			this.$refs.codemirror.cminstance.showHint();
+		});
 	},
 	watch: {
 		original_content(new_value, old_value) {
@@ -172,7 +176,8 @@ export default {
 			}
 		},
 	},
-	destroyed() {
+	beforeDestroy() {
+		this.vditor.clearCache();
 		this.vditor.destroy();
 	},
 };
