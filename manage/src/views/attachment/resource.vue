@@ -221,6 +221,7 @@ export default {
 	right: 0;
 	bottom: 0;
 	padding: 10px;
+    overflow-y: auto;
 }
 .resource-item {
 	width: 100%;
