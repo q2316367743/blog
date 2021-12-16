@@ -76,7 +76,6 @@ export default {
 			value: "",
 			upload: {
 				url: upload_url,
-				linkToImgUrl: upload_url,
 				headers: {
 					token: this.$store.getters.token,
 				},
