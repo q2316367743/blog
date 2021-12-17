@@ -33,13 +33,16 @@ public class ConfigServiceImpl implements ConfigService {
             config.setName("云落天都的博客");
             config.setKeywords(Arrays.asList("云落天都", "博客", "网络日志"));
             config.setFavicon("/favicon.ico");
-            config.setBackground("https://static.zkqiang.cn/images/20191231163321.jpg-slim");
-            config.setPageBackground("https://img-blog.csdnimg.cn/img_convert/cce6857f9276c2ba78d3f4b9af3b036f.png");
-            config.setArticleBackground("https://img-blog.csdnimg.cn/img_convert/cce6857f9276c2ba78d3f4b9af3b036f.png");
-            config.setCategoryBackground("https://img-blog.csdnimg.cn/img_convert/cce6857f9276c2ba78d3f4b9af3b036f.png");
-            config.setArchiveBackground("https://img-blog.csdnimg.cn/img_convert/cce6857f9276c2ba78d3f4b9af3b036f.png");
-            config.setLinkBackground("https://img-blog.csdnimg.cn/img_convert/cce6857f9276c2ba78d3f4b9af3b036f.png");
-            config.setAboutBackground("https://img-blog.csdnimg.cn/img_convert/cce6857f9276c2ba78d3f4b9af3b036f.png");
+            Config.Background background = new Config.Background();
+            background.setIndex("https://static.zkqiang.cn/images/20191231163321.jpg-slim");
+            background.setPage("https://img-blog.csdnimg.cn/img_convert/cce6857f9276c2ba78d3f4b9af3b036f.png");
+            background.setArchive("https://img-blog.csdnimg.cn/img_convert/cce6857f9276c2ba78d3f4b9af3b036f.png");
+            background.setArticle("https://img-blog.csdnimg.cn/img_convert/cce6857f9276c2ba78d3f4b9af3b036f.png");
+            background.setAbout("https://img-blog.csdnimg.cn/img_convert/cce6857f9276c2ba78d3f4b9af3b036f.png");
+            background.setCategory("https://img-blog.csdnimg.cn/img_convert/cce6857f9276c2ba78d3f4b9af3b036f.png");
+            background.setArchive("https://img-blog.csdnimg.cn/img_convert/cce6857f9276c2ba78d3f4b9af3b036f.png");
+            background.setLink("https://img-blog.csdnimg.cn/img_convert/cce6857f9276c2ba78d3f4b9af3b036f.png");
+            config.setBackground(background);
             config.setKeepOnRecord("鄂ICP备2021003611号-1");
             config.setIndex(new Config.Index(
                     "云落天都的博客",

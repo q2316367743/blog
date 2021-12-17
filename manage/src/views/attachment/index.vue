@@ -66,7 +66,7 @@ import resource_api from "@/api/resource";
 import { get_upper_path } from "@/utils/field";
 
 export default {
-	name: "index",
+	name: "attachment",
 	data: () => {
 		return {
 			path: "/",
@@ -209,7 +209,7 @@ export default {
 }
 .resource-path {
 	height: 30px;
-	line-height: 30px;
+	line-height: 40px;
 }
 .resource-option-btn {
 	display: flex;

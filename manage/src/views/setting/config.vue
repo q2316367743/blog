@@ -126,25 +126,25 @@
 			</el-form>
 			<el-form label-width="120px" v-show="type === '3'">
 				<el-form-item label="首页背景图片">
-					<el-input v-model="config.background"></el-input>
+					<el-input v-model="config.background.index"></el-input>
 				</el-form-item>
 				<el-form-item label="友链背景图片">
-					<el-input v-model="config.link_background"></el-input>
+					<el-input v-model="config.background.link"></el-input>
 				</el-form-item>
 				<el-form-item label="关于背景图片">
-					<el-input v-model="config.about_background"></el-input>
+					<el-input v-model="config.background.about"></el-input>
 				</el-form-item>
 				<el-form-item label="分类背景图片">
-					<el-input v-model="config.category_background"></el-input>
+					<el-input v-model="config.background.category"></el-input>
 				</el-form-item>
 				<el-form-item label="归档背景图片">
-					<el-input v-model="config.archive_background"></el-input>
+					<el-input v-model="config.background.archive"></el-input>
 				</el-form-item>
 				<el-form-item label="文章默认图片">
-					<el-input v-model="config.article_background"></el-input>
+					<el-input v-model="config.background.article"></el-input>
 				</el-form-item>
 				<el-form-item label="页面默认图片">
-					<el-input v-model="config.page_background"></el-input>
+					<el-input v-model="config.background.page"></el-input>
 				</el-form-item>
 			</el-form>
 			<div v-show="type === '4'" style="padding: 20px">
@@ -177,7 +177,10 @@
 								@click="music_dialog_open(scope.row)"
 								>修改</el-button
 							>
-							<el-button type="text" style="color: #f56c6c" @click="music_remove(scope.row)"
+							<el-button
+								type="text"
+								style="color: #f56c6c"
+								@click="music_remove(scope.row)"
 								>删除</el-button
 							>
 						</template>
@@ -240,16 +243,19 @@ export default {
 					texts: [],
 					loop: true,
 				},
-				link_background: "",
-				about_background: "",
+				background: {
+					link: "",
+					about: "",
+					article: "",
+					index: "",
+					page: "",
+					category: "",
+					archive: "",
+				},
+				theme_confit: {},
 				keep_on_record: "",
-				article_background: "",
 				music: [],
-				background: "",
-				page_background: "",
-				category_background: "",
 				name: "",
-				archive_background: "",
 				href: "http://localhost:8990",
 			},
 			tag_input: false,
@@ -348,9 +354,9 @@ export default {
 				});
 			}
 		},
-        music_remove(item) {
-            this.config.music.splice(this.config.music.indexOf(item), 1);
-        },
+		music_remove(item) {
+			this.config.music.splice(this.config.music.indexOf(item), 1);
+		},
 		update() {
 			config_api.update(
 				this.config,
@@ -383,7 +389,7 @@ export default {
 	left: 0;
 	bottom: 0;
 	right: 0;
-    overflow-y: auto;
+	overflow-y: auto;
 }
 
 .config-update {

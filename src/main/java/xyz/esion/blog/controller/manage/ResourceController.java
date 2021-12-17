@@ -4,16 +4,19 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import xyz.esion.blog.constant.PathConstant;
+import xyz.esion.blog.domain.Config;
 import xyz.esion.blog.global.Result;
 import xyz.esion.blog.param.FileParam;
 import xyz.esion.blog.service.ConfigService;
 import xyz.esion.blog.service.FileService;
 import xyz.esion.blog.service.ResourceService;
 import xyz.esion.blog.view.file.FileListView;
+import xyz.esion.blog.view.file.FileResourceView;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Esion
@@ -34,17 +37,26 @@ public class ResourceController {
     }
 
     @GetMapping("ls")
-    public Result<List<FileListView>> ls(@RequestParam(value = "path", required = false, defaultValue = "") String path) {
+    public Result<List<FileResourceView>> ls(@RequestParam(value = "path", required = false, defaultValue = "") String path) {
         boolean flag = !PathConstant.WEB_SEPARATOR.equals(File.separator);
         List<FileListView> views = fileService.ls(buildPath(path));
-        views.forEach(view -> {
-            String absPath = view.getPath().substring(PathConstant.RESOURCE_PATH.length());
+        Config config = configService.info();
+        return Result.success(views.stream().map(item -> {
+            FileResourceView view = new FileResourceView();
+            view.setName(item.getName());
+            view.setIsDirectory(item.getIsDirectory());
+            String absPath = item.getPath().substring(PathConstant.RESOURCE_PATH.length());
             if (flag) {
                 absPath = absPath.replace(File.separator, "/");
             }
             view.setPath(absPath);
-        });
-        return Result.success(views);
+            if (!item.getIsDirectory()) {
+                view.setLink(config.getHref() + "/resource" + absPath);
+            }else {
+                view.setLink("");
+            }
+            return view;
+        }).collect(Collectors.toList()));
     }
 
     @GetMapping("link")

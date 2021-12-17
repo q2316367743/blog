@@ -27,7 +27,7 @@
 					"
 					>保存草稿</el-button
 				>
-				<el-button>预览</el-button>
+				<el-button @click="attachment_dialog = true">资源库</el-button>
 				<el-button
 					type="primary"
 					@click="
@@ -59,8 +59,9 @@
 			>
 				<div style="margin-left: 80px">
 					<el-upload
-						action="https://jsonplaceholder.typicode.com/posts/"
+						action=""
 						:show-file-list="false"
+						:http-request="upload"
 					>
 						<el-image :src="page.image">
 							<div slot="error" class="image-slot">
@@ -90,19 +91,25 @@
 				</el-form-item>
 			</el-form>
 		</el-drawer>
+		<el-drawer :title="附件管理" :visible.sync="attachment_dialog">
+			<attachment></attachment>
+		</el-drawer>
 	</div>
 </template>
 
 <script>
-import editor from "@/components/editor";
+import editor from "@/components/editor.vue";
+import attachment from "@/views/attachment/index.vue";
 
 // 引入api
 import page_api from "@/api/page";
+import resource_api from "@/api/resource";
 
 export default {
 	name: "info",
 	components: {
 		editor,
+		attachment
 	},
 	data: () => {
 		return {
@@ -122,6 +129,7 @@ export default {
 				content: "",
 			},
 			publish_dialog: false,
+			attachment_dialog: false,
 		};
 	},
 	created() {
@@ -164,10 +172,6 @@ export default {
 			this.page.content = this.$refs.editor.get_content();
 			this.page.original_content =
 				this.$refs.editor.get_original_content();
-			if (this.page.image === "") {
-				this.page.image =
-					"https://pc-index-skin.cdn.bcebos.com/hiphoto/66225335900.jpg?x-bce-process=image/crop,x_144,y_30,w_1680,h_1050";
-			}
 			if (this.is_save) {
 				page_api.save(
 					this.page,
@@ -199,6 +203,30 @@ export default {
 				);
 			}
 		},
+		upload(param) {
+			let file = param.file;
+			let form = new FormData();
+			form.append("file", file);
+			form.append("path", "/page");
+			const loading = this.$loading({
+				lock: true,
+				text: "上传中",
+				spinner: "el-icon-loading",
+				background: "rgba(0, 0, 0, 0.7)",
+			});
+			resource_api.upload(
+				form,
+				(res) => {
+					this.$message.success("上传成功");
+					this.page.image = res.data;
+					loading.close();
+				},
+				() => {
+					this.$message.error("上传失败");
+					loading.close();
+				}
+			);
+		},
 	},
 };
 </script>
@@ -207,7 +235,7 @@ export default {
 .page-info-header {
 	display: grid;
 	grid-template-rows: 1fr;
-	grid-template-columns: 1fr 250px 108px 80px 80px 108px;
+	grid-template-columns: 1fr 250px 108px 94px 80px 108px;
 }
 
 .page-info-fixed {

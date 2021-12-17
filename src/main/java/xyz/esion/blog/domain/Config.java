@@ -43,41 +43,6 @@ public class Config implements Serializable {
     private String favicon;
 
     /**
-     * 首页背景图片
-     */
-    private String background;
-
-    /**
-     * 页面默认背景图片
-     */
-    private String pageBackground;
-
-    /**
-     * 文章默认背景图片
-     */
-    private String articleBackground;
-
-    /**
-     * 分类默认背景图片
-     */
-    private String categoryBackground;
-
-    /**
-     * 归档默认背景图片
-     */
-    private String archiveBackground;
-
-    /**
-     * 友链默认背景图片
-     */
-    private String linkBackground;
-
-    /**
-     * 关于默认背景图片
-     */
-    private String aboutBackground;
-
-    /**
      * 备案
      */
     private String keepOnRecord;
@@ -87,6 +52,14 @@ public class Config implements Serializable {
      */
     private Index index;
 
+    /**
+     * 背景图片
+     */
+    private Background background;
+
+    /**
+     * 音乐
+     */
     public List<Music> music;
 
     @Data
@@ -119,6 +92,49 @@ public class Config implements Serializable {
          */
         private String lyric;
 
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Background implements Serializable {
+
+        private static final long serialVersionUID = 1L;
+
+        /**
+         * 首页背景图片
+         */
+        private String index;
+
+        /**
+         * 页面默认背景图片
+         */
+        private String page;
+
+        /**
+         * 文章默认背景图片
+         */
+        private String article;
+
+        /**
+         * 分类默认背景图片
+         */
+        private String category;
+
+        /**
+         * 归档默认背景图片
+         */
+        private String archive;
+
+        /**
+         * 友链默认背景图片
+         */
+        private String link;
+
+        /**
+         * 关于默认背景图片
+         */
+        private String about;
     }
 
     @Data

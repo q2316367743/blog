@@ -154,8 +154,9 @@
 			>
 				<div style="margin-left: 80px">
 					<el-upload
-						action="https://jsonplaceholder.typicode.com/posts/"
+						action=""
 						:show-file-list="false"
+						:http-request="upload"
 					>
 						<el-image :src="article.image">
 							<div slot="error" class="image-slot">
@@ -239,6 +240,7 @@
 <script>
 import article_api from "@/api/article";
 import category_api from "@/api/category";
+import resource_api from "@/api/resource";
 
 export default {
 	name: "articleList",
@@ -412,10 +414,6 @@ export default {
 		submit() {
 			let temp_len = this.category_ids.length;
 			this.article.category_id = this.category_ids[temp_len - 1];
-			if (this.article.image === "") {
-				this.article.image =
-					"https://pc-index-skin.cdn.bcebos.com/hiphoto/66225335900.jpg?x-bce-process=image/crop,x_144,y_30,w_1680,h_1050";
-			}
 			article_api.update(
 				this.article.id,
 				this.article,
@@ -452,6 +450,30 @@ export default {
 		to_page(page_num) {
 			this.page_num = page_num;
 			this.search();
+		},
+		upload(param) {
+			let file = param.file;
+			let form = new FormData();
+			form.append("file", file);
+			form.append("path", "/article");
+			const loading = this.$loading({
+				lock: true,
+				text: "上传中",
+				spinner: "el-icon-loading",
+				background: "rgba(0, 0, 0, 0.7)",
+			});
+			resource_api.upload(
+				form,
+				(res) => {
+					this.$message.success("上传成功");
+					this.article.image = res.data;
+					loading.close();
+				},
+				() => {
+					this.$message.error("上传失败");
+					loading.close();
+				}
+			);
 		},
 	},
 };
