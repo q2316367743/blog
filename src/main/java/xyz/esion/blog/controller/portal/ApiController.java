@@ -1,8 +1,6 @@
 package xyz.esion.blog.controller.portal;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
@@ -22,8 +20,8 @@ import xyz.esion.blog.param.MessageParam;
 import xyz.esion.blog.param.PageParam;
 import xyz.esion.blog.service.*;
 import xyz.esion.blog.util.FieldUtil;
-import xyz.esion.blog.view.article.ArticleListView;
 import xyz.esion.blog.view.PageView;
+import xyz.esion.blog.view.article.ArticleListView;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -83,20 +81,7 @@ public class ApiController {
             @NameConvertModel PageParam pageParam,
             @NameConvertModel ArticleCondition condition
     ) {
-        QueryWrapper<Article> queryWrapper = new QueryWrapper<>();
-        queryWrapper.like(StrUtil.isNotBlank(condition.getTitle()),
-                "title", condition.getTitle());
-        queryWrapper.eq("status", 1);
-        if (condition.getOrderByDesc() != null) {
-            queryWrapper.orderByDesc(CollUtil.isNotEmpty(condition.getOrderByDesc()),
-                    ArrayUtil.toArray(condition.getOrderByDesc(), String.class));
-        }
-        if (condition.getOrderBy() != null) {
-            queryWrapper.orderBy(CollUtil.isNotEmpty(condition.getOrderBy()),
-                    true,
-                    ArrayUtil.toArray(condition.getOrderBy(), String.class));
-        }
-        return Result.success(articleService.page(pageParam, queryWrapper));
+        return Result.success(articleService.page(pageParam, condition));
     }
 
     @PostMapping("comment")

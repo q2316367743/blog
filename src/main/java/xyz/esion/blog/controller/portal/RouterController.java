@@ -105,6 +105,7 @@ public class RouterController {
     ) {
         condition.setStatus(ArticleStatusEnum.RELEASE.getValue());
         model.addAttribute("page", articleService.page(pageParam, condition));
+        model.addAttribute("condition", condition);
         return "search";
     }
 
