@@ -1,3 +1,9 @@
 spring:
   profiles:
     active: dev
+  # 为了解决IDEA没有语法提示的问题
+  freemarker:
+    template-loader-path: classpath:/templates/
+    suffix: .ftl
+  resources:
+    static-locations: classpath:/static/
