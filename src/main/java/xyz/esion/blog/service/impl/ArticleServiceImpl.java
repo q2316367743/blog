@@ -1,11 +1,15 @@
 package xyz.esion.blog.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ArrayUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import xyz.esion.blog.condition.ArticleCondition;
 import xyz.esion.blog.entity.Article;
 import xyz.esion.blog.entity.Category;
 import xyz.esion.blog.global.KeyValue;
@@ -34,7 +38,21 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     private final CategoryMapper categoryMapper;
 
     @Override
-    public PageView<ArticleListView> page(PageParam pageParam, QueryWrapper<Article> queryWrapper) {
+    public PageView<ArticleListView> page(PageParam pageParam, ArticleCondition condition) {
+        QueryWrapper<Article> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like(StrUtil.isNotBlank(condition.getTitle()),
+                "title", condition.getTitle());
+        queryWrapper.eq("status", condition.getStatus());
+        queryWrapper.eq(condition.getCategoryId() != null, "category_id", condition.getCategoryId());
+        if (condition.getOrderByDesc() != null) {
+            queryWrapper.orderByDesc(CollUtil.isNotEmpty(condition.getOrderByDesc()),
+                    ArrayUtil.toArray(condition.getOrderByDesc(), String.class));
+        }
+        if (condition.getOrderBy() != null) {
+            queryWrapper.orderBy(CollUtil.isNotEmpty(condition.getOrderBy()),
+                    true,
+                    ArrayUtil.toArray(condition.getOrderBy(), String.class));
+        }
         Page<Article> page = articleMapper.selectPage(
                 new Page<>(pageParam.getPageNum(), pageParam.getPageSize()),
                 queryWrapper.orderByDesc("sequence"));

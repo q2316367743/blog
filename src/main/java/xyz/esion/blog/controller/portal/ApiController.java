@@ -45,7 +45,7 @@ public class ApiController {
     private final PageService pageService;
 
     @PostMapping("message")
-    public Result<Boolean> messageSave(@RequestBody MessageParam param){
+    public Result<Boolean> messageSave(@RequestBody MessageParam param) {
         if (param.getType() == null) {
             throw new IllegalArgumentException("类型不能为空");
         }
@@ -82,10 +82,11 @@ public class ApiController {
     public Result<PageView<ArticleListView>> articlePage(
             @NameConvertModel PageParam pageParam,
             @NameConvertModel ArticleCondition condition
-            ){
-        QueryWrapper<Article> queryWrapper = new QueryWrapper<Article>()
-                .like(StrUtil.isNotBlank(condition.getTitle()),
-                        "title", condition.getTitle());
+    ) {
+        QueryWrapper<Article> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like(StrUtil.isNotBlank(condition.getTitle()),
+                "title", condition.getTitle());
+        queryWrapper.eq("status", 1);
         if (condition.getOrderByDesc() != null) {
             queryWrapper.orderByDesc(CollUtil.isNotEmpty(condition.getOrderByDesc()),
                     ArrayUtil.toArray(condition.getOrderByDesc(), String.class));
@@ -95,14 +96,14 @@ public class ApiController {
                     true,
                     ArrayUtil.toArray(condition.getOrderBy(), String.class));
         }
-        return Result.success(articleService.page(pageParam,queryWrapper));
+        return Result.success(articleService.page(pageParam, queryWrapper));
     }
 
     @PostMapping("comment")
     public Result<Boolean> commentSave(
             @RequestBody CommentParam param,
             HttpServletRequest request
-    ){
+    ) {
         UserAgent userAgent = UserAgentUtil.parse(request.getHeader("user-agent"));
         if (userAgent == null) {
             return Result.fail("请求头缺少user-agent");
@@ -127,7 +128,7 @@ public class ApiController {
             if (articleService.count(new QueryWrapper<Article>().eq(PRIMARY_KEY, param.getSourceId())) == 0) {
                 throw new IllegalArgumentException("来源ID不存在");
             }
-        }else if (sourceType.equals(CommentSourceTypeEnum.PAGE)) {
+        } else if (sourceType.equals(CommentSourceTypeEnum.PAGE)) {
             if (pageService.count(new QueryWrapper<Page>().eq(PRIMARY_KEY, param.getSourceId())) == 0) {
                 throw new IllegalArgumentException("来源ID不存在");
             }
@@ -146,7 +147,7 @@ public class ApiController {
                 .last("limit 1"));
         if (link != null) {
             comment.setType(CommentTypeEnum.FRIEND.getValue());
-        }else {
+        } else {
             comment.setType(CommentTypeEnum.VISITOR.getValue());
         }
         comment.setSourceId(param.getSourceId());

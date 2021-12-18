@@ -17,17 +17,37 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import xyz.esion.blog.domain.*;
-import xyz.esion.blog.entity.*;
-import xyz.esion.blog.enumeration.*;
-import xyz.esion.blog.global.*;
-import xyz.esion.blog.view.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import xyz.esion.blog.condition.ArticleCondition;
+import xyz.esion.blog.domain.Author;
+import xyz.esion.blog.domain.Config;
+import xyz.esion.blog.domain.RssItem;
+import xyz.esion.blog.entity.Article;
+import xyz.esion.blog.entity.Category;
+import xyz.esion.blog.entity.Comment;
+import xyz.esion.blog.entity.Link;
+import xyz.esion.blog.enumeration.ArticleStatusEnum;
+import xyz.esion.blog.enumeration.CommentSourceTypeEnum;
+import xyz.esion.blog.enumeration.CommentStatusEnum;
+import xyz.esion.blog.enumeration.LinkStatusEnum;
+import xyz.esion.blog.global.KeyValue;
+import xyz.esion.blog.global.NameConvertModel;
 import xyz.esion.blog.param.PageParam;
 import xyz.esion.blog.service.*;
-import xyz.esion.blog.view.article.*;
+import xyz.esion.blog.view.CategoryView;
+import xyz.esion.blog.view.CommentView;
+import xyz.esion.blog.view.PageInfoView;
+import xyz.esion.blog.view.PageView;
+import xyz.esion.blog.view.article.ArticleCategoryListView;
+import xyz.esion.blog.view.article.ArticleInfoView;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -66,15 +86,26 @@ public class RouterController {
 
     @GetMapping
     public String index(@NameConvertModel PageParam pageParam, Model model) {
-        PageView<ArticleListView> page = articleService.page(pageParam, new QueryWrapper<Article>()
-                .eq("status", 1));
-        model.addAttribute("page", page);
+        ArticleCondition condition = new ArticleCondition();
+        condition.setStatus(ArticleStatusEnum.RELEASE.getValue());
+        model.addAttribute("page", articleService.page(pageParam, condition));
         return "index";
     }
 
     @GetMapping("index.html")
     public String home(@NameConvertModel PageParam pageParam, Model model) {
         return index(pageParam, model);
+    }
+
+    @GetMapping("search.html")
+    public String search(
+            @NameConvertModel PageParam pageParam,
+            @NameConvertModel ArticleCondition condition,
+            Model model
+    ) {
+        condition.setStatus(ArticleStatusEnum.RELEASE.getValue());
+        model.addAttribute("page", articleService.page(pageParam, condition));
+        return "search";
     }
 
     @GetMapping("article/{id}.html")

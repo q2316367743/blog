@@ -2,25 +2,22 @@ package xyz.esion.blog.controller.manage;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.ArrayUtil;
-import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import xyz.esion.blog.condition.ArticleCondition;
 import xyz.esion.blog.entity.Article;
 import xyz.esion.blog.entity.Category;
 import xyz.esion.blog.enumeration.EditorTypeEnum;
 import xyz.esion.blog.enumeration.ResultCodeEnum;
 import xyz.esion.blog.global.NameConvertModel;
 import xyz.esion.blog.global.Result;
-import xyz.esion.blog.condition.ArticleCondition;
 import xyz.esion.blog.param.ArticleParam;
-import xyz.esion.blog.service.ArticleService;
 import xyz.esion.blog.param.PageParam;
+import xyz.esion.blog.service.ArticleService;
 import xyz.esion.blog.service.CategoryService;
+import xyz.esion.blog.view.PageView;
 import xyz.esion.blog.view.article.ArticleInfoView;
 import xyz.esion.blog.view.article.ArticleListView;
-import xyz.esion.blog.view.PageView;
 
 import java.util.Arrays;
 
@@ -41,21 +38,7 @@ public class ArticleController {
             @NameConvertModel PageParam pageParam,
             @NameConvertModel ArticleCondition articleCondition
     ) {
-        QueryWrapper<Article> queryWrapper = new QueryWrapper<Article>()
-                .like(StrUtil.isNotBlank(articleCondition.getTitle()),
-                        "title", articleCondition.getTitle());
-        if (articleCondition.getOrderBy() != null) {
-            queryWrapper.orderBy(CollUtil.isNotEmpty(articleCondition.getOrderBy()),
-                    true,
-                    ArrayUtil.toArray(articleCondition.getOrderBy(), String.class));
-        }
-        if (articleCondition.getOrderByDesc() != null) {
-            queryWrapper.orderByDesc(CollUtil.isNotEmpty(articleCondition.getOrderByDesc()),
-                    ArrayUtil.toArray(articleCondition.getOrderByDesc(), String.class));
-        }
-        queryWrapper.eq(articleCondition.getStatus() != null, "status", articleCondition.getStatus());
-        queryWrapper.eq(articleCondition.getCategoryId() != null, "category_id", articleCondition.getCategoryId());
-        return Result.success(articleService.page(pageParam,queryWrapper));
+        return Result.success(articleService.page(pageParam, articleCondition));
     }
 
     @GetMapping("{id}")

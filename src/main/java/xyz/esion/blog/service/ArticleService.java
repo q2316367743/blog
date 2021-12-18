@@ -1,12 +1,12 @@
 package xyz.esion.blog.service;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
+import xyz.esion.blog.condition.ArticleCondition;
 import xyz.esion.blog.entity.Article;
 import xyz.esion.blog.global.KeyValue;
-import xyz.esion.blog.view.article.ArticleListView;
 import xyz.esion.blog.param.PageParam;
 import xyz.esion.blog.view.PageView;
+import xyz.esion.blog.view.article.ArticleListView;
 
 import java.util.List;
 
@@ -20,10 +20,10 @@ public interface ArticleService extends IService<Article> {
      * 分页查询文章列表
      *
      * @param pageParam 分页参数
-     * @param queryWrapper 查询条件
+     * @param condition 查询条件
      * @return 文章列表
      */
-    PageView<ArticleListView> page(PageParam pageParam, QueryWrapper<Article> queryWrapper);
+    PageView<ArticleListView> page(PageParam pageParam, ArticleCondition condition);
 
     /**
      * 根据分类IDs查询分类数量
