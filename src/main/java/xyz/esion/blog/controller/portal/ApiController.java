@@ -72,7 +72,9 @@ public class ApiController {
             throw new IllegalArgumentException("昵称不能为空");
         }
         Link link = BeanUtil.copyProperties(param, Link.class);
-        link.setIcon(FieldUtil.getIconByEmailOrWebsite(link.getEmail(), link.getUrl()));
+        if (StrUtil.isBlank(link.getIcon())) {
+            link.setIcon(FieldUtil.getIconByEmailOrWebsite(link.getEmail(), link.getUrl()));
+        }
         return Result.success(linkService.save(link));
     }
 

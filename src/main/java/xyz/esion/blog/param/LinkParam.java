@@ -31,6 +31,11 @@ public class LinkParam implements Serializable {
     private String url;
 
     /**
+     * 图标
+     */
+    private String icon;
+
+    /**
      * 描述
      */
     private String description;
