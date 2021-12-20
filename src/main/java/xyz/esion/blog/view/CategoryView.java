@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -51,6 +52,8 @@ public class CategoryView implements Serializable {
         private Integer id;
 
         private String title;
+
+        private Date createTime;
 
     }
 

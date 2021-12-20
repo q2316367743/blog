@@ -25,10 +25,7 @@ import xyz.esion.blog.condition.ArticleCondition;
 import xyz.esion.blog.domain.Author;
 import xyz.esion.blog.domain.Config;
 import xyz.esion.blog.domain.RssItem;
-import xyz.esion.blog.entity.Article;
-import xyz.esion.blog.entity.Category;
-import xyz.esion.blog.entity.Comment;
-import xyz.esion.blog.entity.Link;
+import xyz.esion.blog.entity.*;
 import xyz.esion.blog.enumeration.ArticleStatusEnum;
 import xyz.esion.blog.enumeration.CommentSourceTypeEnum;
 import xyz.esion.blog.enumeration.CommentStatusEnum;
@@ -197,7 +194,7 @@ public class RouterController {
                         .last("limit 10"));
                 item.getArticles().addAll(articles
                         .stream()
-                        .map(article -> new CategoryView.Article(article.getId(), article.getTitle()))
+                        .map(article -> new CategoryView.Article(article.getId(), article.getTitle(), article.getCreateTime()))
                         .collect(Collectors.toList()));
             }
             // 遍历子分类
@@ -211,7 +208,7 @@ public class RouterController {
                             .last("limit 10"));
                     child.getArticles().addAll(articles
                             .stream()
-                            .map(article -> new CategoryView.Article(article.getId(), article.getTitle()))
+                            .map(article -> new CategoryView.Article(article.getId(), article.getTitle(), article.getCreateTime()))
                             .collect(Collectors.toList()));
 
                 }
@@ -253,7 +250,14 @@ public class RouterController {
     }
 
     @GetMapping("message.html")
-    public String message() {
+    public String message(@NameConvertModel PageParam param, Model model) {
+        model.addAttribute("message", messageService.page(
+                new Page<>(param.getPageNum(), param.getPageSize()),
+                new QueryWrapper<Message>()
+                        // 默认展示类型为1的
+                        .eq("type", 1)
+                        .eq("is_read", 1)
+        ));
         return "message";
     }
 
