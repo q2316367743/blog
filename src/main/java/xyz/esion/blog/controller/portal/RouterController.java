@@ -318,13 +318,13 @@ public class RouterController {
     private PageView<ArticleCategoryListView> buildArticleView(Page<Article> articlePage) {
         // 对文章进行处理，年做分组
         Map<String, List<ArticleCategoryListView.Item>> articleMap = articlePage.getRecords().stream().map(article -> {
-            DateTime updateTime = new DateTime(article.getUpdateTime());
+            DateTime createTime = new DateTime(article.getCreateTime());
             ArticleCategoryListView.Item item = new ArticleCategoryListView.Item();
             item.setId(article.getId());
             item.setTitle(article.getTitle());
-            item.setYear(updateTime.toString("yyyy"));
-            item.setMonth(updateTime.toString("MM"));
-            item.setDay(updateTime.toString("dd"));
+            item.setYear(createTime.toString("yyyy"));
+            item.setMonth(createTime.toString("MM"));
+            item.setDay(createTime.toString("dd"));
             return item;
         }).collect(Collectors.groupingBy(ArticleCategoryListView.Item::getYear));
         List<ArticleCategoryListView> views = new LinkedList<>();
