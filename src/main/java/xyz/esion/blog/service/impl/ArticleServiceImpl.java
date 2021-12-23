@@ -10,17 +10,18 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import xyz.esion.blog.condition.ArticleCondition;
+import xyz.esion.blog.constant.GlobalConstant;
 import xyz.esion.blog.entity.Article;
 import xyz.esion.blog.entity.Category;
+import xyz.esion.blog.enumeration.ArticleStatusEnum;
 import xyz.esion.blog.global.KeyValue;
 import xyz.esion.blog.mapper.ArticleMapper;
 import xyz.esion.blog.mapper.CategoryMapper;
-import xyz.esion.blog.service.ArticleService;
-import xyz.esion.blog.view.article.ArticleListView;
 import xyz.esion.blog.param.PageParam;
+import xyz.esion.blog.service.ArticleService;
 import xyz.esion.blog.view.PageView;
+import xyz.esion.blog.view.article.ArticleListView;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,8 +41,16 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     public PageView<ArticleListView> page(PageParam pageParam, ArticleCondition condition) {
         QueryWrapper<Article> queryWrapper = new QueryWrapper<>();
-        queryWrapper.like(StrUtil.isNotBlank(condition.getTitle()),
-                "title", condition.getTitle());
+        boolean titleExist = StrUtil.isNotBlank(condition.getTitle());
+        boolean tagExist = StrUtil.isNotBlank(condition.getTag());
+        queryWrapper.and(titleExist || tagExist, e -> {
+            e.like(titleExist,
+                            "title", condition.getTitle())
+                    .or()
+                    .like(tagExist,
+                            "tags",
+                            GlobalConstant.TAG_SEPARATOR + condition.getTag() + GlobalConstant.TAG_SEPARATOR);
+        });
         queryWrapper.eq("status", condition.getStatus());
         queryWrapper.eq(condition.getCategoryId() != null, "category_id", condition.getCategoryId());
         if (condition.getOrderByDesc() != null) {
@@ -76,12 +85,34 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
                             if (categoryMap.containsKey(item.getCategoryId())) {
                                 view.setCategoryName(categoryMap.get(item.getCategoryId()).getName());
                             }
-                            view.setTags(Arrays.asList(item.getTags().split(",")));
+                            view.setTags(CollUtil.removeAny(CollUtil.newLinkedList(item.getTags().split(",")), ""));
                             view.setIsTop(item.getSequence().equals(Long.MAX_VALUE));
                             return view;
                         })
                         .collect(Collectors.toList())
         );
+    }
+
+    @Override
+    public PageView<ArticleListView> search(PageParam pageParam, ArticleCondition condition) {
+        condition.setStatus(ArticleStatusEnum.RELEASE.getValue());
+        condition.setTag(condition.getTitle());
+        PageView<ArticleListView> page = this.page(pageParam, condition);
+        page.getRecords().forEach(record -> {
+            // 处理每一条记录
+            // 处理标题
+            record.setTitle(StrUtil.replace(record.getTitle(),
+                    condition.getTitle(),
+                    GlobalConstant.HIGH_LIGHT_START + condition.getTitle() + GlobalConstant.HIGH_LIGHT_END));
+            // 处理标签
+            record.setTags(record.getTags().stream().map(item -> {
+                if (item.equals(condition.getTag())) {
+                    return GlobalConstant.HIGH_LIGHT_START + item + GlobalConstant.HIGH_LIGHT_END;
+                }
+                return item;
+            }).collect(Collectors.toList()));
+        });
+        return page;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package xyz.esion.blog.condition;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -28,6 +29,12 @@ public class ArticleCondition implements Serializable {
      * 分类ID
      */
     private Integer categoryId;
+
+    /**
+     * 标签
+     */
+    @JsonIgnore
+    private String tag;
 
     /**
      * 正序

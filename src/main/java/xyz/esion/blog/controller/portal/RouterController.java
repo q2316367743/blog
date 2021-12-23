@@ -100,8 +100,7 @@ public class RouterController {
             @NameConvertModel ArticleCondition condition,
             Model model
     ) {
-        condition.setStatus(ArticleStatusEnum.RELEASE.getValue());
-        model.addAttribute("page", articleService.page(pageParam, condition));
+        model.addAttribute("page", articleService.search(pageParam, condition));
         model.addAttribute("condition", condition);
         return "search";
     }

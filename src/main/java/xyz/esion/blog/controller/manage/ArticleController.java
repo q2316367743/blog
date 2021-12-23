@@ -5,6 +5,7 @@ import cn.hutool.core.collection.CollUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import xyz.esion.blog.condition.ArticleCondition;
+import xyz.esion.blog.constant.GlobalConstant;
 import xyz.esion.blog.entity.Article;
 import xyz.esion.blog.entity.Category;
 import xyz.esion.blog.enumeration.EditorTypeEnum;
@@ -82,7 +83,9 @@ public class ArticleController {
         article.setStatus(param.getStatus());
         article.setCategoryId(param.getCategoryId());
         if (param.getTags() != null) {
-            article.setTags(CollUtil.join(param.getTags(), ","));
+            article.setTags(GlobalConstant.TAG_SEPARATOR +
+                    CollUtil.join(param.getTags(), GlobalConstant.TAG_SEPARATOR) +
+                    GlobalConstant.TAG_SEPARATOR);
         }
         if (param.getIsTop() != null) {
             if (param.getIsTop()) {

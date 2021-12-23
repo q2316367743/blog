@@ -83,7 +83,7 @@ public class ApiController {
             @NameConvertModel PageParam pageParam,
             @NameConvertModel ArticleCondition condition
     ) {
-        return Result.success(articleService.page(pageParam, condition));
+        return Result.success(articleService.search(pageParam, condition));
     }
 
     @PostMapping("comment")

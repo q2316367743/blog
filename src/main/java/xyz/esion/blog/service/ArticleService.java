@@ -26,6 +26,14 @@ public interface ArticleService extends IService<Article> {
     PageView<ArticleListView> page(PageParam pageParam, ArticleCondition condition);
 
     /**
+     * 分页查询文章，
+     * @param pageParam 分页条件
+     * @param condition 查询条件
+     * @return 文章列表
+     */
+    PageView<ArticleListView> search(PageParam pageParam, ArticleCondition condition);
+
+    /**
      * 根据分类IDs查询分类数量
      *
      * @param categoryIds 分类IDs
