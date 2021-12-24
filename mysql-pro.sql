@@ -139,12 +139,12 @@ create unique index idx_type_key on dict (type, item_key);
 
 create table admin
 (
-    id int unsigned auto_increment primary key comment 'ID',
+    id       int unsigned auto_increment primary key comment 'ID',
     username varchar(32) default '' not null comment '用户名',
     password varchar(64) default '' not null comment '密码'
 ) comment '管理员';
 
-create unique index idx_admin_username on admin(username);
+create unique index idx_admin_username on admin (username);
 
 create table talk
 (
@@ -153,6 +153,20 @@ create table talk
     is_delete   tinyint(1) unsigned default 0                     not null comment '逻辑删除',
     content     text comment '内容'
 ) comment '说说';
+
+create table theme
+(
+    id          int unsigned auto_increment primary key comment 'ID',
+    create_time datetime            default '1998-08-06 00:00:00' not null comment '创建时间',
+    update_time datetime            default '1998-08-06 00:00:00' not null comment '更新时间',
+    sync_time   datetime            default '1998-08-06 00:00:00' not null comment '同步时间',
+    is_delete   tinyint(1) unsigned default 0                     not null comment '逻辑删除',
+    is_enable   tinyint(1) unsigned default 0                     not null comment '是否启用',
+    type        tinyint unsigned    default 0                     not null comment '主题类型',
+    source      varchar(255)        default ''                    not null comment '来源',
+    name        varchar(64)         default ''                    not null comment '名称'
+) comment '主题表';
+
 
 insert into admin(username, password) value ('admin', '96e79218965eb72c92a549dd5a330112');
 
