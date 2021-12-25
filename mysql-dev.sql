@@ -156,7 +156,7 @@ create table talk
 
 create table theme
 (
-    id          int unsigned auto_increment primary key comment 'ID',
+    id          int unsigned primary key auto_increment comment 'ID',
     create_time datetime            default '1998-08-06 00:00:00' not null comment '创建时间',
     update_time datetime            default '1998-08-06 00:00:00' not null comment '更新时间',
     sync_time   datetime            default '1998-08-06 00:00:00' not null comment '同步时间',
@@ -165,7 +165,8 @@ create table theme
     is_enable   tinyint(1) unsigned default 0                     not null comment '是否启用',
     type        tinyint unsigned    default 0                     not null comment '主题类型',
     source      varchar(255)        default ''                    not null comment '来源',
-    name        varchar(64)         default ''                    not null comment '名称'
+    name        varchar(64)         default ''                    not null comment '名称',
+    constraint uq_idx_name unique (name, is_delete)
 ) comment '主题表';
 
 # 默认字典数据

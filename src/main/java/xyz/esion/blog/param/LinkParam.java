@@ -2,6 +2,7 @@ package xyz.esion.blog.param;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 /**
@@ -18,6 +19,7 @@ public class LinkParam implements Serializable {
     /**
      * 名称
      */
+    @NotBlank(message = "昵称不能为空")
     private String name;
 
     /**
@@ -28,6 +30,7 @@ public class LinkParam implements Serializable {
     /**
      * 个人网站
      */
+    @NotBlank(message = "链接不能为空")
     private String url;
 
     /**

@@ -23,11 +23,11 @@ public class Website implements Serializable {
     /**
      * 文章数量
      * */
-    private Integer articleCount;
+    private Long articleCount;
     /**
      * 分类数量
      * */
-    private Integer categoryCount;
+    private Long categoryCount;
 
     /**
      * <p>运行时间</p>

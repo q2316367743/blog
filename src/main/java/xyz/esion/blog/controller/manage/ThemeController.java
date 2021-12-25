@@ -5,19 +5,26 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import xyz.esion.blog.condition.ThemeCondition;
+import xyz.esion.blog.constant.PathConstant;
 import xyz.esion.blog.entity.Theme;
+import xyz.esion.blog.enumeration.ThemeTypeEnum;
 import xyz.esion.blog.global.NameConvertModel;
 import xyz.esion.blog.global.Result;
 import xyz.esion.blog.param.PageParam;
 import xyz.esion.blog.param.ThemeParam;
+import xyz.esion.blog.service.FileService;
 import xyz.esion.blog.service.ThemeService;
 import xyz.esion.blog.view.PageView;
 import xyz.esion.blog.view.ThemeView;
 import xyz.esion.blog.view.file.FileTreeView;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,6 +40,7 @@ import java.util.stream.Collectors;
 public class ThemeController {
 
     private final ThemeService themeService;
+    private final FileService fileService;
 
     @GetMapping
     public Result<PageView<ThemeView>> page(
@@ -55,7 +63,7 @@ public class ThemeController {
     }
 
     @PostMapping("save")
-    public Result<Boolean> save(@RequestBody ThemeParam param) {
+    public Result<Boolean> save(@Validated @RequestBody ThemeParam param) {
         return Result.success(themeService.save(BeanUtil.copyProperties(param, Theme.class)));
     }
 
@@ -89,7 +97,15 @@ public class ThemeController {
     }
 
     @GetMapping("{id}/download")
-    public Result<Boolean> download(@PathVariable Integer id) {
+    public Result<Boolean> download(@PathVariable Integer id, HttpServletResponse response) throws IOException {
+        Theme theme = themeService.getById(id);
+        if (theme.getType().equals(ThemeTypeEnum.LOCAL.getValue())) {
+            fileService.download(theme.getSource(), response);
+        }else if (theme.getType().equals(ThemeTypeEnum.REMOTE.getValue())){
+            fileService.download(PathConstant.THEMES_PATH + File.separator + theme.getName(), response);
+        }else {
+            return Result.fail("主题类型错误");
+        }
         return Result.success();
     }
 

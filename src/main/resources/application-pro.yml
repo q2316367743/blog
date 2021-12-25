@@ -11,14 +11,6 @@ spring:
     multipart:
       max-file-size: 100MB
       max-request-size: 100MB
-  sa-token:
-    token-name: token
-    timeout: 2592000
-    activity-timeout: 1800
-    allow-concurrent-login: false
-    is-share: false
-    token-style: uuid
-    is-log: false
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     property-naming-strategy: CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES
@@ -29,6 +21,15 @@ spring:
     check-template-location: false
   resources:
     static-locations: file:///${user.home}/.blog/theme/static/
+
+sa-token:
+  token-name: token
+  timeout: 2592000
+  activity-timeout: 1800
+  is-share: false
+  token-style: uuid
+  is-log: false
+  is-concurrent: false
 
 mybatis-plus:
   configuration:

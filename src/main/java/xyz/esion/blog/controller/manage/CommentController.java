@@ -130,7 +130,7 @@ public class CommentController {
                 // 更新文章评论数
                 Article article = new Article();
                 article.setId(record.getSourceId());
-                article.setCommentCount(commentService.count(new QueryWrapper<Comment>()
+                article.setCommentCount((int) commentService.count(new QueryWrapper<Comment>()
                         .eq("status", CommentStatusEnum.APPLY.getValue())
                         .eq("source_id", record.getSourceId())
                         .eq("source_type", CommentSourceTypeEnum.ARTICLE.getValue())));

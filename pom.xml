@@ -77,6 +77,10 @@
             <artifactId>org.eclipse.jgit</artifactId>
             <version>4.8.0.201706111038-r</version>
         </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>

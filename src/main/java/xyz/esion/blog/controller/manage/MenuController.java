@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import xyz.esion.blog.entity.Menu;
 import xyz.esion.blog.global.Result;
 import xyz.esion.blog.service.MenuService;
-import xyz.esion.blog.view.MenuView;
 
 import java.util.List;
 
@@ -43,8 +42,8 @@ public class MenuController {
 
     @DeleteMapping("{id}")
     public Result<Boolean> remove(@PathVariable Integer id) {
-        int menuCount = menuService.count(new QueryWrapper<Menu>().eq("p_id", id));
-        if (menuCount > 0) {
+        long menuCount = menuService.count(new QueryWrapper<Menu>().eq("p_id", id));
+        if (menuCount > 0L) {
             throw new IllegalArgumentException("当前节点下存在子节点，请先删除全部子节点");
         }
         return Result.success(menuService.removeById(id));

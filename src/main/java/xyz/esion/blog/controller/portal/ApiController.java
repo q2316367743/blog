@@ -6,6 +6,7 @@ import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.esion.blog.condition.ArticleCondition;
 import xyz.esion.blog.entity.*;
@@ -43,34 +44,16 @@ public class ApiController {
     private final PageService pageService;
 
     @PostMapping("message")
-    public Result<Boolean> messageSave(@RequestBody MessageParam param) {
-        if (param.getType() == null) {
-            throw new IllegalArgumentException("类型不能为空");
-        }
-        if (StrUtil.isBlank(param.getName())) {
-            throw new IllegalArgumentException("昵称不能为空");
-        }
-        if (StrUtil.isBlank(param.getEmail())) {
-            throw new IllegalArgumentException("邮箱不能为空");
-        }
-        if (StrUtil.isBlank(param.getContent())) {
-            throw new IllegalArgumentException("内容不能为空");
-        }
+    public Result<Boolean> messageSave(@Validated @RequestBody MessageParam param) {
         Message message = BeanUtil.copyProperties(param, Message.class);
         return Result.success(messageService.save(message));
     }
 
     @PostMapping("link")
-    public Result<Boolean> linkSave(@RequestBody LinkParam param) {
+    public Result<Boolean> linkSave(@Validated @RequestBody LinkParam param) {
         param.setId(null);
         param.setStatus(null);
         param.setReason(null);
-        if (StrUtil.isBlank(param.getUrl())) {
-            throw new IllegalArgumentException("链接不能为空");
-        }
-        if (StrUtil.isBlank(param.getName())) {
-            throw new IllegalArgumentException("昵称不能为空");
-        }
         Link link = BeanUtil.copyProperties(param, Link.class);
         if (StrUtil.isBlank(link.getIcon())) {
             link.setIcon(FieldUtil.getIconByEmailOrWebsite(link.getEmail(), link.getUrl()));
@@ -88,24 +71,12 @@ public class ApiController {
 
     @PostMapping("comment")
     public Result<Boolean> commentSave(
-            @RequestBody CommentParam param,
+            @Validated @RequestBody CommentParam param,
             HttpServletRequest request
     ) {
         UserAgent userAgent = UserAgentUtil.parse(request.getHeader("user-agent"));
         if (userAgent == null) {
             return Result.fail("请求头缺少user-agent");
-        }
-        if (StrUtil.isBlank(param.getEmail())) {
-            throw new IllegalArgumentException("邮箱不能为空");
-        }
-        if (StrUtil.isBlank(param.getNickname())) {
-            throw new IllegalArgumentException("昵称不能为空");
-        }
-        if (param.getSourceId() == null) {
-            throw new IllegalArgumentException("来源ID不能为空");
-        }
-        if (param.getSourceType() == null) {
-            throw new IllegalArgumentException("来源ID不能为空");
         }
         CommentSourceTypeEnum sourceType = CommentSourceTypeEnum.getByValue(param.getSourceType());
         if (sourceType == null) {

@@ -2,7 +2,6 @@ package xyz.esion.blog.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -43,24 +42,19 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         QueryWrapper<Article> queryWrapper = new QueryWrapper<>();
         boolean titleExist = StrUtil.isNotBlank(condition.getTitle());
         boolean tagExist = StrUtil.isNotBlank(condition.getTag());
-        queryWrapper.and(titleExist || tagExist, e -> {
-            e.like(titleExist,
-                            "title", condition.getTitle())
-                    .or()
-                    .like(tagExist,
-                            "tags",
-                            GlobalConstant.TAG_SEPARATOR + condition.getTag() + GlobalConstant.TAG_SEPARATOR);
-        });
+        queryWrapper.and(titleExist || tagExist, e -> e
+                .like(titleExist, "title", condition.getTitle())
+                .or()
+                .like(tagExist,
+                        "tags",
+                        GlobalConstant.TAG_SEPARATOR + condition.getTag() + GlobalConstant.TAG_SEPARATOR));
         queryWrapper.eq("status", condition.getStatus());
         queryWrapper.eq(condition.getCategoryId() != null, "category_id", condition.getCategoryId());
         if (condition.getOrderByDesc() != null) {
-            queryWrapper.orderByDesc(CollUtil.isNotEmpty(condition.getOrderByDesc()),
-                    ArrayUtil.toArray(condition.getOrderByDesc(), String.class));
+            queryWrapper.orderByDesc(CollUtil.isNotEmpty(condition.getOrderByDesc()), condition.getOrderByDesc());
         }
         if (condition.getOrderBy() != null) {
-            queryWrapper.orderBy(CollUtil.isNotEmpty(condition.getOrderBy()),
-                    true,
-                    ArrayUtil.toArray(condition.getOrderBy(), String.class));
+            queryWrapper.orderBy(CollUtil.isNotEmpty(condition.getOrderBy()), true, condition.getOrderBy());
         }
         Page<Article> page = articleMapper.selectPage(
                 new Page<>(pageParam.getPageNum(), pageParam.getPageSize()),

@@ -2,6 +2,8 @@ package xyz.esion.blog.param;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -16,6 +18,7 @@ public class CommentParam implements Serializable {
     /**
      * 电子邮箱
      */
+    @NotBlank(message = "邮箱不能为空")
     private String email;
 
     /**
@@ -26,16 +29,19 @@ public class CommentParam implements Serializable {
     /**
      * 昵称
      */
+    @NotBlank(message = "昵称不能为空")
     private String nickname;
 
     /**
      * 来源ID
      */
+    @NotNull(message = "来源ID不能为空")
     private Integer sourceId;
 
     /**
      * 来源类型
      */
+    @NotNull(message = "来源类型不能为空")
     private Integer sourceType;
 
     /**
