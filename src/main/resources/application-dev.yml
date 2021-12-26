@@ -47,3 +47,4 @@ mybatis-plus:
 
 logging:
   level.xyz.esion.blog: debug
+  config: classpath:logback-dev.xml
